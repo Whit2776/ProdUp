@@ -7,7 +7,7 @@
   <title>Create Company</title>
 </head>
 <body>
-  <span id='lolo' style='position: fixed; top: 10%; left: 8%; font-weight:bold; color:#111;'>ProdUp</span>
+  <span id='lolo' style='position: fixed; top: 3%; left: 8%; font-weight:bold; color:#111;'>ProdUp</span>
   <style>
     *{
       margin: 0;
@@ -130,6 +130,195 @@
     button:hover{
       background: #3730a3; /* slightly darker purple on hover */
     }
+
+    @media (max-width: 600px){
+
+      main{
+        display: block;
+        position: relative;
+      }
+
+      /* Make video full screen background */
+      .display-video{
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        padding: 0;
+      }
+
+      .display-video video{
+        border-radius: 0;
+      }
+
+      /* Add dark overlay for readability */
+      .display-video::after{
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: -1;
+      }
+
+      #form-container{
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+      }
+
+      #form-container form{
+        width: 100%;
+        max-width: 420px;
+        transform: none;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+      }
+
+      .field-group{
+        width: 100%;
+      }
+
+      .field-group input{
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .field-group label{
+        color: #020202;
+      }
+
+      button{
+        width: 100%;
+      }
+
+    }
+    /* ===============================
+   GLOBAL RESPONSIVE IMPROVEMENTS
+================================= */
+
+/* Better typography scaling */
+html {
+  font-size: clamp(14px, 1vw, 16px);
+}
+
+/* Constrain form container properly */
+#form-container {
+  padding: clamp(2rem, 5vw, 6rem);
+}
+
+/* Remove the hack */
+#form-container form {
+  transform: none !important;
+  width: 100% !important;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* Make fields fluid */
+.field-group {
+  width: 100% !important;
+  max-width: 520px;
+}
+
+/* Improve input responsiveness */
+.field-group input {
+  font-size: 1rem;
+  padding: 1rem 1.25rem;
+}
+
+/* Improve heading scaling */
+.header h1 {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  color: #555;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+/* Button scaling */
+button {
+  max-width: 520px;
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1rem;
+}
+
+/* Improve desktop video spacing */
+.display-video {
+  padding: clamp(0.5rem, 2vw, 2rem);
+}
+
+/* ===============================
+   LARGE SCREENS (Ultra-wide)
+================================= */
+
+@media (min-width: 1600px) {
+
+  main {
+    grid-template-columns: 1.5fr 1fr;
+  }
+
+  #form-container {
+    padding-left: 10%;
+  }
+
+}
+
+/* ===============================
+   TABLETS
+================================= */
+
+@media (max-width: 1024px) {
+
+  main {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #form-container {
+    padding: 3rem;
+  }
+
+}
+
+/* ===============================
+   MOBILE
+================================= */
+
+@media (max-width: 600px){
+
+  body {
+    background: #000;
+  }
+
+  #lolo {
+    color: white !important;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .header h1,
+  .header p {
+    color: white;
+  }
+
+  .field-group input {
+    background: rgba(255,255,255,0.9);
+  }
+
+  button {
+    font-size: 1rem;
+  }
+
+}
   </style>
 
   <main>
