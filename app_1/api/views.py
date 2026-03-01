@@ -117,13 +117,18 @@ def create_company(request):
   r = request.data
   
   with transaction.atomic():
-    company = Company.objects.create(name = r.get('name'), phone_number = r.get('phone_number'), email = r.get('email'), address = r.get('address'))
+    company_serializer = CompanySerializer(data = request.data)
+    if not company_serializer.is_valid:
+      return Response({'success': False, 'message': 'Invalid data', 'errors': company_serializer.errors}, status=status.HTTP_406_NOT_ACCEPTABLE)
+    
+    company = company_serializer.save()
+    
     email_link = Email_Link.objects.create(email = company.email)
     wallet = Wallet.objects.create(owner_company = company)
     set_up_link = request.build_absolute_uri(reverse('create-main-admin', args=[company.link, email_link.token]))
     send_brevo_email(6, company.email, company.name, {'set_up':set_up_link, 'company_name':company.name})
 
-  return Response({'':''})
+  return Response({'success':True, 'message': 'Successfully created Company'})
 
 @api_view(['POST'])
 def create_main_admin(request, link, token):
