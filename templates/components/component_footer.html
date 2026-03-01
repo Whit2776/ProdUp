@@ -1,0 +1,101 @@
+{% load static %}
+<section id="footer-info">
+  <div id='first-footer-nav'>
+
+    <div class="component-wrapper">
+      <div id="follow-us" class='component'>
+        <div id="tas-info-1" class='tas-banner'>
+          <img class='tas-logo-image' src="{% static "images/tas-logo.jpg" %}" alt="tas logo image">
+          <div class='tas-name'>
+            <h1 class='tas'>TAS</h1>
+            <p class='other'>Engineering</p>
+            <p class='other'>Solutions</p>
+          </div>
+        </div>
+
+        <div id="social-media-handles">
+          <a href="" id='facebook-page-link'><img src="{% static "images/facebook.png" %}" alt="facebook-page-link"></a>
+          <a href="" id='twitter-page-link'><img src="{% static "images/twitter.jpeg" %}" alt="twitter-page-link"></a>
+          <a href="" id='youtube-page-link'><img src="{% static "images/youtube.jpeg" %}" alt="youtube-page-link"></a>
+          <a href="" id='linkedin-page-link'><img src="{% static "images/linkedin.png" %}" alt="linkedin-page-link"></a>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="component-wrapper">
+      <div id="useful-links" class='component'>
+        <h3>USEFUL LINKS</h3>
+        <ul>
+          <li><a href="">ABOUT US</a></li>
+          <li><a href="">OUR TEAM</a></li>
+          <li><a href="">OUR SERVICES</a></li>
+          <li><a href="">CAREERS</a></li>
+          <li><a href="">CONTACT US</a></li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="component-wrapper">
+      <div id="contact-us" class='component'>
+        <div class="contact">
+          <h5>PHONE NUMBER</h5>
+          <div class='contact-details'>
+            <img src="{% static "icons/contact-phone.svg" %}" alt="phone-icon">
+            <p>+233 400 000 000</p>
+          </div>
+        </div>
+
+        <div class="contact">
+          <h5>EMAIL ADDRESS</h5>
+          <div class='contact-details'>
+            <img src="{% static "icons/contact-mail.svg" %}" alt="email-icon">
+            <p style="word-break: break-all;">tasengineerinsolutions@gmail.com</p>
+          </div>
+        </div>
+
+        <div class="contact">
+          <h5>MAIN OFFICE ADDRESS</h5>
+          <div class='contact-details'>
+            <img src="{% static "icons/location.svg" %}" alt="address-icon">
+            <p>Tema, Ashaiman-Lebannon</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="component-wrapper">
+      <div id="newsletter" class='component'>
+        <h3>NEWSLETTER</h3>
+        <div class='form-div'>
+          <p>Kindly subscribe to our news letter to get frequent updates</p>
+          <form action="" id='subscribe-to-newsletter-form'>
+            {% csrf_token %}
+            <input type="email" name="email" id="email" placeholder='JohnDoe@email.com'>
+            <button type="submit" >Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id='second-footer-nav'>
+    <nav id="second-footer-nav-bar" style="margin: 0.75rem 0;">
+      <ol>
+        <li> <a href="">ABOUT US</a> </li>
+        <li> <a href="">VISION</a> </li>
+        <li> <a href="">PORTFOLIO</a> </li>
+        <li> <a href="">CAREERS</a> </li>
+        <li> <a href="">SAFETY</a> </li>
+        <li> <a href="">HISTORY</a> </li>
+        <li> <a href="">CONTACT US</a> </li>
+      </ol>
+    </nav>
+  </div>
+
+  <div id='third-footer-nav'>
+    SOME INFO
+  </div>
+</section>

@@ -1,0 +1,308 @@
+<!DOCTYPE html> {%load static%}
+<html lang="en" dir="ltr" data-startbar="light" data-bs-theme="light">
+
+    
+<!-- Mirrored from mannatthemes.com/ TAS -bs5/default/ui-alerts.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Sep 2025 17:58:51 GMT -->
+<head>
+        
+
+        <meta charset="utf-8" />
+                <title>Alerts |  TAS - Engineering Firm DashBoard</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+                <meta content="" name="author" />
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+                <!-- App favicon -->
+                <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+       
+
+         <!-- App css -->
+         <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+         <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+         <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    
+    <!-- Top Bar Start -->
+    <body>
+        {% include "dashboard/components/nav.html" %}
+
+
+        <div class="page-wrapper">
+
+            <!-- Page Content-->
+            <div class="page-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="page-title-box d-md-flex justify-content-md-between align-items-center">
+                                <h4 class="page-title">Alerts</h4>
+                                <div class="">
+                                    <ol class="breadcrumb mb-0">
+                                        <li class="breadcrumb-item"><a href="#"> TAS </a>
+                                        </li><!--end nav-item-->
+                                        <li class="breadcrumb-item"><a href="#">UI Kit</a>
+                                        </li><!--end nav-item-->
+                                        <li class="breadcrumb-item active">Alerts</li>
+                                    </ol>
+                                </div>                                
+                            </div><!--end page-title-box-->
+                        </div><!--end col-->
+                    </div><!--end row-->
+                    <div class="row justify-content-center">
+                        <div class="col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <div class="col">                      
+                                            <h4 class="card-title">Default Alerts</h4>                      
+                                        </div><!--end col-->
+                                    </div>  <!--end row-->                                  
+                                </div><!--end card-header-->
+                                <div class="card-body">
+                                    <div class="alert alert-success shadow-sm border-theme-white-2" role="alert">
+                                        <div class="d-inline-flex justify-content-center align-items-center thumb-xs bg-success rounded-circle mx-auto me-1">
+                                            <i class="fas fa-check align-self-center mb-0 text-white "></i>
+                                        </div>
+                                        <strong>Well done!</strong> You successfully read this important alert message.
+                                    </div> 
+                                    <div class="alert alert-danger shadow-sm border-theme-white-2" role="alert">
+                                        <div class="d-inline-flex justify-content-center align-items-center thumb-xs bg-danger rounded-circle mx-auto me-1">
+                                            <i class="fas fa-xmark align-self-center mb-0 text-white "></i>
+                                        </div>
+                                        <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                                    </div>
+                                    <div class="alert alert-warning shadow-sm border-theme-white-2" role="alert">
+                                        <div class="d-inline-flex justify-content-center align-items-center thumb-xs bg-warning rounded-circle mx-auto me-1">
+                                            <i class="fas fa-exclamation align-self-center mb-0 text-white "></i>
+                                        </div>
+                                        <strong>Well done!</strong> An example warning alert with an icon.
+                                    </div> 
+                                    <div class="alert alert-purple shadow-sm border-theme-white-2 mb-0" role="alert">
+                                        <div class="d-inline-flex justify-content-center align-items-center thumb-xs bg-purple rounded-circle mx-auto me-1">
+                                            <i class="fas fa-info align-self-center mb-0 text-white "></i>
+                                        </div>
+                                        A simple primary alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+                                    </div>                   
+                                </div><!--end card-body--> 
+                            </div><!--end card--> 
+                        </div> <!--end col--> 
+                        <div class="col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <div class="col">                      
+                                            <h4 class="card-title">Outline Alerts</h4>                      
+                                        </div><!--end col-->
+                                    </div>  <!--end row-->                                  
+                                </div><!--end card-header-->
+                                <div class="card-body">
+                                    <div class="alert border border-success text-success" role="alert">
+                                        <strong>Well done!</strong> You successfully read this important alert message.
+                                    </div> 
+                                    <div class="alert border border-danger text-danger" role="alert">
+                                        <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                                    </div>
+                                    <div class="alert border border-warning text-warning" role="alert">
+                                        <strong>Well done!</strong> You successfully read this important alert message.
+                                    </div> 
+                                    <div class="alert border border-info mb-0 text-info" role="alert">
+                                        <strong>Oh snap!</strong> Change a few things up and try submitting again. 🎉
+                                    </div>          
+                                </div><!--end card-body--> 
+                            </div><!--end card--> 
+                        </div> <!--end col-->                                                       
+                    </div><!--end row-->
+
+                    <div class="row justify-content-center">
+                        <div class="col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <div class="col">                      
+                                            <h4 class="card-title">Dismissible Alerts</h4>                      
+                                        </div><!--end col-->
+                                    </div>  <!--end row-->                                  
+                                </div><!--end card-header-->
+                                <div class="card-body">
+                                    <div class="alert alert-success alert-dismissible fade show shadow-sm border-theme-white-2 rounded-pill" role="alert">
+                                        <div class="d-inline-flex justify-content-center align-items-center thumb-xs bg-success rounded-circle mx-auto me-1">
+                                            <i class="fas fa-check align-self-center mb-0 text-white "></i>
+                                        </div>
+                                        <strong>Well done!</strong> You successfully read this important alert message.
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="alert alert-danger alert-dismissible fade show shadow-sm border-theme-white-2 mb-0" role="alert">
+                                        <div class="d-inline-flex justify-content-center align-items-center thumb-xs bg-danger rounded-circle mx-auto me-1">
+                                            <i class="fas fa-xmark align-self-center mb-0 text-white "></i>
+                                        </div>
+                                        <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                                      
+                                </div><!--end card-body--> 
+                            </div><!--end card--> 
+                        </div> <!--end col--> 
+                        <div class="col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <div class="col">                      
+                                            <h4 class="card-title">Dismissible Outline Alerts</h4>                      
+                                        </div><!--end col-->
+                                    </div>  <!--end row-->                                  
+                                </div><!--end card-header-->
+                                <div class="card-body">
+                                    <div class="alert border border-success text-success alert-dismissible fade show rounded-pill" role="alert">
+                                        <div class="d-inline-flex justify-content-center align-items-center thumb-xs bg-success rounded-circle mx-auto me-1">
+                                            <i class="fas fa-check align-self-center mb-0 text-white "></i>
+                                        </div>
+                                        <strong>Well done!</strong> You successfully read this important alert message.
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="alert  border border-danger text-danger alert-dismissible fade show mb-0" role="alert">
+                                        <div class="d-inline-flex justify-content-center align-items-center thumb-xs bg-danger rounded-circle mx-auto me-1">
+                                            <i class="fas fa-xmark align-self-center mb-0 text-white "></i>
+                                        </div>
+                                        <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>         
+                                </div><!--end card-body--> 
+                            </div><!--end card--> 
+                        </div> <!--end col-->                                                       
+                    </div><!--end row-->
+
+                    <div class="row justify-content-center">
+                        <div class="col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <div class="col">                      
+                                            <h4 class="card-title">Custom Icon Alerts</h4>                      
+                                        </div><!--end col-->
+                                    </div>  <!--end row-->                                  
+                                </div><!--end card-header-->
+                                <div class="card-body">                                    
+                                    <div class="alert alert-danger alert-dismissible fade show  border-start border border-danger mb-0" role="alert">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="fas fa-skull-crossbones align-self-center fs-30 text-danger "></i>
+                                            <div class="flex-grow-1 ms-2 text-truncate">
+                                                <h5 class="mb-1 fw-bold mt-0">Primary</h5>
+                                                <p class="mb-0">Oh snap! Change a few things up and try submitting again.</p>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div><!--end media-body-->
+                                        </div>                                       
+                                    </div>       
+                                </div><!--end card-body--> 
+                            </div><!--end card--> 
+                        </div> <!--end col--> 
+                        <div class="col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <div class="col">                      
+                                            <h4 class="card-title">Additional Content</h4>                      
+                                        </div><!--end col-->
+                                    </div>  <!--end row-->                                  
+                                </div><!--end card-header-->
+                                <div class="card-body">
+                                    <div class="alert alert-info mb-0 border" role="alert">
+                                        <h4 class="alert-heading font-18">Well done!</h4>
+                                        <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+                                        <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+                                    </div>   
+                                </div><!--end card-body--> 
+                            </div><!--end card--> 
+                        </div> <!--end col-->                                                       
+                    </div><!--end row-->                    
+                </div><!-- container -->
+                <!--Start Rightbar-->
+                <!--Start Rightbar/offcanvas-->
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="Appearance" aria-labelledby="AppearanceLabel">
+                    <div class="offcanvas-header border-bottom justify-content-between">
+                      <h5 class="m-0 font-14" id="AppearanceLabel">Appearance</h5>
+                      <button type="button" class="btn-close text-reset p-0 m-0 align-self-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">  
+                        <h6>Account Settings</h6>
+                        <div class="p-2 text-start mt-3">
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch1">
+                                <label class="form-check-label" for="settings-switch1">Auto updates</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch2" checked>
+                                <label class="form-check-label" for="settings-switch2">Location Permission</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="settings-switch3">
+                                <label class="form-check-label" for="settings-switch3">Show offline Contacts</label>
+                            </div><!--end form-switch-->
+                        </div><!--end /div-->
+                        <h6>General Settings</h6>
+                        <div class="p-2 text-start mt-3">
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch4">
+                                <label class="form-check-label" for="settings-switch4">Show me Online</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch5" checked>
+                                <label class="form-check-label" for="settings-switch5">Status visible to all</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="settings-switch6">
+                                <label class="form-check-label" for="settings-switch6">Notifications Popup</label>
+                            </div><!--end form-switch-->
+                        </div><!--end /div-->               
+                    </div><!--end offcanvas-body-->
+                </div>
+                <!--end Rightbar/offcanvas-->
+                <!--end Rightbar-->
+                <!--Start Footer-->
+                
+                <footer class="footer text-center text-sm-start d-print-none">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card mb-0 border-bottom-0 rounded-bottom-0">
+                                    <div class="card-body">
+                                        <p class="text-muted mb-0">
+                                            ©
+                                            <script> document.write(new Date().getFullYear()) </script>
+                                             TAS 
+                                            <span
+                                                class="text-muted d-none d-sm-inline-block float-end">
+                                                Design with
+                                                <i class="iconoir-heart-solid text-danger align-middle"></i>
+                                                by Mannatthemes</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                
+                <!--end footer-->
+            </div>
+            <!-- end page content -->
+        </div>
+        <!-- end page-wrapper -->
+
+        <!-- Javascript  -->  
+        <!-- vendor js -->
+        
+        <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+
+        <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+    </body>
+    <!--end body-->
+
+<!-- Mirrored from mannatthemes.com/ TAS -bs5/default/ui-alerts.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Sep 2025 17:58:51 GMT -->
+</html>

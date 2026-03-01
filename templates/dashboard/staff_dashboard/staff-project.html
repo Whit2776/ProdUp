@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>{{project.title}}</title>
+      <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+      <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+      <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+      <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+      <link rel="stylesheet" href="{% static 'css/datatable.min.css' %}">
+      <link rel="stylesheet" href="{% static 'css/datatable.buttons.css' %}">
+
+      
+      <style>
+        :root {
+          --bg: #f5f9ff;
+          --bg-2: #accbfa88;
+          --card: rgba(255, 255, 255, 0.65);
+          --text: #1e2a38;
+          --accent: #3b82f6;
+          --glass-border: rgba(255, 255, 255, 0.3);
+          --glass-bg: rgba(206, 206, 206, 0.3);
+          --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark {
+          --bg: #1c1c1c;
+          --bg-2: #0f0f0f4f;
+          --card: rgba(40, 40, 40, 0.6);
+          --text: #f1f1f1;
+          --accent: #60a5fa;
+          --glass-border: rgba(255, 255, 255, 0.08);
+          --glass-bg: rgba(0,0,0,0.3);
+          --shadow: rgba(136, 136, 136, 0.1);
+        }
+
+        /* ===========================
+          Base Layout
+        =========================== */
+        body {
+          margin: 0;
+          font-family: "Inter", system-ui, sans-serif;
+          background: var(--bg);
+          color: var(--text);
+          transition: background 0.4s, color 0.4s;
+        }
+
+        .container {
+          max-width: 1200px;
+          margin: 2rem auto;
+          padding: 0 1rem;
+        }
+
+        /* ===========================
+          Header (Hero Glass Panel)
+        =========================== */
+        .hero {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          background: var(--card);
+          border: 1px solid var(--glass-border);
+          border-radius: 1rem;
+          padding: 1.5rem 2rem;
+          backdrop-filter: blur(15px);
+          box-shadow: 0 10px 25px var(--shadow);
+          margin-bottom: 2rem;
+        }
+
+        .hero-left {
+          display: flex;
+          align-items: center;
+          gap: 1.5rem;
+        }
+
+        .hero-left img {
+          width: 90px;
+          height: 90px;
+          object-fit: cover;
+          border-radius: 1rem;
+          border: 2px solid var(--accent);
+        }
+
+        .hero h1 {
+          margin: 0;
+          font-size: 1.8rem;
+          font-weight: 600;
+        }
+
+        .hero .status {
+          font-size: 0.9rem;
+          color: var(--accent);
+          font-weight: 600;
+          text-transform: uppercase;
+        }
+
+        /* Toggle Button */
+        .theme-toggle {
+          background: var(--accent);
+          border: none;
+          color: white;
+          padding: 0.6rem 1.2rem;
+          border-radius: 999px;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: opacity 0.3s;
+        }
+        .theme-toggle:hover {
+          opacity: 0.85;
+        }
+
+        /* ===========================
+          Stats Grid (Widgets)
+        =========================== */
+
+        .stat-card {
+          background: var(--card);
+          border: 1px solid var(--glass-border);
+          border-radius: 1rem;
+          padding: 1.2rem 1.5rem;
+          backdrop-filter: blur(12px);
+          box-shadow: 0 4px 20px var(--shadow);
+          transition: transform 0.3s;
+          min-width: 32%;
+          scroll-snap-align: start;
+        }
+
+        .stat-card:hover {
+          transform: translateY(-5px);
+        }
+
+        .stat-title {
+          font-size: 0.9rem;
+          color: var(--accent);
+          margin-bottom: 0.3rem;
+        }
+
+        .stat-value {
+          font-size: 1.4rem;
+          font-weight: 600;
+        }
+
+        /* ===========================
+          Tab Section
+        =========================== */
+        .tabs {
+          background: var(--card);
+          border: 1px solid var(--glass-border);
+          border-radius: 1rem;
+          backdrop-filter: blur(12px);
+          box-shadow: 0 6px 20px var(--shadow);
+        }
+
+        .tab-buttons {
+          display: flex;
+          border-bottom: 1px solid var(--glass-border);
+        }
+
+        .tab-buttons button {
+          flex: 1;
+          padding: 1rem;
+          background: none;
+          border: none;
+          color: var(--text);
+          font-weight: 600;
+          cursor: pointer;
+          transition: background 0.3s, color 0.3s;
+        }
+        .tab-buttons button.active {
+          background: var(--accent);
+          color: white;
+          border-radius: 1rem 1rem 0 0;
+        }
+
+        .tab-content {
+          padding: 1.5rem;
+          display: none;
+          animation: fadeIn 0.4s ease;
+        }
+        .tab-content.active {
+          display: block;
+        }
+
+        @keyframes fadeIn {
+          from {opacity: 0;}
+          to {opacity: 1;}
+        }
+
+        /* ===========================
+          Tables
+        =========================== */
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 0.5rem;
+        }
+
+        th, td {
+          text-align: left;
+          padding: 0.75rem;
+          border-bottom: 1px solid var(--glass-border);
+        }
+
+        th {
+          font-weight: 600;
+          color: var(--accent);
+        }
+
+        /* ===========================
+          Notes Section
+        =========================== */
+        textarea {
+          width: 100%;
+          padding: 0.8rem;
+          border-radius: 0.5rem;
+          border: 1px solid var(--glass-border);
+          background: var(--card);
+          color: var(--text);
+          resize: vertical;
+        }
+
+        /* ===========================
+          Footer
+        =========================== */
+        footer {
+          text-align: center;
+          font-size: 0.8rem;
+          opacity: 0.7;
+          padding: 1rem 0;
+        }
+        
+      #themeToggle {
+        background: var(--toggle);
+        border: none;
+        border-radius: 5px 0px 0px 5px;
+        padding: 0.25rem 0.5rem;
+        box-shadow: 0px 0px 3px rgba(0,0,0,0.5);
+        position: fixed;
+        right: 0;
+        top: 50%;
+        z-index: 100000;
+      }
+
+      .stats-container {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        max-width: 1000px;
+        margin: auto;
+      }
+
+      .stats{
+        display: flex;
+        flex-flow: row nowrap;
+        overflow: auto;
+        scroll-snap-type: x mandatory;
+        gap: 1rem;
+        width: 100%;
+        margin-bottom: 0.75rem;
+      }
+
+      .stats::-webkit-scrollbar{
+        display: none;
+      }
+
+      .glass-progress-container {
+        width: 100%;
+        height: 18px;
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(6px);
+        border-radius: 30px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+      }
+
+      .glass-progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, rgba(79, 172, 254, 0.8), rgba(0, 123, 255, 0.9));
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding-right: 6px;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 600;
+        border-radius: 30px;
+        transition: width 0.4s ease;
+      }
+
+      .dark-mode .progress-container {
+        background: #2b2b2b;
+      }
+
+      .dark-mode .progress-bar {
+        background: linear-gradient(90deg, #444, #777);
+      }
+
+      .dark-mode .glass-progress-container {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+      }
+
+      .dark-mode .glass-progress-bar {
+        background: linear-gradient(90deg, #4f4f4f, #8a8a8a);
+      }
+
+      .tasks-section {
+        margin-top: 25px;
+        font-family: "Segoe UI", Arial, sans-serif;
+      }
+
+      .tasks-section h2 {
+        font-size: 20px;
+        margin-bottom: 12px;
+        color: #2c3e50;
+      }
+
+      .table-container {
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(6px);
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+        overflow-x: auto;
+      }
+
+      .task-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 15px;
+      }
+
+      .task-table thead {
+        background: #e5f0ff;
+      }
+
+      .task-table thead th {
+        text-align: left;
+        padding: 10px;
+        font-weight: 600;
+        color: #1f3f77;
+      }
+
+      .task-table tbody tr {
+        border-bottom: 1px solid #e9eef5;
+      }
+
+      .task-table tbody tr:hover {
+        background: rgba(0, 123, 255, 0.06);
+      }
+
+      .task-table td {
+        padding: 10px;
+        color: #1a1a1a;
+      }
+
+      /* STATUS BADGES */
+      .status{
+        font-weight: bold;
+      }
+
+      .status.pending {
+        color: #f39c12; /* Orange */
+      }
+
+      .status.in-progress {
+        color: #2980b9; /* Blue */
+      }
+
+      .status.completed {
+        color: #27ae60; /* Green */
+      }
+
+      .days-left{
+        padding: 0.5rem;
+        font-family: monospace;
+        background: rgba(243, 243, 243, 0.96);
+        color: red;
+        padding: 0.5rem;
+        height: 100%;
+        font-size: 1rem;
+        border-radius: 5px;
+        transition: all 0.3s;
+      }
+
+      .days-left:hover{
+        cursor:pointer;
+      }
+
+      .None.days-left{
+        color: rgb(0, 255, 0);
+      }
+
+      .tasks-section h2 {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: #2c3e50;
+      }
+
+      #tasksTable_wrapper {
+        margin-top: 15px;
+      }
+
+      .dataTables_filter input {
+        border: 1px solid #bcd0f7;
+        border-radius: 6px;
+        padding: 6px;
+        outline: none;
+      }
+
+      table.dataTable thead {
+        background: #e5f0ff;
+      }
+
+      .modal {
+        display: block;
+        visibility: hidden;
+        position: fixed;
+        z-index: 4;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: auto;
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-content-container{
+        display: flex;
+        background: none;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        min-height: 400px;
+      }
+
+      .modal-content-team {
+        background: var(--bg);
+        padding: 20px;
+        width: max(50%, 300px);
+        border-radius: 10px;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .modal-content-team .close {
+        float: right;
+        font-size: 22px;
+        cursor: pointer;
+      }
+      
+      .modal-content-team .table-container {
+        max-height: 350px;
+        overflow-y: auto;
+        display: flex;
+        width: 100%;
+      }
+
+      .modal-content-team table.dataTable {
+        border-collapse: collapse;
+        margin: 0;
+        display:flex;
+        flex-flow: column nowrap;
+      }
+
+      .modal-content-team thead {
+        background: #333;
+        color: var(--text);
+      }
+
+      .modal-content-team th,
+      .modal-content td {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+      }
+
+      @keyframes fadeIn {
+        from { transform: translateY(-30px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+
+      .show-team-modal-btn{
+        display:flex;
+        justify-content: center;
+        border: none;
+        height: 100%;
+        width: 3rem;
+        padding: 0.5rem;
+        border-radius: 5px;
+        background: linear-gradient(to left, rgba(0, 108, 248, 1), rgba(35, 79, 145, 0.55));
+        transition: all 0.3s;
+      }
+
+      .show-team-modal-btn:hover{
+        transform: scale(1.1);
+      }
+
+      .modal.active{
+        visibility: visible;
+      }
+
+      form#taskForm {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px var(--shadow);
+        color: var(--text);
+        max-width: max(50%, 300px);
+        margin: auto;
+      }
+
+      .task-group {
+        background: var(--bg);
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid var(--glass-border);
+        margin-bottom: 20px;
+      }
+
+      .row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .col {
+        flex: 1;
+      }
+
+      .col-full {
+        flex: 1;
+      }
+
+      label {
+        font-size: 14px;
+        opacity: 0.8;
+      }
+
+      input, select, textarea {
+        width: 100%;
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid var(--glass-border);
+        background: var(--card);
+        color: var(--text);
+      }
+
+      textarea {
+        resize: vertical;
+      }
+
+      input:focus, select:focus, textarea:focus {
+        outline: 2px solid var(--accent);
+      }
+
+      .add-task-btn {
+        background: transparent;
+        border: 2px dashed var(--accent);
+        padding: 8px 16px;
+        color: var(--accent);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .add-task-btn:hover{
+        background: var(--accent);
+        border: 2px dashed transparent;
+        color: var(--bg);
+      }
+      
+      .submit-btn {
+        background: var(--accent);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .submit-btn:hover {
+        background: none;
+        border: none;
+        color: var(--accent);
+        cursor: pointer;
+      }
+
+      .modal-content-container-{
+        position: relative;
+        z-index: 99999;
+      }
+
+      .menu-active{
+        overflow: hidden;
+      }
+
+      #taskFieldsContainer{
+        gap: 1rem;
+        position: relative;
+        padding-bottom: 3rem;
+      }
+
+      .task-field:first-child .close-container{
+        display:none;
+        margin-top: 1rem;
+      }
+
+      .close-container{
+        transform: rotate(45deg);
+        cursor: pointer;
+      }
+
+      .close-container span.close22{
+        display: flex;
+      }
+
+      .close-container span.close22::before,
+      .close-container span.close22::after{
+        content: '';
+        background: var(--text);
+        height: 16px;
+        width: 2px;
+      }
+
+      .close-container span.close22::before{
+        transform: rotate(90deg) translateY(-2px);
+      }
+
+      .clone-form .task-group{
+        background: var(--glass-bg);
+      }
+
+      .table-wrapper{
+        overflow: hidden;
+      }
+
+      .table-container{
+        overflow: scroll;
+        background: var(--bg);
+      }
+            
+      @media (max-width: 500px){
+        .stat-card{
+          min-width: max(100%, 200px);
+          height: 50%;
+        }
+
+        .settings-container{
+          width: max(50%, 300px);
+          right: -83%;
+        }
+
+        .pop-up .item:hover .description{
+          display: none;
+        }
+
+        .hero{
+          display: flex;
+          flex-flow: column nowrap;
+          width: 100%;
+          padding: 0.5rem;
+          margin: 1rem 0rem;
+        }
+
+        .hero-left{
+          display: flex;
+          flex-flow: column;
+        }
+
+        .hero-left div{
+          display: flex;
+          flex-flow: column nowrap;
+        }
+
+        .hero-left img{
+          width: 100%;
+          height: auto;
+        }
+      }
+      
+            
+    </style>
+  </head>
+
+  <body>
+    
+    {% if employee.role.permissions.can_edit_projects %}
+    <div class="settings-container">
+        <style>
+          .settings-container{
+            display: flex;
+            flex-flow: column nowrap;
+            position: fixed;
+            background: var(--bg-2);
+            width: max(25%, 250px);
+            height: 93vh;
+            right: -25%;
+            bottom: 0;
+            z-index: 200;
+            backdrop-filter: blur(6px);
+            border-radius: 10px 0px 0px 10px;
+            border-left: 2px solid rgba(34, 34, 34, 0.2);
+            border-top: 2px solid rgba(34, 34, 34, 0.2);
+            box-shadow: 0px 6px 20px var(--shadow);
+            transition: all 0.5s;
+          }
+
+          .settings-container .settings{
+            display: flex;
+            width: 100%;
+            height: 100%;
+            position: relative;
+          }
+
+          .settings-container .settings-button{
+            position: absolute;
+            top: 20%;
+            left: -20%;
+            border: 1px solid rgba(37, 37, 37, 0.29);
+            border-radius: 5px;
+            background: var(--glass-bg);
+            padding: 0.5rem;
+          }
+
+          .settings-container .settings-button svg{
+            fill: var(--text);
+            animation: spin 3s linear infinite;
+          }
+
+          .settings-container.active{
+            right: 0;
+          }
+
+
+          @keyframes spin {
+            0%{transform: rotate(360deg)}
+            }
+          #themeToggle{
+            transition: all 3s;
+            }
+
+          .inactive{
+            left: 100%;
+            }
+
+            
+        @media (max-width: 500px){
+          .settings-container{
+            right: -70%;
+          }
+        }
+        </style>
+        <button class='settings-button'>
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" ><path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z"/>
+          </svg>
+        </button>
+      <div class="settings">
+        {% if project.status == 'pending' %}
+        <div id="finalize-project">
+          <h3 class="h">Finalize Project</h3>
+          <div id="finalize-project-form">
+            <form action="" method='post'>
+              {% csrf_token %}
+              <input type="hidden" name='form-name' value='fp-form'>
+              <label for="">Status</label>
+              <select name="status">
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+              <label for="">Started</label>
+              <input type="date" name = 'started'>
+              <label for="">Deadline</label>
+              <input type="date" name="deadline" id="">
+
+              <button type="submit">Finalize</button>
+            </form>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      
+      <script>
+        let sc = document.querySelector('.settings-container')
+        let s = document.querySelector('.settings')
+        let sb = document.querySelector('.settings-button')
+
+        sb.onclick = () => {
+          sc.classList.toggle('active')
+          document.querySelector('#themeToggle').classList.toggle('inactive')
+        }
+      </script>
+    </div>
+    {% endif %}
+    {% include "dashboard/staff_dashboard/components/nav.html" %}
+    {% if employee.role.permissions.can_edit_projects %}
+    <div id ='add-tasks-modal' class="modal">
+      <div class="modal-content-container-">
+        <div class="add-tasks">
+          <form id="taskForm" class='add-tasks-form' style='position:relative;' method='post'>
+            {% csrf_token %}
+            <div id="taskFieldsContainer">
+
+              <!-- Single Task Group -->
+              <div class="task-field" style = 'position: relative;'>
+                <div class='close-container' style='width: 25px; height: 25px;position: absolute; right: 2.5%; top: 5%; z-index:100000;'>
+                  <span class='close22'>
+
+                  </span>
+                </div>
+                <div class="task-group">
+                  <div class="row">
+                    <div class="col">
+                      <label>Title</label>
+                      <input type="text" name="title[]" required>
+                    </div>
+                    <div class="col">
+                      <label>Status</label>
+                      <select name="status[]">
+                        <option value="pending">Pending</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                        <option value="on_hold">On Hold</option>
+                        <option value="assigned">Assigned</option>
+                        <option value="cancelled">Cancelled</option>
+                      </select>
+                    </div>
+                    <div class="col">
+                      <label>Priority</label>
+                      <select name="priority[]">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                        <option value="critical">Critical</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col">
+                      <label>Start Date</label>
+                      <input type="date" name="start_date[]">
+                    </div>
+                    <div class="col">
+                      <label>Due Date</label>
+                      <input type="date" name="due_date[]">
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-full">
+                      <label>Description</label>
+                      <textarea name="description[]" rows="2"></textarea>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div style='position: fixed; display: flex; bottom: 0; background: var(--bg); width: 50%; align-items: center; justify-content: center; border-radius: 5px 5px 0px 0px; gap: 0.5rem;'>
+              <button type="button" class="add-task-btn" id="addMoreTask">+ Add Another Task</button>
+              <button type="submit" class="submit-btn">Submit Tasks</button>
+              <button type="button" class="close-btn"><span class='close'>X</span></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <style>
+      #add-files-modal{
+        display: flex;
+        justify-content: center;
+      }
+    </style>
+    <div id="add-files-modal" class="modal">
+      <div id='create-folder-form' class="form-container">
+        <form action="" class="create-folder" method = 'post' enctype='multipart/form-data'>
+          {% csrf_token %}
+          <input type="hidden" name='form_name' value='add-files-form'>
+          <h3 style='text-align: center;'>Add Files</h3>
+          <input type="text" name = 'name' readonly value = '{{folder.name}}'>
+          <textarea style='color: white;' type="text" name = 'description' readonly>{{folder.description}}</textarea>
+          <input type="file" name = 'files' placeholder = 'Files' multiple accept='*/*'>
+          <button type="submit">Create</button>
+        </form>
+      </div>
+    </div>
+    
+
+    <div class="add-team">
+      <div class="hidden pop-up-wrapper">
+          <div class="pop-up">
+              <ul class="items">
+                  <li class='item clickable'>
+                      <span class="description">Add Tasks</span>
+                      <svg class = 'open-add-tasks-modal-btn'  xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000ff"><path d="M500-482q29-32 44.5-73t15.5-85q0-44-15.5-85T500-798q60 8 100 53t40 105q0 60-40 105t-100 53Zm220 322v-120q0-36-16-68.5T662-406q51 18 94.5 46.5T800-280v120h-80Zm80-280v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80Zm-480-40q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM0-160v-112q0-34 17.5-62.5T64-378q62-31 126-46.5T320-440q66 0 130 15.5T576-378q29 15 46.5 43.5T640-272v112H0Zm320-400q33 0 56.5-23.5T400-640q0-33-23.5-56.5T320-720q-33 0-56.5 23.5T240-640q0 33 23.5 56.5T320-560ZM80-240h480v-32q0-11-5.5-20T540-306q-54-27-109-40.5T320-360q-56 0-111 13.5T100-306q-9 5-14.5 14T80-272v32Zm240-400Zm0 400Z"/></svg>
+                  </li>
+                  <li class='item clickable'>
+                      <span id='add-files' class="description">Add Files</span>
+                      <svg id='add_files_btn' class='add-files' xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000ff"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h168q13-36 43.5-58t68.5-22q38 0 68.5 22t43.5 58h168q33 0 56.5 23.5T840-760v268q-19-9-39-15.5t-41-9.5v-243H200v560h242q3 22 9.5 42t15.5 38H200Zm0-120v40-560 243-3 280Zm80-40h163q3-21 9.5-41t14.5-39H280v80Zm0-160h244q32-30 71.5-50t84.5-27v-3H280v80Zm0-160h400v-80H280v80Zm200-190q13 0 21.5-8.5T510-820q0-13-8.5-21.5T480-850q-13 0-21.5 8.5T450-820q0 13 8.5 21.5T480-790ZM720-40q-83 0-141.5-58.5T520-240q0-83 58.5-141.5T720-440q83 0 141.5 58.5T920-240q0 83-58.5 141.5T720-40Zm-20-80h40v-100h100v-40H740v-100h-40v100H600v40h100v100Z"/></svg>
+                  </li>
+                  <li class='item clickable'>
+                      <span class="description">Assign Project</span>
+                      <svg  xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000ff"><path d="M500-482q29-32 44.5-73t15.5-85q0-44-15.5-85T500-798q60 8 100 53t40 105q0 60-40 105t-100 53Zm220 322v-120q0-36-16-68.5T662-406q51 18 94.5 46.5T800-280v120h-80Zm80-280v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80Zm-480-40q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM0-160v-112q0-34 17.5-62.5T64-378q62-31 126-46.5T320-440q66 0 130 15.5T576-378q29 15 46.5 43.5T640-272v112H0Zm320-400q33 0 56.5-23.5T400-640q0-33-23.5-56.5T320-720q-33 0-56.5 23.5T240-640q0 33 23.5 56.5T320-560ZM80-240h480v-32q0-11-5.5-20T540-306q-54-27-109-40.5T320-360q-56 0-111 13.5T100-306q-9 5-14.5 14T80-272v32Zm240-400Zm0 400Z"/></svg>
+                  </li>
+                  <li class='item clickable'>
+                      <span class="description">Add Team</span>
+                      <svg  xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000ff"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h168q13-36 43.5-58t68.5-22q38 0 68.5 22t43.5 58h168q33 0 56.5 23.5T840-760v268q-19-9-39-15.5t-41-9.5v-243H200v560h242q3 22 9.5 42t15.5 38H200Zm0-120v40-560 243-3 280Zm80-40h163q3-21 9.5-41t14.5-39H280v80Zm0-160h244q32-30 71.5-50t84.5-27v-3H280v80Zm0-160h400v-80H280v80Zm200-190q13 0 21.5-8.5T510-820q0-13-8.5-21.5T480-850q-13 0-21.5 8.5T450-820q0 13 8.5 21.5T480-790ZM720-40q-83 0-141.5-58.5T520-240q0-83 58.5-141.5T720-440q83 0 141.5 58.5T920-240q0 83-58.5 141.5T720-40Zm-20-80h40v-100h100v-40H740v-100h-40v100H600v40h100v100Z"/></svg>
+                  </li>
+                  <li class='item clickable'>
+                      <span class="description">Add Team</span>
+                      <svg  xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000ff"><path d="M500-482q29-32 44.5-73t15.5-85q0-44-15.5-85T500-798q60 8 100 53t40 105q0 60-40 105t-100 53Zm220 322v-120q0-36-16-68.5T662-406q51 18 94.5 46.5T800-280v120h-80Zm80-280v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80Zm-480-40q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM0-160v-112q0-34 17.5-62.5T64-378q62-31 126-46.5T320-440q66 0 130 15.5T576-378q29 15 46.5 43.5T640-272v112H0Zm320-400q33 0 56.5-23.5T400-640q0-33-23.5-56.5T320-720q-33 0-56.5 23.5T240-640q0 33 23.5 56.5T320-560ZM80-240h480v-32q0-11-5.5-20T540-306q-54-27-109-40.5T320-360q-56 0-111 13.5T100-306q-9 5-14.5 14T80-272v32Zm240-400Zm0 400Z"/></svg>
+                  </li>
+                  <li class='item clickable'>
+                      <span class="description">Add Team</span>
+                      <svg  xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000ff"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h168q13-36 43.5-58t68.5-22q38 0 68.5 22t43.5 58h168q33 0 56.5 23.5T840-760v268q-19-9-39-15.5t-41-9.5v-243H200v560h242q3 22 9.5 42t15.5 38H200Zm0-120v40-560 243-3 280Zm80-40h163q3-21 9.5-41t14.5-39H280v80Zm0-160h244q32-30 71.5-50t84.5-27v-3H280v80Zm0-160h400v-80H280v80Zm200-190q13 0 21.5-8.5T510-820q0-13-8.5-21.5T480-850q-13 0-21.5 8.5T450-820q0 13 8.5 21.5T480-790ZM720-40q-83 0-141.5-58.5T520-240q0-83 58.5-141.5T720-440q83 0 141.5 58.5T920-240q0 83-58.5 141.5T720-40Zm-20-80h40v-100h100v-40H740v-100h-40v100H600v40h100v100Z"/></svg>
+                  </li>
+              </ul>
+          </div>
+      </div>
+
+      
+      <div class="add-team-button ran clickable">
+          <span class='add'></span>
+      </div>
+    </div>
+    {% endif %}
+    <style>/* ====== GLOBAL ====== */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Inter", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        transition: 0.3s;
+      }
+
+      /* Light mode variables */
+      :root {
+        --bg: #f5f7ff;
+        --card-bg: rgba(255, 255, 255, 0.65);
+        --card-border: rgba(255, 255, 255, 0.4);
+        --accent: #7d5fff;
+        --accent-hover: #6346ea;
+        --text: #2e2e3a;
+        --input-bg: rgba(255, 255, 255, 0.8);
+        --shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      }
+
+    
+      .dark {
+        --bg: #111216;
+        --card-bg: rgba(26, 26, 26, 0.65);
+        --card-border: rgba(80, 80, 80, 0.08);
+        --text: #e9e9ec;
+        --input-bg: rgba(0, 0, 0, 0.35);
+        --shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      }
+
+      /* ====== FORM CARD ====== */
+      .form-container {
+        backdrop-filter: blur(15px);
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 35px 45px;
+        width: max(50%, 300px);
+        box-shadow: var(--shadow);
+        position: fixed;
+        top: 10%;
+        z-index: 5;
+        visibility: hidden;
+      }
+
+      .fade-up{visibility:visible;animation: fadeUp 0.4s ease;}
+
+
+      /* ====== INPUTS ====== */
+      .create-folder input[type="text"],
+      .create-folder textarea,
+      .create-folder input[type="file"] {
+        width: 100%;
+        background: var(--input-bg);
+        border: none;
+        border-radius: 10px;
+        outline: none;
+        padding: 13px 15px;
+        margin-bottom: 18px;
+        font-size: 15px;
+        color: var(--text);
+        transition: 0.2s ease;
+        box-shadow: inset 0 0 0 1px transparent;
+      }
+
+      .create-folder input:hover,
+      .create-folder textarea:hover {
+        box-shadow: inset 0 0 0 1px var(--accent);
+      }
+
+      .create-folder input:focus,
+      .create-folder textarea:focus {
+        box-shadow: inset 0 0 0 2px var(--accent);
+      }
+
+      .create-folder textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      /* Hide ugly browser file UI (clean style) */
+      .create-folder input[type="file"] {
+        padding: 10px;
+        cursor: pointer;
+        border: dotted 2px var(--accent);
+      }
+
+      /* ====== BUTTON ====== */
+      .create-folder button {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 10px;
+        background: var(--accent);
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.25s ease;
+      }
+
+      .create-folder button:hover {
+        background: var(--accent-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 14px rgba(125, 95, 255, 0.3);
+      }
+
+      .create-folder button:active {
+        transform: scale(0.97);
+      }
+
+      /* ====== Smooth entrance animation ====== */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(25px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+
+    <div class="page-wrapper">
+      <div class="page-content">
+        <div class="container-fluid">
+          <div class="container">
+            {% for team in teams %}
+            <div id="teamModal{{team.id}}" class="modal">
+              <div class=modal-content-container>
+                <div class="modal-content-team">
+
+                  <span class="close" data-id="{{team.id}}">&times;</span>
+                  <h2>{{team.name}} Members</h2>
+
+                  <div class="table-wrapper">
+                    <div class="table-container">
+                      <table class='tasksTable2'>
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for member in team.members.all %}
+                          <tr>
+                            <td>{{ member.id }}</td>
+                            <td>{{ member.name }}</td>
+                            <td>{{ member.email }}</td>
+                            <td>{{ member.role }}</td>
+                          </tr>
+                          {% empty %}
+                          <tr>
+                            <td colspan="3" style="text-align:center;">No members found</td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            
+
+          <!-- Hero Header -->
+          <style>
+          </style>
+
+          <div class="hero" >
+            <div class="hero-left">
+              <img src="{% get_media_prefix %}{{project.logo}}" alt="Project Logo">
+              <div>
+                <h1>{{project.title}} </h1>
+                <p class="status">{{project.status}} • {{project.priority|default:'Low'}} Priority</p>
+                <p> <strong>Client</strong> : {{project.client.name}} - {{project.client.company_name}}</p>
+                <p> <strong>Supervisor</strong> : {{project.supervisor.name}}</p>
+              </div>
+            </div>
+
+            <h4><span class= '{{project.days_left}} days-left'>{{project.days_left}}</span> Days Left</h4>
+          </div>
+
+          
+
+          <!-- Stats Section -->
+          {% if employee.role.permissions.can_view_finances %}
+          <div class="stats-container">
+            <div class="stats-track">
+              <div class="stats">
+                <div class="stat-card">
+                  <div class="stat-title">Budget</div>
+                  <div class="stat-value">GHC{{project.budget}}</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-title">Amount Spent</div>
+                  <div class="stat-value">GHC{{project.amount_spent}}</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-title">Amount Charged</div>
+                  <div class="stat-value">GHC{{project.amount_charged}}</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-title">Remainder</div>
+                  <div class="stat-value">
+                    <div class="stat-value {% if project.amount_charged < project.amount_spent %}text-red{% endif %}">
+                      {{ project.profit_or_loss|default:'0'}}
+                    </div>
+                  </div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-title">Deadline</div>
+                  <div class="stat-value">{{project.deadline}}</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-title">Days Left</div>
+                  <div class="stat-value">{{project.days_left|default:'Unknown'}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- Tabs -->
+          <div class="tabs">
+            <div class="tab-buttons">
+              <button class="active" data-tab="overview">Overview</button>
+              <button data-tab="team">Team</button>
+              <button data-tab="files">Files</button>
+              <button data-tab="notes">Notes</button>
+            </div>
+
+            <div id="overview" class="tab-content active">
+              <h2>Project Overview</h2>
+              <p>
+                Ocean View Apartments is a residential project located at the
+                heart of the city, featuring modern architecture and eco-friendly design.
+              </p>
+              <table>
+                <tr><th>Type</th><td>{{project.type}}</td></tr>
+                <tr><th>Location</th><td>{{project.location}}</td></tr>
+                <tr><th>Size</th><td>{{project.size}}</td></tr>
+                <tr><th>Status</th><td>{{project.status}}</td></tr>
+                <tr><th>Status Reason</th><td>{{project.status_reason}}</td></tr>
+                <tr><th>Progress</th><td><div class="glass-progress-container" style = 'border 1px solid rgba(0, 0, 0, 0.2)'><div class="glass-progress-bar" style="width: {{project.progress}}%; align-text:center;">{{project.progress}}%</div></div></td></tr>
+              </table>
+            </div>
+
+            <div id="team" class="tab-content">
+              <h2>{{team.name}}</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Leader</th>
+                    <th>Members</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for team in teams %}
+                  <tr>
+                    <td>{{team.name}}</td>
+                    <td>{{team.leader.name}}</td>
+                    <td>
+                      <button id="openModalBtn{{team.id}}" class='show-team-modal-btn'>{{team.members.all|length}}</button>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+
+
+            </div>
+
+            <div id="files" class="tab-content">
+              <h2>Project Files</h2>
+              <div class="table-wrapper">
+                <div class="table-container">
+                  <table id='files-table'>
+                    <thead>
+                      <tr><th>File</th><th>File Name</th><th>Type</th><th>Size</th><th>Date Uploaded</th></tr>
+                    </thead>
+                    <tbody>
+                      {% for file in folder.files.all %}
+                        <tr> <td>
+                          {% if "image" in file.type %}🖼️{% elif "pdf" in file.type %}📄{% elif "video" in file.type %}🎞️{% elif "csv" in file.type %}📊{% elif "json" in file.type %}🧩{% elif 'spreadsheet' in file.type %}<i class="fa fa-file-excel"></i>{% else %}📂 {% endif %} </td><td>{{file.name}}</td><td>{{file.type}}</td><td>{{file.size}}</td><td>{{file.created}}</td></tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              
+            </div>
+
+            <div id="notes" class="tab-content">
+              <h2>Project Notes</h2>
+              <textarea rows="6" placeholder="Write internal notes or updates here..."></textarea>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="tasks-section" style='background: var(--card); padding: 0.5rem; margin: 1.5rem; box-shadow: 0px 0px 5px var(--shadow); border-radius: 10px; border: 1.5px solid var(--glass-border);'>
+        <h2 style='display: block; width: 100%; text-align: center; color: var(--text);'>Project Tasks</h2>
+        <div class="table-wrapper">
+          <div class="tasks-table-container table-container" style='padding: 0.5rem; background: var(--card); margin: 0.75rem; box-shadow:0 6px 20px var(--shadow); border-radius: 20px;'>
+            <table id="tasksTable" class=" tasksTable display nowrap" style="width:100%; padding-top: 0.75rem;">
+              <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Task</th>
+                    <th>Assigned To</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Assigned Date</th>
+                    <th>Due Date</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for task in tasks %}
+                  <tr>
+                    <td>{{task.id}}</td>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.assigned_to.name|default:"Not Assigned" }}</td>
+                    <td class='{{task.status}} status'>{{task.status}}</td>
+                    <td>{{task.priority.name}}</td>
+                    <td>{{task.assigned_date}}</td>
+                    <td>{{ task.due_date|date:"Y-m-d" }}</td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+
+    <script src="{%static 'dashboard/assets/js/jquery.js'%}"></script>
+
+    <script src="{%static 'dashboard/assets/js/dataTables.min.js'%}"></script>
+
+    <script src="{%static 'dashboard/assets/js/dataTables.buttons.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/jsButtonsHTML5.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/jsButtons.print.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/main.js'%}"></script>
+
+
+    <script>
+      const tabButtons = document.querySelectorAll('.tab-buttons button');
+      const tabContents = document.querySelectorAll('.tab-content');
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const id = btn.dataset.tab;
+          tabContents.forEach(c => {
+            c.classList.toggle('active', c.id === id);
+          });
+        });
+      });
+    </script>
+
+    {% if employee.role.permissions.can_edit_projects %}
+    
+    <script defer>
+      
+      let a = document.getElementById('add_files_btn')
+      let a_m = document.getElementById('add-files-modal')
+      let f_m = document.getElementById('create-folder-form')
+        
+        a.onclick = () => {
+          a_m.classList.toggle('active')
+          f_m.classList.toggle('fade-up')
+        }
+
+        window.addEventListener('click', e => {
+          if(e.target.classList.contains('modal')){
+            e.target.classList.toggle('active')
+            f_m.classList.toggle('fade-up')
+          }
+        })
+
+      const open_add_tasks_modal_btn = document.querySelector('.open-add-tasks-modal-btn')
+      const add_tasks_modal = document.getElementById('add-tasks-modal')
+      const close_btn = document.querySelector('.close-btn')
+
+      open_add_tasks_modal_btn.addEventListener('click', e => {
+        add_tasks_modal.classList.toggle('active')
+        document.body.classList.toggle('menu-active')
+      })
+
+      close_btn.onclick = () => {
+        document.body.classList.toggle('menu-active')
+      }
+
+      const add_files_btn = document.getElementById('add_files_btn')
+      
+      const container = document.getElementById('taskFieldsContainer');
+      const addBtn = document.getElementById('addMoreTask');
+      const task_fields = container.children
+
+      function attachClose(btn, block) {
+        btn.addEventListener('click', e => {
+          e.preventDefault();
+          e.stopPropagation();
+          block.remove();
+        });
+      }
+
+      addBtn.addEventListener('click', () => {
+        const child = container.children[0]
+        const clone = child.cloneNode(true);
+
+        clone.classList.add('clone-form')
+        child.querySelectorAll("input, textarea").forEach(i => i.value = "");
+        child.querySelectorAll("select").forEach(i => i.selectedIndex = 0);
+        container.appendChild(clone);
+        const close = clone.querySelector('.close-container')
+        attachClose(close, clone)
+      });
+
+    </script>
+    {% endif %}
+
+    
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const modals = document.querySelectorAll(".modal");
+        const openButtons = document.querySelectorAll("[id^='openModalBtn']");
+        const closeButtons = document.querySelectorAll(".close");
+
+        openButtons.forEach(btn => {
+          btn.onclick = () => {
+            const id = btn.id.replace("openModalBtn", "");
+            document.getElementById("teamModal" + id).style.visibility = "visible";
+          };
+        });
+
+        closeButtons.forEach(btn => {
+          btn.onclick = () => {
+            const id = btn.getAttribute("data-id");
+            document.getElementById("teamModal" + id).style.visibility = "hidden";
+          };
+        });
+      });
+    </script>
+
+    <script>
+      $(document).ready(function() {
+          $('.tasksTable').DataTable({
+              responsive: true,
+              dom: 'Bfrtip',
+              buttons: [
+                'csv', 'excel', 'pdf', 'print'
+              ],
+              pageLength: 10,
+              autowidth: false
+          });
+      });
+
+      $(document).ready(function() {
+          $('.tasksTable2').DataTable({
+              responsive: true,
+              dom: 'Bfrtip',
+              buttons: [
+                'csv', 'excel', 'pdf', 'print'
+              ],
+              pageLength: 10,
+              autowidth: false,
+              scrollX: true
+          });
+      });
+    </script>
+  </body>
+</html> 

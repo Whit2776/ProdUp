@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Departments - {{company.name}}</title>
+    <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+    <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="{%get_static_prefix%}dashboard/css/datatable.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/css/datatable.buttons.css" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+    {% include "dashboard/components/nav.html" %}
+    <div class="page-wrapper">
+      <div class="page-content">
+        <div class="container-fluid">
+          <div class="container mt-5">
+            <h2 class="mb-4 text-center">Clients</h2>
+
+            <div class="table-responsive">
+              <table id="department-table" class="table table-striped table-bordered text-center">
+                <thead class="table-dark">
+                  <tr>
+                    <th>#</th>
+                    <th>Department</th>
+                    <th>Department Head</th>
+                    <th>Employees</th>
+                    <th>Created</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {% for d in departments %}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ d.name }}</td>
+                    <td>{{ department_head.name }}</td>
+                    <td>{{ d.department_employees.all.count }}</td>
+                    <td>{{ d.created|date:"Y-m-d" }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+    <script src="{%static 'dashboard/assets/js/jquery.js'%}"></script>
+
+    <!-- DataTables core -->
+    <script src="{%static 'dashboard/assets/js/dataTables.min.js'%}"></script>
+
+    <!-- Buttons -->
+    <script src="{%static 'dashboard/assets/js/dataTables.buttons.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/jsButtonsHTML5.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/jsButtons.print.min.js'%}"></script>
+
+    <script>
+      $(document).ready(function () {
+          $('#department-table').DataTable({
+              pageLength: 10,
+              lengthMenu: [5, 10, 25, 50, 100]
+          });
+      });
+    </script>
+  </body>
+</html> 

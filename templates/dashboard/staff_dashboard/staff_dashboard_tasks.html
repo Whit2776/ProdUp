@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+    <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <style>
+:root{
+  --primary: rgba(2, 175, 255, 1);
+  --primary-txt: rgba(61, 61, 61, 0.98);
+  --bg: #ffffffff;
+  --off-bg: #f4f7ffff;
+  --text: #2c3e50;
+  --danger: #ff3d3dff;
+  --warning: #ffde85ff;
+  --success: #77ff38ff;
+  --shadow: rgba(71, 71, 71, 1)ff;
+}
+
+.dark{
+  --primary: rgba(37, 37, 37, 1);
+  --primary-txt: rgba(243, 243, 243, 0.77);
+  --bg: #141414ff;
+  --off-bg: #1a1a1aff;
+  --text: #ffffffcc;
+  --danger: #ff3d3dff;
+  --warning: #ffde85ff;
+  --success: #77ff38ff;
+  --shadow: rgba(255, 255, 255, 1)ff;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  padding: 30px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+select, input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.pending { background: #e67e22; }
+.progress { background: #2980b9; }
+.completed { background: #27ae60; }
+
+.modal{
+  position: fixed;
+  display: flex;
+  justify-content: flex-end;
+  height: 100%;
+  z-index: 10000000;
+  background: #ffffff15;
+  visibility: hidden;
+  opacity: 0.5;
+  transition: all 1s;
+  width: 0;
+  overflow: hidden;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+}
+
+.modal-content{
+  width: max(25%, 300px);
+  height: 100%;
+  background: rgba(26, 26, 26, 0.34);
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  display: flex;
+  padding: 1rem;
+  position: fixed;
+}
+
+.active{
+  opacity: 1;
+  visibility: visible;
+  width: 100%;
+}
+
+
+.clickable{
+  cursor: pointer;
+}
+
+.task{
+  transition: all 0.3s ease-in;
+}
+
+.task:hover{
+  background: rgba(166, 204, 240, 0.98)
+}
+
+/* Stats Cards */
+        
+  
+      .stats-container {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        max-width: 1000px;
+        margin: auto;
+        margin-bottom: 0.5rem; 
+      }
+
+      .stats{
+        display: flex;
+        flex-flow: row nowrap;
+        overflow: auto;
+        scroll-snap-type: x mandatory;
+        gap: 2%;
+      }
+
+      .stats::-webkit-scrollbar{
+        display: none;
+      }
+        
+      .stat-card {
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        border-left: 4px solid var(--primary);
+        scroll-snap-align: start;
+        min-width: max(23%, 100px);
+        scroll-snap-align: start;
+        background: var(--off-bg);
+        box-shadow: 0px 0px 10px var(--shadow);
+      }
+
+      @media (max-width: 500px){
+        .stat-card {
+          min-width: max(100%, 100px);
+        }
+      }
+
+      .stat-card:nth-child(2){
+        border-color: rgba(63, 255, 73, 1)
+      }.stat-card:nth-child(3){
+        border-color: rgba(186, 113, 255, 1)
+      }.stat-card:nth-child(4){
+        border-color: rgba(255, 47, 47, 1)
+      }.stat-card:nth-child(5){
+        border-color: rgba(72, 249, 255, 1)
+      }
+      
+      .stat-card h3 {
+        font-size: 14px;
+        color: var(--gray);
+        margin-bottom: 10px;
+      }
+      
+      .stat-card .value {
+        font-size: 28px;
+        font-weight: bold;
+        color: var(--dark);
+        text-align: right;
+      }
+      
+      .status {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+        display: inline-block;
+      }
+  .table-container{
+    overflow: hidden;
+  }
+
+  .table-wrapper{
+    overflow: scroll;
+  }
+  .table-wrapper:-webkit-scrollbar{
+    display:none;
+  }
+</style>
+
+    {% include "dashboard/staff_dashboard/components/nav.html" %}
+    <div class="page-wrapper">
+      <div class="page-content">
+        <div class="container-fluid">
+          <div class="container">
+            <div class="header">
+              <h2>Your Tasks</h2>
+            </div>
+
+            {% for task in tasks %}
+            <div class="modal" data-task='task{{task.id}}'>
+              <div class="modal-content">
+                <div class="task-actions">
+                  {% if task.status == 'pending' %}
+                  <div class="start-task">
+                    <h3>Start Task</h3>
+                    <form action="" id="start-task" class='action-form'>  
+                      {% csrf_token %}
+                      <input type="hidden" value='{{task.id}}' name = 'task_id'>
+                      <input type="hidden" name = 'action' value='start-task'>
+
+                      <input type="datetime-local" name="start_date" required >
+                      <button type="submit"><i class='fas fa-check'></i></button>
+                    </form>
+                  </div>
+                  {% endif %}
+
+                  {% if task.status == 'in progress' or task.stauts == 'in_progress' %}
+                  <div id="complete-task">
+                    <h3>Complete Task</h3>
+                    <form action="" id="complete-task" class='action-form'>  
+                      {% csrf_token %}
+                      <input type="hidden" value='{{task.id}}' name = 'task_id'>
+                      <input type="hidden" name = 'action' value='complete-task'>
+
+                      <input type="datetime-local" name="end_date" id="">
+                      <button type="submit"><i class='fas fa-check'></i></button>
+                    </form>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            <script>
+              let action_url ='/api/task-action'
+              let forms = document.querySelectorAll('.action-form')
+              forms.forEach(form => {
+                form.addEventListener('submit', async e => {
+                  e.preventDefault()
+                  let formdata = new FormData(form)
+                  let res = await fetch(action_url, {method:'post', body:formdata})
+                  let data = await res.json()
+                })
+              })
+            </script>
+
+            <div class="stats-container">
+              <div class="stats-track">
+                <div class="stats">
+                  <div class="stat-card">
+                    <h3>Total</h3>
+                    <div class="value">{{tasks.count}}</div>
+                  </div>
+                  <div class="stat-card">
+                    <h3>Completed</h3>
+                    <div class="value">{{completed.count}}</div>
+                  </div>
+                  <div class="stat-card">
+                    <h3>Pending</h3>
+                    <div class="value">{{pending.count}}</div>
+                  </div>
+                  <div class="stat-card">
+                    <h3>Not Completed</h3>
+                    <div class="value">
+                      {{ not_completed.count}}
+                    </div>
+                  </div>
+                  <div class="stat-card">
+                    <h3>Deadline</h3>
+                    <div class="value">{{project.deadline}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+            <div class='table-container'>
+              <div class="table-wrapper">
+                <table class='tasks-table'>
+                  <thead style='background: var(--primary); color: var(--primary-txt)'>
+                    <tr>
+                      <th>#</th>
+                      <th>ID</th>
+                      <th>Task</th>
+                      <th>Assigned By</th>
+                      <th>Deadline</th>
+                      <th>Status</th> 
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for task in tasks %}
+                    <tr id='task{{task.id}}' data-task='task{{task.id}}' class='task task{{task.id}} clickable'>
+                      <td>{{forloop.counter}}</td>
+                      <td>{{task.id}}</td>
+                      <td>{{task.title}}</td>
+                      <td>{{task.assigned_by.name}}</td>
+                      <td>{{task.due_date}}</td>
+                      <td>{{task.status}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/js/main.js"></script>
+
+    
+    <!-- jQuery (load once!) -->
+    <script src="{%static 'dashboard/assets/js/jquery.js'%}"></script>
+
+    <!-- DataTables core -->
+    <script src="{%static 'dashboard/assets/js/dataTables.min.js'%}"></script>
+
+    <!-- Buttons -->
+    <script src="{%static 'dashboard/assets/js/dataTables.buttons.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/jsButtonsHTML5.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/jsButtons.print.min.js'%}"></script>
+
+    <script src="{%static 'dashboard/assets/js/pdfmake.min.js'%}"></script>
+
+    <script src="{%static 'dashboard/assets/js/vsffonts.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/szip.min.js'%}"></script>
+
+    
+    
+  <script>
+    $(document).ready(function() {
+      $('.tasks-table').DataTable({
+        responsive: true,
+        dom: 'Bfrtip',
+        buttons: [
+          'csv', 'excel', 'pdf', 'print'
+        ],
+        pageLength: 10,
+      });
+    });
+  </script>
+
+  <script>
+    
+    let ts = document.querySelectorAll('.task')
+    let ms = Array.from(document.querySelectorAll('.modal'))
+
+
+    window.addEventListener('click', e=> {
+      if (e.target.classList.contains('modal')){
+        ms.forEach(m =>{
+          m.classList.remove('active')
+        })
+      }
+    })
+    
+    
+    Array.from(ts).forEach(t => {
+      t.onclick = () => {
+        let tm = ms.find(m => m.getAttribute('data-task') == t.id)
+        tm.classList.toggle('active')
+      }
+    })
+  </script>
+  </body>
+</html>

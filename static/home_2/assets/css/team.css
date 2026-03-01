@@ -1,0 +1,112 @@
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.6s ease-in-out;
+  overflow: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scroll-marker-group: after;
+  counter-reset: slide;
+}
+
+.carousel-track::-webkit-scrollbar{
+  display: none;
+}
+
+.carousel-slide {
+  min-width: 100%; /* Each slide takes full container width */
+  min-height: 75vh;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 4 employees per row */
+  gap: 2rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  place-content: center;
+  scroll-snap-align: start;
+  counter-increment: slide;
+}
+
+
+.carousel-track::scroll-marker-group{
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  padding-bottom: 2rem;
+}
+
+.carousel-slide::scroll-marker{
+  content: counter(slide);
+  width: 2rem;
+  height: 2rem;
+  
+  background-color: black;  /* light gray */
+  color: white;
+  font-size: 0.9rem;
+  font-weight: bold;
+
+  border-radius: 0.4rem; /* makes them squarish, not round */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+
+  text-align: center;
+}
+
+.carousel-slide::scroll-marker:hover{
+  background: rgb(26, 91, 212);
+}
+
+/* highlight the active marker (the marker for the slide currently in view) */
+.carousel-slide::scroll-marker:target-current {
+  background: #094f91;
+  
+}
+
+.employee{
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  max-width: 400px;
+  max-height: 400px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgb(27, 27, 27, 0.3);
+  background-color: rgb(245, 244, 244);
+  transition: all 0.5s;
+}
+
+.employee h3, .employee p{
+  min-width: 100%;
+  text-align: center;
+}
+
+.employee:hover{
+  animation: float 1.5s ease-in-out infinite;
+  box-shadow: 0px 0px 5px rgb(26, 26, 26);
+  transform: scale(1.05);
+}
+
+.employee img{
+  width: 100%;
+  max-height: 300px;
+  border-radius: 5px 5px 0 0;
+}
+
+
+@keyframes float {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-8px); } /* gentle lift */
+  100% { transform: translateY(0px); }
+}
+
+@media (max-width: 500px){
+  .carousel-slide{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

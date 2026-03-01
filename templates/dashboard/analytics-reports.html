@@ -1,0 +1,322 @@
+<!DOCTYPE html> {%load static%}
+<html lang="en" dir="ltr" data-startbar="light" data-bs-theme="light">
+
+    
+<!-- Mirrored from mannatthemes.com/ TAS -bs5/default/analytics-reports.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Sep 2025 17:58:47 GMT -->
+<head>
+        
+
+        <meta charset="utf-8" />
+                <title>Reports |  TAS - Engineering Firm DashBoard</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+                <meta content="" name="author" />
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+                <!-- App favicon -->
+                <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+       
+        <link rel="stylesheet" href="{%get_static_prefix%}dashboard/assets/libs/jsvectormap/css/jsvectormap.min.css">
+         <!-- App css -->
+         <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+         <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+         <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    
+    <!-- Top Bar Start -->
+    <body>
+        {% include "dashboard/components/nav.html" %}
+
+
+        <div class="page-wrapper">
+
+            <!-- Page Content-->
+            <div class="page-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="page-title-box d-md-flex justify-content-md-between align-items-center">
+                                <h4 class="page-title">Reports</h4>
+                                <div class="">
+                                    <ol class="breadcrumb mb-0">
+                                        <li class="breadcrumb-item"><a href="#"> TAS </a>
+                                        </li><!--end nav-item-->
+                                        <li class="breadcrumb-item"><a href="#">Analytics</a>
+                                        </li><!--end nav-item-->
+                                        <li class="breadcrumb-item active">Reports</li>
+                                    </ol>
+                                </div>                                
+                            </div><!--end page-title-box-->
+                        </div><!--end col-->
+                    </div><!--end row-->
+                    <div class="row">                        
+                        
+                        <div class="col-md-12 col-lg-7">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <div class="col">                      
+                                            <h4 class="card-title">Metrics</h4>                      
+                                        </div><!--end col-->
+                                        <div class="col-auto"> 
+                                            <div class="dropdown">
+                                                <a href="#" class="btn btn-sm btn-outline-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                   This Year<i class="las la-angle-down ms-1"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item" href="#">Today</a>
+                                                    <a class="dropdown-item" href="#">Last Week</a>
+                                                    <a class="dropdown-item" href="#">Last Month</a>
+                                                    <a class="dropdown-item" href="#">This Year</a>
+                                                </div>
+                                            </div>          
+                                        </div><!--end col-->
+                                    </div>  <!--end row-->                                  
+                                </div><!--end card-header-->
+                                <div class="card-body">
+                                    <div id="reports-bar" class="apex-charts pill-bar"></div>
+                                </div><!--end card-body--> 
+                            </div><!--end card-->                             
+                        </div> <!--end col--> 
+                        <div class="col-md-12 col-lg-5">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <div class="col">                      
+                                            <h4 class="card-title">Top Country</h4>                      
+                                        </div><!--end col-->
+                                    </div>  <!--end row-->                                  
+                                </div><!--end card-header-->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="d-flex align-items-center py-3">
+                                                <img src="{%get_static_prefix%}dashboard/assets/images/flags/us_flag.jpg" class="thumb-sm align-self-center rounded-circle" alt="...">
+                                                <div class="flex-grow-1 ms-2">
+                                                    <h5 class="m-0">35,365</h5>
+                                                    <p class="text-muted mb-0">USA</p>
+                                                </div><!--end media-body-->
+                                            </div><!--end media--> 
+                                        </div><!--end col-->
+                                        <div class="col-md-4">
+                                            <div class="d-flex align-items-center py-3">
+                                                <img src="{%get_static_prefix%}dashboard/assets/images/flags/germany_flag.jpg" class="thumb-sm align-self-center rounded-circle" alt="...">
+                                                <div class="flex-grow-1 ms-2">
+                                                    <h5 class="m-0">24,865</h5>
+                                                    <p class="text-muted mb-0">Germany</p>
+                                                </div><!--end media-body-->
+                                            </div><!--end media-->
+                                        </div><!--end col-->
+                                        <div class="col-md-4">
+                                            <div class="d-flex align-items-center py-3">
+                                                <img src="{%get_static_prefix%}dashboard/assets/images/flags/spain_flag.jpg" class="thumb-sm align-self-center rounded-circle" alt="...">
+                                                <div class="flex-grow-1 ms-2">
+                                                    <h5 class="m-0">18,369</h5>
+                                                    <p class="text-muted mb-0">Spain</p>
+                                                </div><!--end media-body-->
+                                            </div><!--end media-->
+                                        </div><!--end col-->
+                                    </div>  <!--end row-->
+                                    <div id="map_2" class style="height:300px"></div>                                    
+                                </div><!--end card-body--> 
+                            </div><!--end card-->                             
+                        </div> <!--end col-->           
+                    </div><!--end row-->  
+                    
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <div class="col">                      
+                                            <h4 class="card-title">Visits Details</h4>                      
+                                        </div><!--end col-->
+                                    </div>  <!--end row-->                                  
+                                </div><!--end card-header-->
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <thead class="table-light">
+                                              <tr>
+                                                <th>URL</th>
+                                                <th class="text-end">Views</th>
+                                                <th class="text-end">Uniques</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>htpps:/</td>
+                                                    <td class="text-end">9.2k</td>
+                                                    <td class="text-end">7.9k</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>.com/dashboard</td>
+                                                    <td class="text-end">7.7k</td>
+                                                    <td class="text-end">6.2k</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>.com/ecommerce-index</td>
+                                                    <td class="text-end">6.8k</td>
+                                                    <td class="text-end">5.5k</td>
+                                                </tr> 
+                                                <tr>
+                                                    <td>.com/apps/projects-overview</td>
+                                                    <td class="text-end">5k</td>
+                                                    <td class="text-end">4.9k</td>
+                                                </tr>  
+                                                <tr>
+                                                    <td>.com/blog/crypto/exchange</td>
+                                                    <td class="text-end">4.3k</td>
+                                                    <td class="text-end">3.3k</td>
+                                                </tr>                                                                                    
+                                            </tbody>
+                                          </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- end col -->
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <div class="col">                      
+                                            <h4 class="card-title">By Social Media</h4>                      
+                                        </div><!--end col-->
+                                    </div>  <!--end row-->                                  
+                                </div><!--end card-header-->
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <thead class="table-light">
+                                              <tr>
+                                                <th>Source</th>
+                                                <th class="text-end">Views</th>
+                                                <th class="text-end">Uniques</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Twitter</td>
+                                                    <td class="text-end">9.2k</td>
+                                                    <td class="text-end">7.9k</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Facebook</td>
+                                                    <td class="text-end">7.7k</td>
+                                                    <td class="text-end">6.2k</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Instagram</td>
+                                                    <td class="text-end">6.8k</td>
+                                                    <td class="text-end">5.5k</td>
+                                                </tr> 
+                                                <tr>
+                                                    <td>LinkedIn</td>
+                                                    <td class="text-end">5k</td>
+                                                    <td class="text-end">4.9k</td>
+                                                </tr>  
+                                                <tr>
+                                                    <td>WhatsApp</td>
+                                                    <td class="text-end">4.3k</td>
+                                                    <td class="text-end">3.3k</td>
+                                                </tr>                                                                                    
+                                            </tbody>
+                                          </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- end col -->
+                    </div> <!-- end row -->                                     
+                </div><!-- container -->
+                
+                <!--Start Rightbar-->
+                <!--Start Rightbar/offcanvas-->
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="Appearance" aria-labelledby="AppearanceLabel">
+                    <div class="offcanvas-header border-bottom justify-content-between">
+                      <h5 class="m-0 font-14" id="AppearanceLabel">Appearance</h5>
+                      <button type="button" class="btn-close text-reset p-0 m-0 align-self-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">  
+                        <h6>Account Settings</h6>
+                        <div class="p-2 text-start mt-3">
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch1">
+                                <label class="form-check-label" for="settings-switch1">Auto updates</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch2" checked>
+                                <label class="form-check-label" for="settings-switch2">Location Permission</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="settings-switch3">
+                                <label class="form-check-label" for="settings-switch3">Show offline Contacts</label>
+                            </div><!--end form-switch-->
+                        </div><!--end /div-->
+                        <h6>General Settings</h6>
+                        <div class="p-2 text-start mt-3">
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch4">
+                                <label class="form-check-label" for="settings-switch4">Show me Online</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch5" checked>
+                                <label class="form-check-label" for="settings-switch5">Status visible to all</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="settings-switch6">
+                                <label class="form-check-label" for="settings-switch6">Notifications Popup</label>
+                            </div><!--end form-switch-->
+                        </div><!--end /div-->               
+                    </div><!--end offcanvas-body-->
+                </div>
+                <!--end Rightbar/offcanvas-->
+                <!--end Rightbar-->
+                <!--Start Footer-->
+                
+                <footer class="footer text-center text-sm-start d-print-none">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card mb-0 border-bottom-0 rounded-bottom-0">
+                                    <div class="card-body">
+                                        <p class="text-muted mb-0">
+                                            ©
+                                            <script> document.write(new Date().getFullYear()) </script>
+                                             TAS 
+                                            <span
+                                                class="text-muted d-none d-sm-inline-block float-end">
+                                                Design with
+                                                <i class="iconoir-heart-solid text-danger align-middle"></i>
+                                                by Mannatthemes</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                
+                <!--end footer-->
+            </div>
+            <!-- end page content -->
+        </div>
+        <!-- end page-wrapper -->
+
+        <!-- Javascript  -->  
+        <!-- vendor js -->
+        
+        <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/libs/apexcharts/apexcharts.min.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/libs/jsvectormap/js/jsvectormap.min.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/libs/jsvectormap/maps/world.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/js/pages/analytics-reports.init.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+    </body>
+    <!--end body-->
+
+<!-- Mirrored from mannatthemes.com/ TAS -bs5/default/analytics-reports.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Sep 2025 17:58:49 GMT -->
+</html>

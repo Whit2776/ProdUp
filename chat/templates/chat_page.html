@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Chat |  TAS - Engineering Firm DashBoard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+    <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    
+    <link href="{% static 'chat.css' %}" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="slide-in">
+      <div class="delete-messages">
+
+      </div>
+      <form action="" class="slide-in-form">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+
+    <div class="loader">
+
+    </div>
+
+    <style>
+      .loader{
+        width: 40px;
+        height: 40px;
+        border: 5px solid white;
+        border-top-color: red;
+        border-radius: 50%;
+        animation: spin 3s infinite;
+        position: fixed;
+        top: 0;
+        left: 50%;
+        z-index: 3;
+        display: none;
+      }
+
+      @keyframes spin {
+        0%{
+          transform: rotate(0);
+        }
+        50%{
+          transform: rotate(180deg);
+        }
+        100%{
+          transform: rotate(360deg);
+        }
+      }
+
+      .slide-in{
+        position: fixed;
+        z-index: 3;
+        right: -40%;
+        top: 15%;
+        height: 60%;
+        width: 25%;
+        display: flex;
+        flex-flow: column nowrap;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+        transition: all 0.8s linear;
+        background-color: rgba(239, 251, 255, 1);
+      }
+
+      .slide-in.active{
+        right: 2.5%;
+      }
+
+      .slide-in .delete-messages{
+        width: 100%;
+        height: 80%;
+        overflow-y: auto;
+      }
+
+      .slide-in form{
+        display: grid;
+        place-content: center;
+        height: 20%;
+      }
+
+      .slide-in form button{
+        padding: 0.75rem;
+        color: white;
+        background: red;
+        border-radius: 10px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.28);
+        border: none;
+      }
+
+      .delete-messages{
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 0.5rem;
+        padding: 0.5rem;
+      }
+
+      .delete-message{
+        padding: 0.75rem;
+        color: rgb(41, 41, 41);
+        background-color: rgb(255, 255, 255);
+        border-radius: 10px;
+        box-shadow: 2px 3px 50px rgba(0, 0, 0, 0.1), 3px 2px 50px rgba(255, 255, 255, 0.1);
+      }
+    </style>
+    <!--MODALS-->
+
+    <div id = 'view-files-modal' class="modal">
+      <div class="cards-container">
+        <div class="cards">
+          
+        </div>
+      </div>
+    </div>
+
+    <style>
+      
+      .cards-container {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        max-width: 1000px;
+        margin: auto;
+      }
+
+      .cards{
+        display: flex;
+        flex-flow: row nowrap;
+        overflow: auto;
+        scroll-snap-type: x mandatory;
+      }
+
+      
+      .cards::-webkit-scrollbar{
+        display: none;
+      }
+
+      .card{
+        min-width: 100%;
+        scroll-snap-align: start;
+        background: transparent;
+        display: grid;
+        place-content: center;
+        border: none;
+      }
+
+      .card img{
+        height: auto;
+        max-width: 500px;
+      }
+
+    </style>
+
+    <div id = 'forward-message-modal' class="modal">
+      <div class="forward-message-container">
+        <div class="forward-message-content">
+          <div class="header">
+            <div><input type="text" place-holder='Search....' class='search'></div>
+          </div>
+          <div class="chats">
+            {% for chat in chats %}          
+              <div class="chat-container">
+                <div class="hidden link">{{chat.link}}</div>
+                <div class="chat-el">
+                  <img src="{{chat.other_user.picture.url}}" alt="">
+                  <div>
+                    <span class='name'>{{chat.other_user.name}}</span>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          <form action="" class="forward-message-form">
+            <input type="hidden" name = 'type' value = 'forward'>
+            
+            <button type="submit"></button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .modal{
+        position: fixed;
+        z-index: 3;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(2px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s linear;
+        top: 100%;
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .modal.active{
+        top: 0;
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .forward-message-container{
+        width: max(25%, 250px);
+        height: max(47%, 330px);
+        background: white;
+        border-radius: 10px;
+        box-shadow: 2px 3px 15px rgba(57, 57, 57, 0.5), -2px -3px 15px rgba(113, 192, 231, 0.5);
+      }
+
+      .forward-message-container .header{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-flow: column nowrap;
+        z-index: 2;
+      }
+
+      .header:after{
+        content: '';
+        width: 100%;
+        height: 2px;
+        background: rgba(80, 80, 80, 0.3);
+        filter: blur(2px);
+        position: relative;
+        top: 0.5px;
+      }
+
+      .forward-message-content{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-flow: column nowrap;
+      }
+
+      .chats{
+        width: 100%;
+        height: 80%;
+        overflow-y: auto;
+        display: flex;
+        flex-flow: column nowrap;
+      }
+
+      .chat-container{
+        width: 100%;
+        height: 25%;
+        display: flex;
+        align-items: center;
+        background: white;
+        cursor: pointer;
+      }
+
+      .chat-container{
+        border-bottom: 1.5px solid rgba(65, 64, 64, 0.2);
+      }
+
+      .chat-el{
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-flow: row nowrap;
+        align-items: center;
+        padding: 0.5rem;
+      }
+
+      .chat-el img{
+        width: 40px;
+        height: 40px;
+        border: 0.25px solid rgba(27, 255, 221, 0);
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .chat-el div{
+        font-family: monospace;
+      }
+
+      .chat-container.selected{
+        background: rgba(1, 106, 167, 1);
+      }
+
+      .chat-container.selected .chat-el{
+        backdrop-filter: blur(5px);
+      }
+
+    </style>
+
+    <div class="hidden">
+      <div class="d-flex other-user mes" >
+        <div class="hidden id"></div>
+        <div class="pop-up-wrapper hidden">
+          <div class="pop-up">
+            <ul class="pop-up-list">
+              <li><a href="">Reply</a></li>
+              <li><a href="">Forward</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="ms-1 chat-box w-100">
+          <div class="user-chat">
+            <div class="files-container">
+              <div class="files">
+
+              </div>
+            </div>
+            <div class="message"> <i class="fas fa-arrow-left reply-icon"></i> <div class="actual"> </div> <span class="text-muted"></span> <svg class='icon forward-icon' xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="m640-280-57-56 184-184-184-184 57-56 240 240-240 240ZM80-200v-160q0-83 58.5-141.5T280-560h247L383-704l57-56 240 240-240 240-57-56 144-144H280q-50 0-85 35t-35 85v160H80Z"/></svg></div>
+          </div>
+          <div class="chat-time date">yesterday</div>
+          <div class="state"></div>
+        </div> 
+      </div>  
+    </div>
+
+    <div class="hidden">
+      <div class="d-flex flex-row-reverse current-user mes" >
+        <div class="hidden id"></div>
+        <div class="pop-up-wrapper hidden">
+          <div class="pop-up">
+            <ul class="pop-up-list">
+              <li><a href="">Reply</a></li>
+              <li><a href="">Edit</a></li>
+              <li><a href="">Forward</a></li>
+              <li><a href="">Delete</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="me-1 chat-box w-100 reverse">
+          <div class="user-chat">
+            
+            <div class="files-container">
+              <div class="files">
+                
+              </div>
+            </div>
+
+            <div class="message"> <i class="fas fa-arrow-left reply-icon"></i> <div class="actual"> </div> <span class="text-muted"></span> <svg class='icon forward-icon' xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="m640-280-57-56 184-184-184-184 57-56 240 240-240 240ZM80-200v-160q0-83 58.5-141.5T280-560h247L383-704l57-56 240 240-240 240-57-56 144-144H280q-50 0-85 35t-35 85v160H80Z"/></svg></div>
+            
+          </div>
+          <div class="chat-time date">12:35pm</div>
+          <div class="state"></div>
+        </div>
+      </div>
+    </div>  
+    
+    
+    <div id ='chat-link' class='hidden'>{{chat.link}}</div>
+    <div class="chat-box-right" style='margin: 0; display: flex; flex-flow: column nowrap; height: 97vh;'>
+      <div class="border-bottom" style = 'display: flex; height: 10%; justify-content: space-between; align-items: center; padding: 0.25rem 0.5rem;'>
+        <a href="#" class="d-flex align-self-center">
+          <div class="flex-shrink-0">
+              <img src="{{chat.other_user.picture.url}}" alt="user" class="rounded-circle thumb-lg">
+          </div>
+          <div class="flex-grow-1 ms-2 align-self-center">
+            <div>
+              <h6 class="my-0 fw-medium text-dark fs-14">{{chat.other_user.name}}</h6>
+              <p class="text-muted mb-0">Last seen: 2 hours ago</p>
+            </div>
+          </div>
+        </a>
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <a href="#"><i class="icon iconoir-phone fs-22"></i></a>
+            <a href="#"><i class="icon iconoir-video-camera fs-22"></i></a>
+            <a href="#" class='hidden'><i class="icon iconoir-trash fs-22 delete-multiple"></i></a>
+
+            <a href="#" class="text-muted"><i class="iconoir-menu-scale fs-22"></i></a>                               
+        </div>
+      </div>
+
+      <div class="chat-body" style = 'height: 100%;'>
+
+        <div class="chat-detail messages-container">
+
+        </div>  <!-- end chat-detail --> 
+
+      </div><!-- end chat-body -->
+      
+      <div class="chat-footer border-top">
+        <div class="files-preview-container">
+          <div class="files-preview">
+
+          </div>
+
+          <div class="close-btn-container">
+            <span class='close-btn'></span>
+          </div>
+        </div>
+        <div class="row" style = 'display: flex; height: 15%;'>            
+          <form action="" id ='post-message' class='row'>  
+            {% csrf_token %}
+            <input type = 'hidden' value = 'normal' name='type' id='message-type'>
+            <input type = 'hidden' name='reply_to_id' id='reply-to-id'>
+
+            <div class="col-12 col-md-8">
+              <textarea type="text" class="form-control" placeholder="Type something here..." name = 'message'></textarea>
+            </div><!-- col-8 -->
+            <div class="col-4 text-end">
+              <div class="d-none d-sm-inline-block chat-features">
+                <a id='-icon' class='clickable'><i class="iconoir-camera"></i></a>
+                <a id='add-files-icon' class='clickable'><i class="iconoir-attachment"></i></a>
+                <a id='-icon' class='clickable'><i class="iconoir-microphone"></i></a>
+                <a class="text-primary send clickable"><i class="iconoir-send-solid"></i></a>
+                <button type="submit" class="submit-form hidden"></button>
+              </div>
+            <!--HIDDEN INPUTS-->
+            <input type="file" multiple class = 'hidden' name='files' id = 'add-files-input' accept = */*>
+            </div><!-- end col -->
+          </form> 
+        </div><!-- end row -->
+      </div><!-- end chat-footer -->
+    </div>
+    
+    <div id="id" class='hidden'>{{employee.id}}</div>
+  </body>
+
+  <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+  <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+  <script src="{% static 'chat.js' %}"></script>
+  
+</html>

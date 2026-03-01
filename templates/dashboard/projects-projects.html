@@ -1,0 +1,244 @@
+<!DOCTYPE html> {%load static%}
+<html lang="en" dir="ltr" data-startbar="light" data-bs-theme="light">
+
+    
+<!-- Mirrored from mannatthemes.com/ TAS -bs5/default/projects-projects.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Sep 2025 17:58:42 GMT -->
+<head>
+        
+
+        <meta charset="utf-8" />
+                <title>Projects |  TAS - Engineering Firm DashBoard</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+                <meta content="" name="author" />
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+                <!-- App favicon -->
+                <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+       
+         <!-- App css -->
+         <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+         <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+         <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    
+    <!-- Top Bar Start -->
+    <body>
+        {% include "dashboard/components/nav.html" %}
+
+
+        <div class="page-wrapper">
+
+            <!-- Page Content-->
+            <div class="page-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="page-title-box d-md-flex justify-content-md-between align-items-center">
+                                <h4 class="page-title">Projects</h4>
+                                <div class="">
+                                    <ol class="breadcrumb mb-0">
+                                        <li class="breadcrumb-item"><a href="#"> TAS </a>
+                                        </li><!--end nav-item-->
+                                        <li class="breadcrumb-item"><a href="#">Projects</a>
+                                        </li><!--end nav-item-->
+                                        <li class="breadcrumb-item active">Projects</li>
+                                    </ol>
+                                </div>                                
+                            </div><!--end page-title-box-->
+                        </div><!--end col-->
+                    </div><!--end row-->
+                    
+                    
+                    <div class="row">
+                        {% for project in projects %}
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-body"> 
+                                    <div class="position-absolute top-0 start-0 translate-middle"><i class="fas fa-circle text-success"></i></div>    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-shrink-0">
+                                                    <img src="{%get_media_prefix%}{{project.logo}}" alt="" class="thumb-lg rounded-circle"> 
+                                                </div>
+                                                <div class="flex-grow-1 ms-2 text-truncate">
+                                                    <h4 class="m-0 fw-semibold text-dark fs-16"><a href="{% url 'project' project.id %}">{{project.title}}</a></h4>   
+                                                    <p class="text-muted mb-0 fs-13"><span class="text-dark">Client : </span>{{project.client.name}}</p> 
+                                                </div><!--end media-body-->
+                                            </div>
+                                        </div><!--end col-->
+                                        <div class="col-md-6 text-lg-end">
+                                            <h6 class="fw-semibold m-0">Start : <span class="text-muted fw-normal"> {{project.started}}</span></h6>
+                                            <h6 class="fw-semibold  mb-0 mt-2">Deadline : <span class="text-muted fw-normal"> {{project.deadline}}</span></h6>
+                                        </div><!--end col-->
+                                    </div><!--end row-->
+                                    <div class="mt-3">                                                                                      
+                                        <div class="d-flex justify-content-between">
+                                            <h6 class="fw-semibold m-0 align-self-center">All Hours : <span class="text-muted fw-normal"> 530 / 281:30</span></h6>
+                                            <h6 class="fw-semibold">Today : <span class="text-muted fw-normal"> 2:45</span><span class="badge bg-soft-pink fw-semibold ms-2"><i class="far fa-fw fa-clock"></i> {{project.days_left}}</span></h6>
+                                        </div>
+                                        <p class="text-muted mb-1">{{project.description}}
+                                        </p>
+                                        <p class="text-muted text-end mb-1">{{project.progress}}% Complete</p>
+                                        <div class="progress mb-3" style="height: 3px;">
+                                            <div class="progress-bar bg-primary" role="progressbar" style="width: {{project.progress}}%;" aria-valuenow="{{project.progress}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        
+                                        <div class="d-flex justify-content-between">
+                                            <div class="img-group d-flex justify-content-center">
+                                                <a class="user-avatar position-relative d-inline-block" href="#">
+                                                    <img src="{%get_static_prefix%}dashboard/assets/images/users/avatar-1.jpg" alt="avatar" class="thumb-md shadow-sm rounded-circle">
+                                                </a>
+                                                <a class="user-avatar position-relative d-inline-block ms-n2" href="#">
+                                                    <img src="{%get_static_prefix%}dashboard/assets/images/users/avatar-4.jpg" alt="avatar" class="thumb-md shadow-sm rounded-circle">
+                                                </a>
+                                                <a class="user-avatar position-relative d-inline-block ms-n2" href="#">
+                                                    <img src="{%get_static_prefix%}dashboard/assets/images/users/avatar-6.jpg" alt="avatar" class="thumb-md shadow-sm rounded-circle">
+                                                </a>
+                                                <a href="#" class="user-avatar position-relative d-inline-block ms-1">
+                                                    <span class="thumb-md shadow-sm justify-content-center d-flex align-items-center bg-light rounded-circle fw-semibold fs-6">+6</span>
+                                                </a>                    
+                                            </div>
+                                            <ul class="list-inline mb-0 align-self-center">                                                                    
+                                                <li class="list-item d-inline-block me-2">
+                                                    <a class="" href="#">
+                                                        <i class="fa-solid fa-list-ul text-success fs-15"></i>
+                                                        <span class="text-muted fw-bold">{{project.progress}}/100</span>
+                                                    </a>
+                                                </li>
+                                                <li class="list-item d-inline-block">
+                                                    <a class="" href="#">
+                                                        <i class="fa-regular fa-message text-primary fs-15"></i>
+                                                        <span class="text-muted fw-bold">3</span>
+                                                    </a>                                                                               
+                                                </li>
+                                                <li class="list-item d-inline-block">
+                                                    <a class="ms-2" href="#">
+                                                        <i class="fa-solid fa-pencil text-muted fs-18"></i>
+                                                    </a>                                                                               
+                                                </li>
+                                                <li class="list-item d-inline-block">
+                                                    <a class="" href="#">
+                                                        <i class="fa-regular fa-trash-can text-muted fs-18"></i>
+                                                    </a>                                                                               
+                                                </li>
+                                            </ul>
+                                        </div>                                        
+                                    </div><!--end task-box-->  
+                                    <hr class="hr-dashed">
+                                    <div class="row mt-3">                                                
+                                        <div class="col-lg">
+                                            <div class="d-flex">
+                                                <i class="iconoir-headset align-self-center text-secondary fs-24"></i> 
+                                                <div class="d-block align-self-center ms-2">
+                                                    <h6 class="m-0">Last Meeting</h6>
+                                                    <p class="mb-0 text-muted">28 Oct 2020 / 10:30AM - 12:30PM</p>
+                                                </div>
+                                            </div>
+                                        </div><!--end col-->
+                                        <div class="col-lg-auto">
+                                            <div class="d-flex">
+                                                <i class="iconoir-headset align-self-center text-secondary fs-24"></i>
+                                                <div class="d-block align-self-center ms-2">
+                                                    <h6 class="m-0">Next Meeting</h6>
+                                                    <p class="mb-0 text-muted">06 Nov 2020 / 10:30AM - 12:30PM</p>
+                                                </div>
+                                            </div>
+                                        </div><!--end col-->
+                                    </div><!--end row--> 
+                                </div><!--end card-body-->                                
+                            </div><!--end card-->
+                        </div><!--end col-->  
+                    {% endfor %}                       
+                    </div><!--end row-->      
+                                                      
+                </div><!-- container -->
+                
+                <!--Start Rightbar-->
+                <!--Start Rightbar/offcanvas-->
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="Appearance" aria-labelledby="AppearanceLabel">
+                    <div class="offcanvas-header border-bottom justify-content-between">
+                      <h5 class="m-0 font-14" id="AppearanceLabel">Appearance</h5>
+                      <button type="button" class="btn-close text-reset p-0 m-0 align-self-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">  
+                        <h6>Account Settings</h6>
+                        <div class="p-2 text-start mt-3">
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch1">
+                                <label class="form-check-label" for="settings-switch1">Auto updates</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch2" checked>
+                                <label class="form-check-label" for="settings-switch2">Location Permission</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="settings-switch3">
+                                <label class="form-check-label" for="settings-switch3">Show offline Contacts</label>
+                            </div><!--end form-switch-->
+                        </div><!--end /div-->
+                        <h6>General Settings</h6>
+                        <div class="p-2 text-start mt-3">
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch4">
+                                <label class="form-check-label" for="settings-switch4">Show me Online</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch5" checked>
+                                <label class="form-check-label" for="settings-switch5">Status visible to all</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="settings-switch6">
+                                <label class="form-check-label" for="settings-switch6">Notifications Popup</label>
+                            </div><!--end form-switch-->
+                        </div><!--end /div-->               
+                    </div><!--end offcanvas-body-->
+                </div>
+                <!--end Rightbar/offcanvas-->
+                <!--end Rightbar-->
+                <!--Start Footer-->
+                
+                <footer class="footer text-center text-sm-start d-print-none">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card mb-0 border-bottom-0 rounded-bottom-0">
+                                    <div class="card-body">
+                                        <p class="text-muted mb-0">
+                                            ©
+                                            <script> document.write(new Date().getFullYear()) </script>
+                                             TAS 
+                                            <span
+                                                class="text-muted d-none d-sm-inline-block float-end">
+                                                Design with
+                                                <i class="iconoir-heart-solid text-danger align-middle"></i>
+                                                by Mannatthemes</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                
+                <!--end footer-->
+            </div>
+            <!-- end page content -->
+        </div>
+        <!-- end page-wrapper -->
+
+        <!-- Javascript  -->  
+        <!-- vendor js -->
+        
+        <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+    </body>
+    <!--end body-->
+
+<!-- Mirrored from mannatthemes.com/ TAS -bs5/default/projects-projects.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Sep 2025 17:58:43 GMT -->
+</html>

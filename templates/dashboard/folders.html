@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folders</title>
+    <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+    <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    {% include "dashboard/components/nav.html" %}
+    <div class="page-wrapper">
+      <div class="page-content">
+        <div class="container-fluid">
+          <style>
+            /* ===== GLOBAL ===== */
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: .3s;
+}
+
+
+/* Light mode variables */
+:root{
+  --bg: #f7f9ff;
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-border: rgba(255, 255, 255, 0.45);
+  --text: #2c2c35;
+  --accent: #7d5fff;
+  --shadow: 0 4px 20px rgba(0,0,0,0.07);
+}
+
+/* Dark mode */
+.dark {
+  --bg: #111216;
+  --card-bg: rgba(25, 25, 29, 0.6);
+  --card-border: rgba(255,255,255,0.08);
+  --text: #eee;
+  --shadow: 0 4px 20px rgba(0,0,0,0.55);
+}
+
+
+/* ===== WRAPPER ===== */
+.folders-container {
+  display: flex;
+  justify-content: center;
+  padding: 50px 20px;
+}
+
+.folders {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 25px;
+  width: 90%;
+  max-width: 1400px;
+}
+
+/* ===== CARD ===== */
+.card {
+  backdrop-filter: blur(15px);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 7px 28px rgba(125, 95, 255, 0.3);
+  border-color: var(--accent);
+}
+
+/* ===== CONTENT ===== */
+.folder {
+  display: flex;
+  flex-direction: column;
+}
+
+.folder a {
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: none;
+  margin-bottom: 8px;
+  color: var(--text);
+  transition: all .2s ease;
+  border-bottom: 2px dashed rgba(0, 0, 0, 0.2)
+}
+
+.folder a:hover {
+  color: var(--accent);
+  border-bottom: 2px dashed rgba(125, 95, 255, 0.3);
+}
+
+.folder p {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 12px;
+}
+
+.folder span {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  opacity: 0.9;
+}
+
+          </style>
+
+          <div class="folders-container">
+            <div class="folders">
+              {% for folder in folders %}
+              <div class="card">
+                <div class="folder">
+                  <a href="{% url 'folder' folder.slug%}">📁 {{folder.name}}</a>
+                  <p>{{folder.description}}</p>
+                  <span>{{folder.files.all.count}}</span>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/js/main.js"></script>
+
+    
+    <!-- jQuery (load once!) -->
+    <script src="{%static 'dashboard/assets/js/jquery.js'%}"></script>
+
+    <!-- DataTables core -->
+    <script src="{%static 'dashboard/assets/js/dataTables.min.js'%}"></script>
+
+    <!-- Buttons -->
+    <script src="{%static 'dashboard/assets/js/dataTables.buttons.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/jsButtonsHTML5.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/jsButtons.print.min.js'%}"></script>
+
+    <script src="{%static 'dashboard/assets/js/pdfmake.min.js'%}"></script>
+
+    <script src="{%static 'dashboard/assets/js/vsffonts.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/szip.min.js'%}"></script>
+  </body>
+</html>

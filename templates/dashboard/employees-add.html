@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAS DashBoard | Add Employees</title>
+    
+    <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+    <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+  
+    <style>
+      :root{
+        --bg: #d6e4f1ff;
+        --bgg: #f8f9fa;
+        --text: #212529;
+        --primary: #0d6efd;
+        --secondary: #22c55e;
+        --accent: #f59e0b;
+        --button-hover: #0b5ed7;
+        --box-shadow: rgba(0,0,0,0.2);
+        --title-border: #2954ccff;
+      }
+
+      
+      .dark{
+        --bg: #050d14ff;
+        --bgg: #1a1a1aff;
+        --text: #dbdbdbff;
+        --primary: #ffffffff;
+        --secondary: #063172ff;
+        --accent: #fffb00ff;
+        --button-hover: #0b5ed7;
+        --box-shadow: rgba(255, 255, 255, 0.2);
+        --title-border: #391099ff;
+      }
+      
+      body {
+        background-color: var(--bg);
+        color: var(--text);
+      }
+
+      h4 {
+        border-left: 4px solid var(--title-border);
+        padding-left: 8px;
+        margin-top: 30px;
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .btn-custom {
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        transition: 0.3s;
+      }
+
+      .btn-custom:hover {
+        background: #0b5ed7;
+      }
+
+      .modal-header {
+        background-color: var(--primary);
+        color: #fff;
+      }
+
+      .modal-footer .btn {
+        border-radius: 8px;
+      }
+
+      .hidden{
+        display:none;
+      }
+
+      
+      .floating-alert {
+        position: fixed;
+        top: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        color: var(--bg);
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        border-radius: 16px;
+        padding: 20px 24px;
+        width: 90%;
+        max-width: 480px;
+        z-index: 9999;
+        backdrop-filter: blur(12px);
+        animation: slideDown 0.5s ease-out, fadeOut 0.5s ease-in 29.5s forwards;
+      }
+
+      .floating-alert h2 {
+        color: var(--secondary);
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .floating-alert h2::before {
+        content: "✅";
+      }
+
+      .floating-alert p {
+        margin: 6px 0;
+        line-height: 1.4;
+      }
+
+      .floating-alert code {
+        background-color: #1e293b;
+        padding: 6px 10px;
+        border-radius: 8px;
+        font-family: 'Fira Code', monospace;
+        color: #10b981;
+        display: inline-block;
+      }
+
+      .floating-alert small {
+        display: block;
+        color: #94a3b8;
+        margin-top: 8px;
+        font-size: 0.85rem;
+      }
+
+      .floating-alert .countdown {
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      /* Animations */
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translate(-50%, -20px);
+        }
+        to {
+          opacity: 1;
+          transform: translate(-50%, 0);
+        }
+      }
+
+      @keyframes fadeOut {
+        to {
+          opacity: 0;
+          transform: translate(-50%, -10px);
+        }
+      }
+
+      .add-employee-cont{
+        width: 75%;
+        justify-self: center;
+        background-color: var(--bgg);
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: 0px 0px 6px var(--box-shadow) ; 
+        margin: 0.5rem;
+      }
+
+      .add-employee-cont input:focus,
+      .add-employee-cont textarea:focus,{
+        box-shadow:  none;
+        outline: none;
+        color: var(--bg);
+        background: var(--text);
+      }
+
+      .add-employee-cont select{
+        background: var(--bg);
+      }
+
+      .preview{
+        width: clamp(75px, 25vh, 50vw);
+        height: clamp(75px, 25vh, 50vh);
+        border: 1.5px dashed var(--text);
+        background: var(--bg);
+        position: relative;
+        justify-self: center;
+        border-radius: 50%;
+        display: flex;
+      }
+      
+      .preview img{
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      #plus{
+        display: flex;
+        position: absolute;
+        bottom: 0;
+        left: 95%;
+        width: 30px;
+        height: 30px;
+        justify-content: center;
+      }
+
+      #plus::before, 
+      #plus::after{
+        content: '';
+        width: 3px;
+        height: 30px;
+        background: var(--text);
+      }
+
+      #plus::before{
+        transform: translateX(1.85px) rotate(90deg)
+      }
+
+      #plus:hover{
+        cursor: pointer;
+      }
+
+      .clickable{
+        cursor: pointer;
+      }
+
+    </style>
+  </head>
+<body>
+
+  {% include "dashboard/components/nav.html" %}
+  <div class="page-wrapper">
+    <div class="page-content">
+      <div class="container-fluid">
+        <div class="add-employee-cont container py-4">
+
+          <h2 class="text-center mb-4">Create New Employee</h2>
+
+          <form class="add-employee-form" method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+            <div class="preview">
+              <img src="{% static 'dashboard/assets/images/anon-display.jpg' %}" class='clickable preview-img' alt="">
+              <span id="plus" class='add-display-picture'>
+
+              </span>
+            </div>
+
+            <input type="file" class = 'hidden add-display-picture-input' id ='picture' name='picture' accept='image/*' >
+            <!-- Personal Details -->
+            <h4>Personal Details</h4>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">First Name</label>
+                <input required type="text" name="first_name" class="form-control">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Other Names</label>
+                <input type="text" name="other_names" class="form-control">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Last Name</label>
+                <input required type="text" name="last_name" class="form-control">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Gender</label>
+                <select name="gender" class="form-select">
+                  <option value="">--Select--</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Date of Birth</label>
+                <input required type="date" name="date_of_birth" id ='' class="form-control dob">
+              </div>
+              <div class="col-6">
+                <label class="form-label">Location</label>
+                <textarea name="location" class="form-control" rows="2"></textarea>
+              </div>
+              <div class="col-6">
+                <label class="form-label">House Code</label>
+                <textarea name="house_code" class="form-control" rows="2"></textarea>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Marital Status</label>
+                <select name="marital_status" class="form-select">
+                  <option value="">--Select--</option>
+                  <option value="married">Married</option>
+                  <option value="single">Single</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Father Details -->
+            <h4>Father Details</h4>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">First Name</label>
+                <input type="text" name="father_first_name" class="form-control">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Last Name</label>
+                <input type="text" name="father_last_name" class="form-control">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Date of Birth</label>
+                <input type="date" name="father_date_of_birth" class="form-control dob">
+              </div>
+              <div class="col-6">
+                <label class="form-label">Location</label>
+                <textarea name="father_location" class="form-control"></textarea>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Marital Status</label>
+                <select name="father_marital_status" class="form-select">
+                  <option value="">--Select--</option>
+                  <option value="married">Married</option>
+                  <option value="divorced">Divorced</option>
+                  <option value="separated">Separated</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Living Status</label>
+                <select name="father_living_status" class="form-select">
+                  <option value="">--Select--</option>
+                  <option value="alive">Alive</option>
+                  <option value="dead">Dead</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Mother Details -->
+            <h4>Mother Details</h4>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">First Name</label>
+                <input type="text" name="mother_first_name" class="form-control">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Last Name</label>
+                <input type="text" name="mother_last_name" class="form-control">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Date of Birth</label>
+                <input type="date" name="mother_date_of_birth" class="form-control dob">
+              </div>
+              <div class="col-6">
+                <label class="form-label">Location</label>
+                <textarea name="mother_location" class="form-control"></textarea>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Marital Status</label>
+                <select name="mother_marital_status" class="form-select">
+                  <option value="">--Select--</option>
+                  <option value="married">Married</option>
+                  <option value="divorced">Divorced</option>
+                  <option value="separated">Separated</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Living Status</label>
+                <select name="mother_living_status" class="form-select">
+                  <option value="">--Select--</option>
+                  <option value="alive">Alive</option>
+                  <option value="dead">Dead</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Contacts -->
+            <h4>Contact Info</h4>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" name="phone_number" class="form-control">
+              </div>
+            </div>
+
+            <!-- Company -->
+            <h4>Company Details</h4>
+            <div class="row g-3">
+              
+              <div class="col-md-4">
+                <label class="form-label">Department</label>
+                {% if departments|length > 0 %}
+                <select name="department" id="" class="form-select" required>
+                  {% for d in departments %}
+                  <option value="{{d.id}}">{{d.name}}</option>
+                  {% endfor %}
+                </select>
+                {% else %}
+                <h5>You have no departments click <a href="{% url 'departments-create-department'%}">Create Department</a></h5>
+                {% endif %}
+
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Role</label>
+                {% if roles|length > 0 %}
+                <select name="role" id="" class="form-select" required>
+                  {% for r in roles %}
+                  <option value="{{r.id}}">{{r.name}} -- {{r.position}}</option>
+                  {% endfor %}
+                </select>
+                {%else%}
+                <h5>You have no roles click <a href="{% url 'roles-create-role'%}">Create Roles</a></h5>
+                {% endif %}
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Employment Type</label>
+                {% if emp_types|length > 0 %}
+                <select id="" class="form-select" name='employment_type' required>
+                  {% for et in emp_types %}
+                  <option value="{{et.id}}">{{et.type}} - {{et.factor}}</option>
+                  {% endfor %}
+                </select>
+                {%else%}
+                <h5>You have no employment types click <a href="{% url 'employment-types-create'%}">Create E.Type</a></h5>
+                {% endif %}
+              </div>
+
+            </div>
+
+            <!-- Actions -->
+            <div class="mt-4 text-center">
+              <button type="submit" class="btn btn-custom">Create Employee</button>
+            </div>
+          </form>
+
+          
+          </div>
+        </div>
+      </div>
+
+
+      </div>  
+    </div>
+  </div>
+
+  <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+
+  <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+
+  <script src="{% static 'dashboard/assets/js/add-employee.js' %}"></script>
+  <script>
+    let add = document.querySelector('.add-display-picture')
+    let add_in = document.querySelector('.add-display-picture-input')
+    add.onclick = () => {
+      add_in.click()
+    }
+    
+    let pre = document.querySelector('.preview')
+    let pre_im = pre.querySelector('.preview-img')
+
+    add_in.addEventListener('change', e => {
+      let im = e.target.files[0]
+      pre_im.src = URL.createObjectURL(im)
+    })
+
+    const dob = document.querySelectorAll(".dob");
+    dob.forEach(d => {
+      const today = new Date();
+      today.setFullYear(today.getFullYear() - 18);
+
+      d.max = today.toISOString().split("T")[0];
+    })
+  </script>
+
+</body>
+</html>

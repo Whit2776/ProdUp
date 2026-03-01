@@ -1,0 +1,76 @@
+{% load static %}
+<section id="head-info">
+  <div id="head-info-1">
+    <p>We go through all the stages of engineering</p>
+    <ol>
+      <li>NEWS AND MEDIA</li>
+      <li>CAREERS</li>
+      <li>CONTACT</li>
+    </ol>
+  </div>
+  <div id="head-info-2">
+    <div id="tas-info-1" class='tas-banner'>
+      <img class='tas-logo-image' src="{% static "images/tas-logo.jpg" %}" alt="tas logo image">
+      <div class='tas-name'>
+        <h1 class='tas'>TAS</h1>
+        <p class='other engineering'>Engineering</p>
+        <p class='other solutions'>Solutions</p>
+      </div>
+    </div>
+
+    <div id='tas-info-2' class='contact hide-on-mobile '>
+      <img class='tas-location' src="{% static "icons/location.svg" %}" alt="tas location image">
+      <div class="location-info">
+        <p>Our Location</p>
+        <p>Tema Ashaiman Lebanon</p>
+      </div>
+    </div>
+
+    <div id='tas-info-3' class='contact hide-on-mobile'>
+      <img class='tas-email' src="{% static "icons/contact-mail.svg" %}" alt="tas email image">
+      <div class="email-info">
+        <p>Send Us an Email</p>
+        <p>tasengineerinsolutions@gmail.com</p>
+      </div>
+    </div>
+
+    <div id="get-a-quote" class='hide-on-mobile'>
+      <a href="">Get a Quote</a>
+    </div>
+
+    <div id='open-menu-div'><img class='open-menu' src="{% static "icons/menu.svg" %}" alt=""></div>
+  </div>
+</section>
+
+<section id="nav">
+  <nav class='on-large-screen'>
+    <ol>
+      <li><a href="{% url "home" %}">HOME</a></li>
+      <li><a href="{% url "services" %}">SERVICES</a></li>
+      <li><a href="{% url "portfolio" %}">PORTFOLIO</a></li>
+      <li><a href="{% url "contact" %}">CONTACT</a></li>
+    </ol>
+
+    <ol>
+      <li><img src="{% static "icons/search.svg" %}" alt="search icon"></li>
+    </ol>
+  </nav>
+
+  <div class="hidden nav-on-mobile-wrapper">
+    
+  </div>
+
+  <nav class=' on-mobile'>
+      <ol>
+        <li><a href="{% url "home" %}">HOME</a></li>
+        <li><a href="{% url "services" %}">SERVICES</a></li>
+        <li><a href="{% url "portfolio" %}">PORTFOLIO</a></li>
+        <li><a href="{% url "contact" %}">CONTACT</a></li>
+      </ol>
+
+      <ol>
+        <li><img src="{% static "icons/search.svg" %}" alt="search icon"></li>
+        <li><img class='close-menu' src="{% static "icons/close.svg" %}" alt=""></li>
+      </ol>
+    </nav>
+</section>

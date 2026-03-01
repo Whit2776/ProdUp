@@ -1,0 +1,5 @@
+Emp ID,Full Name,Email,Phone,Dept,Role,Joined,Status
+EMP-001,John Doe,john.doe@example.com,+1 555-0123,IT,Engineer,2023-01-12,active
+EMP-002,Aisha Mensah,aisha.m@example.com,+233 20 111 2222,HR,Manager,2020-07-02,leave
+EMP-003,Kofi Asare,kofi.asare@company.com,+233 24 333 4444,Finance,Analyst,2019-03-20,suspended
+EMP-004,Grace Owusu,grace.owusu@company.com,+233 24 555 6666,Operations,Supervisor,2021-11-15,active

@@ -1,0 +1,192 @@
+<!DOCTYPE html> {%load static%}
+<html lang="en" dir="ltr" data-startbar="light" data-bs-theme="light">
+
+    
+<!-- Mirrored from mannatthemes.com/ TAS -bs5/default/apps-chat.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Sep 2025 17:58:49 GMT -->
+<head>
+        
+
+        <meta charset="utf-8" />
+                <title>Chat |  TAS - Engineering Firm DashBoard</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+                <meta content="" name="author" />
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+                <!-- App favicon -->
+                <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+       
+         <!-- App css -->
+         <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+         <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+         <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    
+    <!-- Top Bar Start -->
+    <body>
+        {% include "dashboard/staff_dashboard/components/nav.html" %}
+
+
+        <div class="page-wrapper">
+
+            <!-- Page Content-->
+            <div class="page-content" style = 'padding: 0;'>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="chat-box-left" style = 'overflow-y: scroll;'>
+                                <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link py-2 active"id="messages_chat_tab" data-bs-toggle="tab" href="#messages_chat" role="tab">Messages</a>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link py-2" id="active_chat_tab" data-bs-toggle="tab" href="#active_chat" role="tab">Active</a>
+                                    </li>
+                                </ul>                        
+                                <div class="chat-search p-3">
+                                    <div class="bg-light rounded">
+                                        <div class="input-group">
+                                          <div class="input-group-prepend">
+                                            <button id="button-addon2" type="submit" class="btn btn-link text-secondary"><i class="fa fa-search"></i></button>
+                                          </div>
+                                          <input type="search" placeholder="Searching.." aria-describedby="button-addon2" class="form-control border-0 bg-light ps-0">
+                                        </div>
+                                    </div>
+                                </div><!--end chat-search-->
+    
+                                <div class="chat-body-left px-3" data-simplebar>
+                                    <div class="tab-content" id="pills-tabContent" >
+                                        <div class="tab-pane fade show active" id="messages_chat">
+                                            <div class="row">
+                                                <div class="col chats-container">
+                                                    {% for chat in chats %}
+                                                    <div class="p-2 border-dashed border-theme-color rounded mb-2 user chat" style ='cursor: pointer;'>
+                                                        <p class='id' style='display: none;'>{{chat.link}}</p>
+                                                        <a href="#" class="">
+                                                            <div class="d-flex align-items-start">
+                                                                <div class="position-relative">
+                                                                    <img src="{{chat.other_user.picture.url}}" alt="" class="thumb-lg rounded-circle">
+                                                                    <span class="position-absolute bottom-0 end-0"><i class="fa-solid fa-circle text-success fs-10 border-2 border-theme-color"></i></span>
+                                                                </div>
+                                                                <div class="flex-grow-1 ms-2 text-truncate align-self-center">
+                                                                    <a href="{% url 'chat' chat.link %}" class='link hidden' style='display: none;'></a>
+                                                                    <h6 class="my-0 fw-medium text-dark fs-14">
+                                                                        {{chat.other_user.name}}
+                                                                        <small class="float-end text-muted fs-11">5 min ago</small>
+                                                                    </h6>
+                                                                    <p class="text-muted mb-0"><span class="text-primary">Typing...</span>
+                                                                        <span class="badge float-end rounded text-white bg-success ">3</span>
+                                                                    </p>
+                                                                </div><!--end media-body-->
+                                                            </div><!--end media-->
+                                                        </a> <!--end-->                                                        
+                                                    </div><!--end div-->   
+                                                    {% endfor %}
+                                                    
+                                                </div><!--end col-->
+                                            </div><!--end row-->           
+                                        </div><!--end general chat-->
+    
+                                        <div class="tab-pane fade" id="active_chat">                                                
+                                            
+                                        </div><!--end group chat-->
+    
+                                    </div><!--end tab-content-->
+                                </div>
+                            </div><!--end chat-box-left -->
+
+                            <div id="chat_page" class='chat-box-right' style ='display:flex;'>
+                                <iframe id = 'chat-frame' style='width: 100%;height: 100%;'></iframe>
+                            </div>
+
+                            <style>
+                                .div{
+                                    display: flex;
+                                }
+
+                                .chat_page{
+                                    min-height: 100%;
+                                    min-width: 100%;
+                                }
+
+                                iframe#chat-frame{
+                                    width: 100%;
+                                }
+                            </style>
+                            
+                            <script>
+                                let chats = document.querySelectorAll('.chat')
+                                let chat_frame = document.getElementById('chat-frame')
+                                let chats_container = document.querySelector('.chats-container')
+                                chats.forEach(chat => {
+                                    chat.onclick = () => {
+                                        let link = chat.querySelector('.link').href
+
+                                        chat_frame.src = link
+                                        location.href = link
+                                    }
+                                })
+
+                                window.moveChatToTop = (chat_link) => {
+                                    let chat = Array.from(chats).find(chat => {return chat.querySelector('.id').innerText === chat_link})
+                                    console.log(chat)
+                                    chats_container.prepend(chat)
+                                    return
+                                }
+                            </script>
+                        </div> <!-- end col -->                           
+                    </div><!-- end row -->                                        
+                </div><!-- container -->
+                
+                <!--Start Rightbar-->
+                <!--Start Rightbar/offcanvas-->
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="Appearance" aria-labelledby="AppearanceLabel">
+                    <div class="offcanvas-header border-bottom justify-content-between">
+                      <h5 class="m-0 font-14" id="AppearanceLabel">Appearance</h5>
+                      <button type="button" class="btn-close text-reset p-0 m-0 align-self-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">  
+                        <h6>Account Settings</h6>
+                        <div class="p-2 text-start mt-3">
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch1">
+                                <label class="form-check-label" for="settings-switch1">Auto updates</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch2" checked>
+                                <label class="form-check-label" for="settings-switch2">Location Permission</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="settings-switch3">
+                                <label class="form-check-label" for="settings-switch3">Show offline Contacts</label>
+                            </div><!--end form-switch-->
+                        </div><!--end /div-->
+                        <h6>General Settings</h6>
+                        <div class="p-2 text-start mt-3">
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch4">
+                                <label class="form-check-label" for="settings-switch4">Show me Online</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch5" checked>
+                                <label class="form-check-label" for="settings-switch5">Status visible to all</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="settings-switch6">
+                                <label class="form-check-label" for="settings-switch6">Notifications Popup</label>
+                            </div>``
+                        </div>             
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+    </body>
+</html>

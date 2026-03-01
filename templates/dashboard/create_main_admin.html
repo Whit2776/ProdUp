@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Employee Registration</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,500;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    /* ============================================================
+       THEME VARIABLES
+    ============================================================ */
+    :root {
+      --bg: #eef3fb;
+      --bg2: #f8faff;
+      --card: #ffffff;
+      --border: #dde5f0;
+      --border2: #c8d5e8;
+      --muted: #64748b;
+      --muted2: #94a3b8;
+      --primary: #0e6cf5;
+      --primary-dim: rgba(14,108,245,0.12);
+      --primary-glow: rgba(14,108,245,0.25);
+      --text: #0f1d35;
+      --text2: #3d5070;
+      --success: #10b981;
+      --success-dim: rgba(16,185,129,0.12);
+      --error: #ef4444;
+      --error-dim: rgba(239,68,68,0.12);
+      --shadow: 0 2px 20px rgba(14,108,245,0.06), 0 1px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 8px 32px rgba(14,108,245,0.1), 0 2px 8px rgba(0,0,0,0.06);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    .dark {
+      --bg: #080e1a;
+      --bg2: #0b1220;
+      --card: #0f1929;
+      --border: #1a2640;
+      --border2: #243450;
+      --muted: #7a8fa8;
+      --muted2: #4a5f7a;
+      --primary: #3b8ef8;
+      --primary-dim: rgba(59,142,248,0.12);
+      --primary-glow: rgba(59,142,248,0.2);
+      --text: #dce8f8;
+      --text2: #8baabf;
+      --shadow: 0 2px 20px rgba(0,0,0,0.25), 0 1px 4px rgba(0,0,0,0.2);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    /* ============================================================
+       RESET
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ============================================================
+       BASE
+    ============================================================ */
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: background 0.35s, color 0.35s;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(900px 500px at 5% -5%, rgba(14,108,245,0.07) 0%, transparent 60%),
+        radial-gradient(600px 400px at 95% 95%, rgba(99,102,241,0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+      transition: opacity 0.35s;
+    }
+
+    /* ============================================================
+       PAGE LAYOUT
+    ============================================================ */
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 28px 16px 48px;
+    }
+
+    .wizard {
+      width: 100%;
+      max-width: 820px;
+    }
+
+    /* ============================================================
+       HEADER
+    ============================================================ */
+    .wizard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding: 0 4px;
+    }
+
+    .wizard-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+
+    .wizard-title span {
+      color: var(--primary);
+      font-style: italic;
+    }
+
+    /* ============================================================
+       THEME TOGGLE
+    ============================================================ */
+    .theme-toggle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: all 0.25s;
+      flex-shrink: 0;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-dim);
+    }
+
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--muted);
+      transition: fill 0.25s;
+    }
+
+    .theme-toggle:hover svg { fill: var(--primary); }
+
+    /* ============================================================
+       STEP PROGRESS BAR
+    ============================================================ */
+    .progress-bar {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 20px;
+      padding: 0 2px;
+    }
+
+    .progress-step {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      position: relative;
+    }
+
+    .progress-step:last-child { flex: 0; }
+
+    .ps-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--border2);
+      background: var(--card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--muted2);
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ps-dot.active {
+      border-color: var(--primary);
+      background: var(--primary-dim);
+      color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-dim);
+    }
+
+    .ps-dot.done {
+      border-color: var(--success);
+      background: var(--success-dim);
+      color: var(--success);
+    }
+
+    .ps-dot.done::after {
+      content: '✓';
+      font-size: 0.8rem;
+    }
+
+    .ps-dot:not(.done) .dot-num { display: inline; }
+    .ps-dot.done .dot-num { display: none; }
+
+    .ps-label {
+      position: absolute;
+      top: 38px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--muted2);
+      white-space: nowrap;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .progress-step:has(.ps-dot.active) .ps-label { color: var(--primary); }
+    .progress-step:has(.ps-dot.done) .ps-label { color: var(--success); }
+
+    .ps-line {
+      flex: 1;
+      height: 2px;
+      background: var(--border);
+      margin: 0 -1px;
+      position: relative;
+      z-index: 1;
+      transition: background 0.4s;
+      overflow: hidden;
+    }
+
+    .ps-line.done { background: rgba(16,185,129,0.4); }
+    .ps-line::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--primary);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .ps-line.active::after { transform: scaleX(1); }
+
+    /* ============================================================
+       CARD
+    ============================================================ */
+    .steps-container {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow-lg);
+      transition: background 0.35s, border-color 0.35s;
+    }
+
+    /* ============================================================
+       STEPS
+    ============================================================ */
+    .step { display: none; }
+
+    .step.active {
+      display: block;
+      animation: stepIn 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    @keyframes stepIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .step-heading-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--primary-dim);
+      border: 1px solid rgba(14,108,245,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-heading-icon svg { width: 16px; height: 16px; stroke: var(--primary); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    .step h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    /* ============================================================
+       FIELD GRID
+    ============================================================ */
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+    }
+
+    .f-12 { grid-column: span 12; }
+    .f-6  { grid-column: span 6; }
+    .f-4  { grid-column: span 4; }
+    .f-3  { grid-column: span 3; }
+
+    /* ============================================================
+       FLOATING LABEL FIELDS
+    ============================================================ */
+    .fl-wrap {
+      position: relative;
+    }
+
+    .fl-wrap label {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.88rem;
+      color: var(--muted);
+      pointer-events: none;
+      transition: all 0.2s ease;
+      background: var(--card);
+      padding: 0 5px;
+      z-index: 2;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .fl-wrap.textarea-wrap label {
+      top: 18px;
+      transform: none;
+    }
+
+    .fl-wrap input:focus + label,
+    .fl-wrap input.filled + label,
+    .fl-wrap select:focus + label,
+    .fl-wrap select.filled + label,
+    .fl-wrap textarea:focus + label,
+    .fl-wrap textarea.filled + label {
+      top: 0;
+      transform: translateY(-50%);
+      font-size: 0.72rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .fl-wrap.textarea-wrap input:focus + label,
+    .fl-wrap.textarea-wrap textarea:focus + label,
+    .fl-wrap.textarea-wrap textarea.filled + label {
+      top: 0;
+      transform: translateY(-50%);
+    }
+
+    /* ============================================================
+       INPUTS, SELECTS, TEXTAREAS
+    ============================================================ */
+    input, select, textarea {
+      width: 100%;
+      padding: 15px 14px 11px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font-size: 0.9rem;
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    textarea {
+      resize: none;
+      min-height: 82px;
+      padding-top: 18px;
+    }
+
+    input::placeholder, textarea::placeholder { color: transparent; }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-dim);
+      background: color-mix(in srgb, var(--primary) 3%, transparent);
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 13px center;
+      cursor: pointer;
+      padding-right: 38px;
+    }
+
+    select option { background: var(--card); color: var(--text); }
+
+    input[type="date"] {
+      color-scheme: light;
+    }
+    .dark input[type="date"] { color-scheme: dark; }
+
+    /* ============================================================
+       RADIO PILLS
+    ============================================================ */
+    .radio-group-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: block;
+    }
+
+    .radio-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .radio-pill input[type="radio"] { display: none; }
+
+    .radio-pill label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border2);
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      /* Reset floating label styles */
+      position: static;
+      transform: none;
+      left: auto;
+      top: auto;
+      z-index: auto;
+      pointer-events: all;
+    }
+
+    .radio-pill input:checked + label {
+      border-color: var(--primary);
+      background: var(--primary-dim);
+      color: var(--primary);
+    }
+
+    .radio-pill label:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* ============================================================
+       PHOTO UPLOAD
+    ============================================================ */
+    .photo-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .photo-upload-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .photo-upload {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      border: 2px dashed var(--border2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: var(--bg2);
+    }
+
+    .photo-upload:hover {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-dim);
+    }
+
+    .photo-upload img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+      position: absolute;
+      inset: 0;
+    }
+
+    .photo-upload-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      pointer-events: none;
+    }
+
+    .photo-upload-icon svg { width: 24px; height: 24px; stroke: var(--muted2); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .photo-upload-icon span { font-size: 0.68rem; color: var(--muted2); font-weight: 500; }
+
+    /* ============================================================
+       SECTION DIVIDER
+    ============================================================ */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 6px 0 14px;
+    }
+
+    .section-divider span {
+      font-size: 0.67rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted2);
+      white-space: nowrap;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ============================================================
+       NAV
+    ============================================================ */
+    .nav {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .nav-btn {
+      flex: 1;
+      padding: 13px 20px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border2);
+      background: transparent;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.22s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      user-select: none;
+    }
+
+    .nav-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    .nav-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-dim);
+      transform: translateY(-1px);
+    }
+
+    .nav-btn.next {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .nav-btn.next:hover {
+      background: color-mix(in srgb, var(--primary) 85%, black);
+      border-color: color-mix(in srgb, var(--primary) 85%, black);
+      color: #fff;
+      box-shadow: 0 6px 20px var(--primary-glow);
+      transform: translateY(-1px);
+    }
+
+    .nav-btn:disabled, .nav-btn.disabled {
+      opacity: 0.3;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+
+    /* ============================================================
+       SUBMIT BUTTON
+    ============================================================ */
+    .submit-btn {
+      margin-top: 22px;
+      width: 100%;
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.22s;
+      letter-spacing: 0.01em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .submit-btn svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    .submit-btn:hover {
+      background: color-mix(in srgb, var(--primary) 85%, black);
+      box-shadow: 0 8px 24px var(--primary-glow);
+      transform: translateY(-1px);
+    }
+
+    /* ============================================================
+       DRAFT SECTION
+    ============================================================ */
+    .draft-section {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .draft-action {
+      flex: 1;
+      min-width: 100px;
+      padding: 11px 14px;
+      text-align: center;
+      border-radius: var(--radius-sm);
+      border: 1px dashed var(--border2);
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      background: transparent;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .draft-action svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    .draft-action:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-dim);
+    }
+
+    .draft-action.save:hover { border-color: var(--success); color: var(--success); background: var(--success-dim); border-style: solid; }
+    .draft-action.clear:hover { border-color: var(--error); color: var(--error); background: var(--error-dim); border-style: solid; }
+
+    /* ============================================================
+       ALERT / TOAST
+    ============================================================ */
+    .alert {
+      position: fixed;
+      top: 20px;
+      right: -400px;
+      max-width: 300px;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(12px);
+      transition: right 0.4s cubic-bezier(0.4,0,0.2,1);
+      z-index: 999;
+    }
+
+    .alert svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    .alert.shown { right: 20px; }
+
+    .alert.good {
+      background: rgba(16,185,129,0.12);
+      border-color: rgba(16,185,129,0.3);
+      color: #059669;
+    }
+    .dark .alert.good { color: #34d399; }
+
+    .alert.bad {
+      background: rgba(239,68,68,0.12);
+      border-color: rgba(239,68,68,0.3);
+      color: #dc2626;
+    }
+    .dark .alert.bad { color: #f87171; }
+
+    .alert.info {
+      background: rgba(14,108,245,0.1);
+      border-color: rgba(14,108,245,0.25);
+      color: var(--primary);
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 720px) {
+      .f-6, .f-4, .f-3 { grid-column: span 12; }
+      .steps-container { padding: 18px; }
+      .nav { flex-direction: column; }
+      .draft-action { min-width: 80px; }
+    }
+
+    @media (max-width: 420px) {
+      .wizard-title { font-size: 1.2rem; }
+      .photo-upload { width: 90px; height: 90px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+  <div class="wizard">
+
+    <!-- Header -->
+    <div class="wizard-header">
+      <div class="wizard-title">Employee <span>Registration</span></div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar">
+      <!-- Steps injected by JS -->
+    </div>
+
+    <!-- Card -->
+    <div class="steps-container">
+      <form id="multiStepForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- ====== STEP 1: IDENTITY ====== -->
+        <div class="step active" id="step-0">
+          <div class="step-heading">
+            <div class="step-heading-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </div>
+            <h2>Identity Information</h2>
+          </div>
+
+          <!-- Photo -->
+          <div class="field-grid" style="margin-bottom:18px">
+            <div class="f-12">
+              <div class="photo-section">
+                <span class="photo-upload-label">Profile Photo</span>
+                <label class="photo-upload" for="picture">
+                  <img id="photoPreview" alt="Preview"/>
+                  <div class="photo-upload-icon">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+                    <span>Add Photo</span>
+                  </div>
+                </label>
+                <input type="file" name="picture" id="picture" accept="image/*" hidden class="model-field"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-divider"><span>Basic Details</span></div>
+
+          <div class="field-grid">
+            <div class="f-4">
+              <div class="fl-wrap">
+                <input type="text" name="first_name" id="first_name" class="model-field" autocomplete="off" placeholder="First Name"/>
+                <label for="first_name">First Name</label>
+              </div>
+            </div>
+            <div class="f-4">
+              <div class="fl-wrap">
+                <input type="text" name="last_name" id="last_name" class="model-field" autocomplete="off" placeholder="Last Name"/>
+                <label for="last_name">Last Name</label>
+              </div>
+            </div>
+            <div class="f-4">
+              <div class="fl-wrap">
+                <input type="text" name="other_names" id="other_names" class="model-field" autocomplete="off" placeholder="Other Names"/>
+                <label for="other_names">Other Names</label>
+              </div>
+            </div>
+            <div class="f-6">
+              <div class="fl-wrap">
+                <select>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+                <label for="gender">Gender</label>
+              </div>
+            </div>
+            <div class="f-6">
+              <div class="fl-wrap">
+                <input type="date" name="date_of_birth" id="date_of_birth" class="model-field"/>
+                <label for="date_of_birth">Date of Birth</label>
+              </div>
+            </div>
+            <div class="f-6">
+              <div class="fl-wrap">
+                <input type="text" name="house_code" id="house_code" class="model-field" autocomplete="off" placeholder="e.g. HQ-001"/>
+                <label for="house_code">House Code</label>
+              </div>
+            </div>
+            <div class="f-12 fl-wrap textarea-wrap">
+              <textarea name="location" id="location" class="model-field" placeholder="Full address or location details" rows="3"></textarea>
+              <label for="location">Location / Address</label>
+            </div>
+            <div class="f-12">
+              <span class="radio-group-label">Marital Status</span>
+              <select name="marital_status" id="">
+                <option value="Married">Married</option>
+                <option value="Divorced">Divorced</option>
+                <option value="Single">Single</option>
+                <option value="Separated">Separated</option>
+
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====== STEP 2: FATHER ====== -->
+        <div class="step" id="step-1">
+          <div class="step-heading">
+            <div class="step-heading-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </div>
+            <h2>Father's Information</h2>
+          </div>
+
+          <div class="field-grid">
+            <div class="f-4">
+              <div class="fl-wrap">
+                <input type="text" name="father_first_name" id="father_first_name" class="model-field" autocomplete="off" placeholder="First Name"/>
+                <label for="father_first_name">First Name</label>
+              </div>
+            </div>
+            <div class="f-4">
+              <div class="fl-wrap">
+                <input type="text" name="father_last_name" id="father_last_name" class="model-field" autocomplete="off" placeholder="Last Name"/>
+                <label for="father_last_name">Last Name</label>
+              </div>
+            </div>
+            <div class="f-4">
+              <div class="fl-wrap">
+                <input type="date" name="father_date_of_birth" id="father_date_of_birth" class="model-field"/>
+                <label for="father_date_of_birth">Date of Birth</label>
+              </div>
+            </div>
+            <div class="f-4">
+              <div class="fl-wrap">
+                <select name="father_marital_status" id="father_marital_status" class="model-field">
+                  <option value=""></option>
+                  <option value="married">Married</option>
+                  <option value="divorced">Divorced</option>
+                  <option value="separated">Separated</option>
+                </select>
+                <label for="father_marital_status">Marital Status</label>
+              </div>
+            </div>
+            <div class="f-4">
+              <div class="fl-wrap">
+                <select name="father_living_status" id="father_living_status" class="model-field">
+                  <option value=""></option>
+                  <option value="alive">Alive</option>
+                  <option value="dead">Dead</option>
+                </select>
+                <label for="father_living_status">Living Status</label>
+              </div>
+            </div>
+            <div class="f-4">
+              <div class="fl-wrap">
+                <input type="text" name="father_contact" id="father_contact" class="model-field" maxlength="20" autocomplete="off" placeholder="+1234567890"/>
+                <label for="father_contact">Contact Number</label>
+              </div>
+            </div>
+            <div class="f-12 fl-wrap textarea-wrap">
+              <textarea name="father_location" id="father_location" class="model-field" placeholder="Father's address or location" rows="3"></textarea>
+              <label for="father_location">Location / Address</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====== STEP 3: MOTHER ====== -->
+        <div class="step" id="step-2">
+          <div class="step-heading">
+            <div class="step-heading-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </div>
+            <h2>Mother's Information</h2>
+          </div>
+
+          <div class="field-grid">
+            <div class="f-4">
+              <div class="fl-wrap">
+                <input type="text" name="mother_first_name" id="mother_first_name" class="model-field" autocomplete="off" placeholder="First Name"/>
+                <label for="mother_first_name">First Name</label>
+              </div>
+            </div>
+            <div class="f-4">
+              <div class="fl-wrap">
+                <input type="text" name="mother_last_name" id="mother_last_name" class="model-field" autocomplete="off" placeholder="Last Name"/>
+                <label for="mother_last_name">Last Name</label>
+              </div>
+            </div>
+            <div class="f-4">
+              <div class="fl-wrap">
+                <input type="date" name="mother_date_of_birth" id="mother_date_of_birth" class="model-field"/>
+                <label for="mother_date_of_birth">Date of Birth</label>
+              </div>
+            </div>
+            <div class="f-4">
+              <div class="fl-wrap">
+                <select name="mother_marital_status" id="mother_marital_status" class="model-field">
+                  <option value=""></option>
+                  <option value="married">Married</option>
+                  <option value="divorced">Divorced</option>
+                  <option value="separated">Separated</option>
+                </select>
+                <label for="mother_marital_status">Marital Status</label>
+              </div>
+            </div>
+            <div class="f-4">
+              <div class="fl-wrap">
+                <select name="mother_living_status" id="mother_living_status" class="model-field">
+                  <option value=""></option>
+                  <option value="alive">Alive</option>
+                  <option value="dead">Dead</option>
+                </select>
+                <label for="mother_living_status">Living Status</label>
+              </div>
+            </div>
+            <div class="f-4">
+              <div class="fl-wrap">
+                <input type="text" name="mother_contact" id="mother_contact" class="model-field" maxlength="20" autocomplete="off" placeholder="+1234567890"/>
+                <label for="mother_contact">Contact Number</label>
+              </div>
+            </div>
+            <div class="f-12 fl-wrap textarea-wrap">
+              <textarea name="mother_location" id="mother_location" class="model-field" placeholder="Mother's address or location" rows="3"></textarea>
+              <label for="mother_location">Location / Address</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====== STEP 4: CONTACT ====== -->
+        <div class="step" id="step-3">
+          <div class="step-heading">
+            <div class="step-heading-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <h2>Contact Details</h2>
+          </div>
+
+          <div class="field-grid">
+            <div class="f-6">
+              <div class="fl-wrap">
+                <input type="email" name="email" id="email" class="model-field" autocomplete="off" placeholder="email@company.com" required/>
+                <label for="email">Email Address</label>
+              </div>
+            </div>
+            <div class="f-6">
+              <div class="fl-wrap">
+                <input type="text" name="phone_number" id="phone_number" class="model-field" maxlength="20" autocomplete="off" placeholder="+233 XX XXX XXXX"/>
+                <label for="phone_number">Phone Number</label>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submitBtn">
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Submit Registration
+          </button>
+        </div>
+
+      </form><!-- /form -->
+
+      <!-- Nav buttons (outside form) -->
+      <div class="nav">
+        <button class="nav-btn prev" id="prevBtn">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          Previous
+        </button>
+        <button class="nav-btn next" id="nextBtn">
+          Next
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div><!-- /steps-container -->
+
+    <!-- Draft actions -->
+    <div class="draft-section">
+      <button class="draft-action save" id="btnSave">
+        <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Save Draft
+      </button>
+      <button class="draft-action load" id="btnLoad">
+        <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        Load Draft
+      </button>
+      <button class="draft-action clear" id="btnClear">
+        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+        Clear Draft
+      </button>
+    </div>
+
+  </div><!-- /wizard -->
+</div><!-- /page-wrapper -->
+
+<!-- Toast -->
+<div class="alert" id="alertBox"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ── Config ── */
+  const STEP_LABELS = ['Identity', 'Father', 'Mother', 'Contact'];
+  const steps       = Array.from(document.querySelectorAll('.step'));
+  const totalSteps  = steps.length;
+  let   currentStep = 0;
+
+  /* ── Progress bar build ── */
+  const progressBar = document.getElementById('progressBar');
+  STEP_LABELS.forEach((label, i) => {
+    const item = document.createElement('div');
+    item.className = 'progress-step';
+    item.innerHTML = `
+      <div class="ps-dot" id="psdot-${i}"><span class="dot-num">${i + 1}</span></div>
+      <span class="ps-label">${label}</span>
+      ${i < totalSteps - 1 ? `<div class="ps-line" id="psline-${i}"></div>` : ''}
+    `;
+    progressBar.appendChild(item);
+  });
+
+  /* ── Update UI ── */
+  function updateUI() {
+    steps.forEach((s, i) => s.classList.toggle('active', i === currentStep));
+
+    for (let i = 0; i < totalSteps; i++) {
+      const dot  = document.getElementById(`psdot-${i}`);
+      const line = document.getElementById(`psline-${i}`);
+      dot.classList.remove('active', 'done');
+      if      (i < currentStep)  dot.classList.add('done');
+      else if (i === currentStep) dot.classList.add('active');
+      if (line) {
+        line.classList.remove('done', 'active');
+        if      (i < currentStep - 1) line.classList.add('done');
+        else if (i === currentStep - 1) line.classList.add('active');
+      }
+    }
+
+    prevBtn.disabled = currentStep === 0;
+    const isLast = currentStep === totalSteps - 1;
+    nextBtn.style.display = isLast ? 'none' : 'flex';
+  }
+
+  /* ── Nav ── */
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  prevBtn.addEventListener('click', () => {
+    if (currentStep > 0) { currentStep--; updateUI(); }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if (currentStep < totalSteps - 1) { currentStep++; updateUI(); }
+  });
+
+  
+  /* ── Photo preview ── */
+  const pictureInput = document.getElementById('picture');
+  const photoPreview = document.getElementById('photoPreview');
+
+  pictureInput.addEventListener('change', function () {
+    if (this.files[0]) {
+      photoPreview.src = URL.createObjectURL(this.files[0]);
+      photoPreview.style.display = 'block';
+    }
+  });
+
+  /* ── Floating label filled state ── */
+  function syncFilled() {
+    document.querySelectorAll('.fl-wrap input, .fl-wrap select, .fl-wrap textarea').forEach(el => {
+      el.classList.toggle('filled', el.value.trim() !== '');
+    });
+    // date inputs always float label
+    document.querySelectorAll('input[type="date"]').forEach(el => el.classList.add('filled'));
+  }
+
+  document.querySelectorAll('.fl-wrap input:not([type="file"]):not([type="radio"]):not([type="date"]), .fl-wrap select, .fl-wrap textarea').forEach(el => {
+    el.addEventListener('input', () => el.classList.toggle('filled', el.value.trim() !== ''));
+    el.addEventListener('change', () => el.classList.toggle('filled', el.value.trim() !== ''));
+  });
+
+  document.querySelectorAll('input[type="date"]').forEach(el => {
+    el.classList.add('filled');
+    el.addEventListener('change', () => el.classList.add('filled'));
+  });
+
+  /* ── Draft ── */
+  const modelFields = () => Array.from(document.querySelectorAll('.model-field'));
+
+  function getFormSnapshot() {
+    const data = {};
+    modelFields().forEach(f => {
+      if (f.type === 'file') return;
+      if (f.type === 'radio') { if (f.checked) data[f.name] = f.value; }
+      else data[f.name] = f.value;
+    });
+    return data;
+  }
+
+  function applySnapshot(data) {
+    modelFields().forEach(f => {
+      if (f.type === 'file') return;
+      const val = data[f.name];
+      if (val === undefined) return;
+      if (f.type === 'radio') { f.checked = f.value === val; }
+      else { f.value = val; f.dispatchEvent(new Event('input')); }
+    });
+    document.querySelectorAll('input[type="date"]').forEach(el => el.classList.add('filled'));
+  }
+
+  document.getElementById('btnSave').addEventListener('click', () => {
+    localStorage.setItem('employeeDraft', JSON.stringify(getFormSnapshot()));
+    showAlert('Draft saved successfully 😎', 'good');
+  });
+
+  document.getElementById('btnLoad').addEventListener('click', () => {
+    const raw = localStorage.getItem('employeeDraft');
+    if (!raw) { showAlert('No draft found in storage', 'bad'); return; }
+    try { applySnapshot(JSON.parse(raw)); showAlert('Draft loaded successfully 😎', 'info'); }
+    catch { showAlert('Failed to load draft', 'bad'); }
+  });
+
+  document.getElementById('btnClear').addEventListener('click', () => {
+    localStorage.removeItem('employeeDraft');
+    showAlert('Draft cleared from storage', 'bad');
+  });
+
+  /* ── Theme toggle ── */
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon   = document.getElementById('themeIcon');
+
+  const SUN_ICON  = `<path d="M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0-15v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>`;
+  const MOON_ICON = `<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>`;
+
+  let isDark = false;
+
+  // Persist theme
+  if (localStorage.getItem('theme') === 'dark') {
+    isDark = true;
+    document.body.classList.add('dark');
+    themeIcon.innerHTML = SUN_ICON;
+  }
+
+  themeToggle.addEventListener('click', () => {
+    isDark = !isDark;
+    document.body.classList.toggle('dark', isDark);
+    themeIcon.innerHTML = isDark ? SUN_ICON : MOON_ICON;
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+
+  /* ── Toast ── */
+  const alertBox = document.getElementById('alertBox');
+  let alertTimer;
+
+  function showAlert(msg, type) {
+    clearTimeout(alertTimer);
+    const icons = {
+      good: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+      bad:  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`,
+      info: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
+    };
+    alertBox.className = `alert ${type} shown`;
+    alertBox.innerHTML = (icons[type] || '') + msg;
+    alertTimer = setTimeout(() => alertBox.classList.remove('shown'), 3500);
+  }
+
+  /* ── Init ── */
+  updateUI();
+  syncFilled();
+
+}); // DOMContentLoaded
+</script>
+
+<script>
+  let form = document.querySelector('#multiStepForm')
+  let location_array = location.href.split('/')
+  let url = `/api/create-main-admin/${location_array[4]}/${location_array[5]}`
+  console.log(url)
+  form.addEventListener('submit', async e => {
+    e.preventDefault()
+    let formdata = new FormData(form)
+    let res = await fetch(url, {method:'POST', body: formdata})
+    let res_json = await res.json()
+
+    console.log(res_json)
+  })
+</script>
+</body>
+</html>

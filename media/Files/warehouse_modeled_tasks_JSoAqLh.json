@@ -1,0 +1,202 @@
+[
+    {
+        "project": 1,
+        "assigned_to": 1,
+        "title": "Assess current warehouse capacity",
+        "description": "Assess current warehouse capacity.",
+        "status": "pending",
+        "priority": 3,
+        "assigned_date": "2025-02-06T08:00:00Z",
+        "due_date": "2025-02-06T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 2,
+        "title": "Draft initial warehouse layout concept",
+        "description": "Draft initial warehouse layout concept.",
+        "status": "pending",
+        "priority": 2,
+        "assigned_date": "2025-02-06T08:00:00Z",
+        "due_date": "2025-02-06T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 3,
+        "title": "Conduct warehouse safety assessment",
+        "description": "Conduct warehouse safety assessment.",
+        "status": "pending",
+        "priority": 3,
+        "assigned_date": "2025-02-06T08:00:00Z",
+        "due_date": "2025-02-06T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 4,
+        "title": "Document current inventory levels",
+        "description": "Document current inventory levels.",
+        "status": "pending",
+        "priority": 2,
+        "assigned_date": "2025-02-06T08:00:00Z",
+        "due_date": "2025-02-06T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 1,
+        "title": "Discuss space requirements with contractor",
+        "description": "Discuss space requirements with contractor.",
+        "status": "pending",
+        "priority": 2,
+        "assigned_date": "2025-02-07T08:00:00Z",
+        "due_date": "2025-02-07T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 2,
+        "title": "Map loading/unloading traffic flow",
+        "description": "Map loading/unloading traffic flow.",
+        "status": "pending",
+        "priority": 2,
+        "assigned_date": "2025-02-07T08:00:00Z",
+        "due_date": "2025-02-07T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 3,
+        "title": "Review fire safety regulations",
+        "description": "Review fire safety regulations.",
+        "status": "pending",
+        "priority": 3,
+        "assigned_date": "2025-02-07T08:00:00Z",
+        "due_date": "2025-02-07T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 4,
+        "title": "Archive existing stock records",
+        "description": "Archive existing stock records.",
+        "status": "pending",
+        "priority": 2,
+        "assigned_date": "2025-02-07T08:00:00Z",
+        "due_date": "2025-02-07T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 1,
+        "title": "Inspect available storage zones",
+        "description": "Inspect available storage zones.",
+        "status": "pending",
+        "priority": 2,
+        "assigned_date": "2025-02-08T08:00:00Z",
+        "due_date": "2025-02-08T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 2,
+        "title": "Optimize shelving height and aisle spacing",
+        "description": "Optimize shelving height and aisle spacing.",
+        "status": "pending",
+        "priority": 3,
+        "assigned_date": "2025-02-08T08:00:00Z",
+        "due_date": "2025-02-08T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 3,
+        "title": "Create safety equipment requirements list",
+        "description": "Create safety equipment requirements list.",
+        "status": "pending",
+        "priority": 3,
+        "assigned_date": "2025-02-08T08:00:00Z",
+        "due_date": "2025-02-08T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 4,
+        "title": "Identify slow-moving items for relocation",
+        "description": "Identify slow-moving items for relocation.",
+        "status": "pending",
+        "priority": 2,
+        "assigned_date": "2025-02-08T08:00:00Z",
+        "due_date": "2025-02-08T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 1,
+        "title": "Approve expansion draft and provide feedback",
+        "description": "Approve expansion draft and provide feedback.",
+        "status": "pending",
+        "priority": 3,
+        "assigned_date": "2025-02-09T08:00:00Z",
+        "due_date": "2025-02-09T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 2,
+        "title": "Plan pallet racking system placement",
+        "description": "Plan pallet racking system placement.",
+        "status": "pending",
+        "priority": 2,
+        "assigned_date": "2025-02-09T08:00:00Z",
+        "due_date": "2025-02-09T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 3,
+        "title": "Update emergency evacuation route",
+        "description": "Update emergency evacuation route.",
+        "status": "pending",
+        "priority": 3,
+        "assigned_date": "2025-02-09T08:00:00Z",
+        "due_date": "2025-02-09T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 4,
+        "title": "Label inventory sections for relocation",
+        "description": "Label inventory sections for relocation.",
+        "status": "pending",
+        "priority": 2,
+        "assigned_date": "2025-02-09T08:00:00Z",
+        "due_date": "2025-02-09T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 1,
+        "title": "Final expansion blueprint approval walkthrough",
+        "description": "Final expansion blueprint approval walkthrough.",
+        "status": "pending",
+        "priority": 3,
+        "assigned_date": "2025-02-10T08:00:00Z",
+        "due_date": "2025-02-10T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 2,
+        "title": "Confirm material handling equipment needs",
+        "description": "Confirm material handling equipment needs.",
+        "status": "pending",
+        "priority": 2,
+        "assigned_date": "2025-02-10T08:00:00Z",
+        "due_date": "2025-02-10T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 3,
+        "title": "Perform safety compliance checklist",
+        "description": "Perform safety compliance checklist.",
+        "status": "pending",
+        "priority": 3,
+        "assigned_date": "2025-02-10T08:00:00Z",
+        "due_date": "2025-02-10T17:00:00Z"
+    },
+    {
+        "project": 1,
+        "assigned_to": 4,
+        "title": "Prepare new inventory location map",
+        "description": "Prepare new inventory location map.",
+        "status": "pending",
+        "priority": 2,
+        "assigned_date": "2025-02-10T08:00:00Z",
+        "due_date": "2025-02-10T17:00:00Z"
+    }
+]

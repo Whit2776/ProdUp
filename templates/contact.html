@@ -1,0 +1,78 @@
+<!DOCTYPE html> {%load static%} {% load static %}
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Contact</title>
+  <link rel="icon" type='image/x.icon' href="{% static "images/tas-logo.jpg" %}">
+  <link rel="stylesheet" href="{% static "css/style.css" %}">
+  <link rel="stylesheet" href="{% static "css/contact.css" %}">
+  <script defer src='{% static "js/main.js" %}'></script>
+</head>
+<body>
+  <header>
+    {% include "components/component_header_1.html" %}
+  </section>
+  </header>
+
+  <main>
+    <section id="our-contact-banner">
+      <h1>OUR CONTACT</h1>
+      <h2>HOME/OUR CONTACT</h2>
+    </section>
+
+    <section id="contact-cards">
+      <div class="contact-card">
+        <img src="{%static 'images/tas-logo.jpg'%}" alt="contact-card-image">
+        <div>
+          <img src="{% static "icons/contact-mail.svg" %}" alt="make-a-quote-image">
+          <p>Make a Quote</p>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <img src="{%static 'images/tas-logo.jpg'%}" alt="contact-card-image">
+        <div>
+          <img src="{% static "icons/contact-phone.svg" %}" alt="call-us-image">
+          <p>Call Us</p>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <img src="{%static 'images/tas-logo.jpg'%}" alt="contact-card-image">
+        <div>
+          <img src="{% static "icons/location.svg" %}" alt="work-station-image">
+          <p>Work Station</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="get-in-touch">
+      <h3>NEED HELP? GET IN TOUCH</h3>
+
+      <form action="" id='get-in-touch-form'>
+        {% csrf_token %}
+        <div>
+          <input type="text" name='name' placeholder='Name'>
+          <input type="email" name='email' placeholder='Email'>
+        </div>
+
+        <div>
+          <input type="subject" name='subject' placeholder='Subject(eg.Boiler Installation)'>
+        </div>
+
+        <div>
+          <textarea type="text" name='name' placeholder='Message'></textarea>
+        </div>
+
+        <button type="submit">SEND MESSAGE</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+      {% include "components/component_footer.html" %}
+  </footer>
+</body>
+</html>

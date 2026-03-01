@@ -1,0 +1,224 @@
+<!DOCTYPE html> {%load static%} {% load static %}
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>TAS</title>
+  <link rel="stylesheet" href="{% static "css/style.css" %}">
+  <link rel="stylesheet" href="{% static "css/home.css" %}">
+  <link rel="icon" type='image/x.icon' href="{% static "images/tas-logo.jpg" %}">
+  <script defer src='{% static "js/main.js" %}'></script>
+  <script src='{% static "js/home.js" %}'></script>
+  <style>
+    .welcome-screen-wrapper{
+      background-image: url('{% static "images/bg/img_1.jpg"%}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: 30% 15%;
+    }
+
+    #latest-project-section-1{
+      background-image: url('{% static "images/bg/img_2.jpg"%}');
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    {% include "components/component_header_1.html" %}
+  </header>
+  <main>
+    <section id="welcome-screen">
+      <div class='welcome-screen-wrapper'>
+        <div id='contact-us'>
+          <div id='welcome-message'>
+            <h1 class=''>WELCOME TO TAS</h1>
+            <h2 class='message'>WE'RE PROVIDING</h2>
+            <h2 class='message'>INDUSTRY LEADING</h2>
+            <h2 class='message'>SOLUTION</h2>
+          </div>
+
+          <div id="get-started">
+            <a href="" id="get-started-link">GET STARTED</a>
+
+            <div id='contact' class='contact'>
+              <img class='tas-contact' src="{% static "icons/contact-phone.svg" %}" alt="">
+              <div class="contact-info">
+                <p>Call Us Now</p>
+                <p class='contact-number'>+233 400 000 000</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="some-services">
+          <ol>
+            <li>DESIGN AND BUILD</li>
+            <li>ROOF REMODELING</li>
+            <li>BRIDGE REMODELING</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="our-services">
+      <div id='heading'>
+        <h1>OUR SERVICES</h1>
+        <h2>QUALITY SERVICING OPPORTUNITY</h2>
+      </div>
+
+      <div id="services-cards">
+        <div id="service-card-1" class="service-card">
+          <img class='service-card-image' src="{% static "images/card/img_2.jpg" %}" alt="service-card-image" id="service-card-1-img">
+          <div class="service-description">
+            <h4>GENERAL CONSTRUCTION</h4>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima tempora maxime modi voluptatibus excepturi, culpa ullam. Expedita illo fugit esse reprehenderit unde neque quae laudantium, mollitia saepe quo perferendis impedit.
+            </p>
+
+
+          <a href="" class="view-service">VIEW SERVICE</a>
+          </div>
+        </div>
+
+        <div id="service-card-2" class="service-card">
+          <img class='service-card-image' src="{% static "images/card/img_3.jpg" %}" alt="service-card-image" id="service-card-2-img">
+          <div class="service-description">
+            <h4>PROPERTY MAINTENANCE</h4>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima tempora maxime modi voluptatibus excepturi, culpa ullam. Expedita illo fugit esse reprehenderit unde neque quae laudantium, mollitia saepe quo perferendis impedit.
+            </p>
+
+
+          <a href="" class="view-service">VIEW SERVICE</a>
+          </div>
+        </div>
+
+        <div id="service-card-3" class="service-card">
+          <img class='service-card-image' src="{% static "images/card/img_1.jpg" %}" alt="service-card-image" id="service-card-3-img">
+          <div class="service-description">
+            <h4>VIRTUAL DESIGN AND BUILD</h4>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima tempora maxime modi voluptatibus excepturi, culpa ullam. Expedita illo fugit esse reprehenderit unde neque quae laudantium, mollitia saepe quo perferendis impedit.
+            </p>
+
+
+          <a href="" class="view-service">VIEW SERVICE</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="latest-projects">
+      <div class="latest-projects-wrapper">
+        <div class='latest-project-section' id="latest-project-section-1" >
+          <div id="latest-project-section-1-message">
+            <div>
+              <p>Leading Developer of Commercial &</p>
+              <p>Residential Projects</p>
+            </div>
+
+            <a href="" id="lastest-project-section-1-read-more">Read More <img src="{% static 'images/utils/arrow_1.jpg'%}" alt="arrow image"></a>
+          </div>
+        </div>
+
+        <div class='latest-project-section' id="latest-project-section-2">
+          <div id='latest-project-section-2-wrapper'>
+            <h3>Latest Projects</h3>
+            <div id='latest-project-section-2-message-1'>
+              <h3>WE ARE QUALIFIED IN</h3>
+              <h3>EVERY WORKING</h3>
+              <h3>DEPARTMENT</h3>
+            </div>
+
+            <nav id="latest-project-section-2-nav">
+              <ol>
+                <li>About</li>
+                <li>Vision</li>
+                <li>Contact</li>
+              </ol>
+            </nav>
+
+            <div id="latest-project-section-2-message-2">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi aut molestiae nulla, a perspiciatis omnis sed ab aspernatur similique nesciunt aperiam unde molestias accusamus cupiditate vero corrupti. Ducimus, repudiandae!
+            </div>
+
+            <div id="latest-project-section-2-stats">
+              <div>
+                <p>2000</p>
+                <p>STARTED JOURNEY</p>
+              </div>
+
+              <div id="latest-project-section-2-benefits">
+                <div id="latest-project-section-2-benefit">
+                  <img src="" alt="">
+                  <p>Emergency Solutions Anytime</p>
+                </div>
+
+                <div id="latest-project-section-2-benefit">
+                  <img src="" alt="">
+                  <p>High Quality</p>
+                </div>
+
+                <div id="latest-project-section-2-benefit">
+                  <img src="" alt="">
+                  <p>Reliable And Experienced Team</p>
+                </div>
+              </div>
+
+            </div>
+
+            <div id='lastest-project-section-2-a-div'>
+              <a href="" id="latest-projects-section-2-get-started">GET STARTED</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="three-images" style="background-color: black;">
+      <img src="{% static "images/three_images/img_1.jpg" %}" alt="first image">
+      <img src="{% static "images/three_images/img_2.jpg" %}" alt="second image">
+      <img src="{% static "images/three_images/img_3.jpg" %}" alt="third image">
+    </section>
+
+    <section id="frequently-asked-questions">
+      <div class="question-wrapper">
+        <div id="first-question" class='question'>
+          <img src="{% static 'images/tas-logo.jpg'%}" alt="first-question-image: times open">
+          <div class='contact'>
+            <p>WE ARE OPEN MONDAY TO FRIDAY</p>
+            <p>7:00AM - 9:00PM</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-wrapper">
+        <div id="second-question" class='question'>
+          <img src="{% static 'images/tas-logo.jpg'%}" alt="second-question-image: telephone number">
+          <div class='contact'>
+            <p>HAVE A QUESTION?</p>
+            <p>+233 400 000 000</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-wrapper">
+        <div id="third-question" class='question'>
+          <img src="{% static 'images/tas-logo.jpg'%}" alt="third-question-image: office address">
+          <div class='contact'>
+            <p>NEED A REPAIR? OUR ADDRESS</p>
+            <p>Pink Lady Road</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <footer>
+    {% include "components/component_footer.html" %}
+  </footer>
+</body>
+</html>

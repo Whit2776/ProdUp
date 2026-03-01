@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Clients</title>
+  <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+  <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+  <style>
+    :root {
+    --bg: #f5f7fb;
+    --card: white;
+    --text: #1c1f26;
+    --input-bg: #fff;
+    --input-border: #dce1eb;
+    --accent: #3a86ff;
+    --accent-hover: #1d6ef2;
+    }
+
+    .dark {
+      --bg: #0d1117;
+      --card: #161b22;
+      --text: #e6edf3;
+      --input-bg: #0d1117;
+      --input-border: #30363d;
+      --accent: #3a86ff;
+      --accent-hover: #1d6ef2;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background: var(--card);
+      border-bottom: 1px solid var(--input-border);
+    }
+
+    .header h2 {
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .form-container {
+      max-width: 700px;
+      margin: 30px auto;
+      background: var(--card);
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.08);
+    }
+
+    .client-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      width: calc(50% - 10px);
+    }
+
+    .form-group.full {
+      width: 100%;
+    }
+
+    label {
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    input, textarea {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text);
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--accent);
+      outline: none;
+      box-shadow: 0 0 0 2px var(--accent + 20%);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+      transition: 0.25s;
+    }
+
+    .submit-btn:hover {
+      background: var(--accent-hover);
+    }
+
+
+  </style>
+</head>
+<body>
+  {% include "dashboard/components/nav.html" %}
+  <div class="page-wrapper">
+    <div class="page-content">
+      <div class="container-fluid">
+
+        <main class="form-container">
+          <form class="client-form" enctype='multipart/form-data' method='POST'>
+            {% csrf_token %}
+            <div class="form-group">
+              <label>Client Name</label>
+              <input type="text" name = 'name' placeholder="Enter client’s full name" required>
+            </div>
+
+            <div class="form-group">
+              <label>Company Name (Optional)</label>
+              <input type="text" name = 'company_name' placeholder="Enter company name">
+            </div>
+
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email"  name = 'email' placeholder="example@email.com" required>
+            </div>
+
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel"  name = 'phone_number' placeholder="e.g. +233 548 000 000" required>
+            </div>
+
+            <div class="form-group">
+              <label>Location</label>
+              <input type="text" name = 'location' placeholder="City / Region" required>
+            </div>
+
+            <div class="form-group">
+              <label>Picture</label>
+              <input type="file" name = 'picture' placeholder="" accept = 'image/*' required>
+            </div>
+
+            <div class="form-group full">
+              <label>Notes (Optional)</label>
+              <textarea rows="4" name = 'note' placeholder="Add a note about this client..."></textarea>
+            </div>
+
+            <button class="submit-btn" type="submit">Save Client</button>
+          </form>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+  <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+  
+</body>
+</html>

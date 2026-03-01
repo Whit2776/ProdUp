@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Folder - {{company.name}}</title>
+    <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+    <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    {% include "dashboard/components/nav.html" %}
+    <div class="page-wrapper">
+      <div class="page-content">
+        <div class="container-fluid">
+          <style>/* ====== GLOBAL ====== */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: 0.3s;
+}
+
+/* Light mode variables */
+:root {
+  --bg: #f5f7ff;
+  --card-bg: rgba(255, 255, 255, 0.65);
+  --card-border: rgba(255, 255, 255, 0.4);
+  --accent: #7d5fff;
+  --accent-hover: #6346ea;
+  --text: #2e2e3a;
+  --input-bg: rgba(255, 255, 255, 0.8);
+  --shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Auto dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111216;
+    --card-bg: rgba(33, 33, 37, 0.65);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --text: #e9e9ec;
+    --input-bg: rgba(0, 0, 0, 0.35);
+    --shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* ====== WRAPPER ====== */
+.form-wrapper {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* ====== FORM CARD ====== */
+.form-container {
+  backdrop-filter: blur(15px);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 35px 45px;
+  width: 420px;
+  box-shadow: var(--shadow);
+  animation: fadeUp 0.4s ease;
+}
+
+/* ====== INPUTS ====== */
+.create-folder input[type="text"],
+.create-folder textarea,
+.create-folder input[type="file"] {
+  width: 100%;
+  background: var(--input-bg);
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  padding: 13px 15px;
+  margin-bottom: 18px;
+  font-size: 15px;
+  color: var(--text);
+  transition: 0.2s ease;
+  box-shadow: inset 0 0 0 1px transparent;
+}
+
+.create-folder input:hover,
+.create-folder textarea:hover {
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.create-folder input:focus,
+.create-folder textarea:focus {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.create-folder textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Hide ugly browser file UI (clean style) */
+.create-folder input[type="file"] {
+  padding: 10px;
+  cursor: pointer;
+  border: dotted 2px var(--accent);
+}
+
+/* ====== BUTTON ====== */
+.create-folder button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.create-folder button:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(125, 95, 255, 0.3);
+}
+
+.create-folder button:active {
+  transform: scale(0.97);
+}
+
+/* ====== Smooth entrance animation ====== */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+          <div class="form-wrapper">
+            <div class="form-container">
+              <form action="" class="create-folder" method = 'post' enctype='multipart/form-data'>
+                {% csrf_token %}
+                <input type="text" name = 'name' placeholder = 'Folder Name ...'>
+                <textarea type="text" name = 'description' placeholder = 'Folder Description ...'></textarea>
+                <input type="file" name = 'files' placeholder = 'Files' multiple accept='*/*'>
+                <button type="submit">Create</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/js/main.js"></script>
+
+    
+    <!-- jQuery (load once!) -->
+    <script src="{%static 'dashboard/assets/js/jquery.js'%}"></script>
+
+    <!-- DataTables core -->
+    <script src="{%static 'dashboard/assets/js/dataTables.min.js'%}"></script>
+
+    <!-- Buttons -->
+    <script src="{%static 'dashboard/assets/js/dataTables.buttons.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/jsButtonsHTML5.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/jsButtons.print.min.js'%}"></script>
+
+    <script src="{%static 'dashboard/assets/js/pdfmake.min.js'%}"></script>
+
+    <script src="{%static 'dashboard/assets/js/vsffonts.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/szip.min.js'%}"></script>
+  </body>
+</html>

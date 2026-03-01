@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{employee.name|default:'Employee'}} - {{company.name}}</title>
+    <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+    <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="{%get_static_prefix%}css/datatable.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}css/datatable.buttons.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <div id="modal" class='modal'>
+
+  </div>
+
+  <div class="settings-container">
+        <style>
+          .settings-container{
+          display: flex;
+          flex-flow: column nowrap;
+          position: fixed;
+          background: var(--bg-2);
+          width: 25%;
+          height: 93vh;
+          right: -25%;
+          bottom: 0;
+          z-index: 200;
+          backdrop-filter: blur(6px);
+          border-radius: 10px 0px 0px 10px;
+          border-left: 2px solid rgba(34, 34, 34, 0.2);
+          border-top: 2px solid rgba(34, 34, 34, 0.2);
+          box-shadow: 0px 6px 20px var(--shadow);
+          transition: all 0.5s;
+          }
+
+          .settings-container .settings{
+            display: flex;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            }
+
+          .settings-container .settings-button{
+            position: absolute;
+            top: 20%;
+            left: -20%;
+            border: 1px solid rgba(37, 37, 37, 0.29);
+            border-radius: 5px;
+            background: var(--glass-bg);
+            padding: 0.5rem;
+            }
+
+          .settings-container .settings-button svg{
+            fill: var(--text);
+            animation: spin 3s linear infinite;
+            }
+
+          .settings-container.active{
+            right: 0;
+            }
+
+          @keyframes spin {
+            0%{transform: rotate(360deg)}
+            }
+          #themeToggle{
+            transition: all 3s;
+            }
+
+          .inactive{
+            left: 100%;
+            }
+        </style>
+        <button class='settings-button'>
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" ><path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z"/>
+          </svg>
+        </button>
+      <div class="settings">
+        
+      </div>
+      
+      <script>
+        let sc = document.querySelector('.settings-container')
+        let s = document.querySelector('.settings')
+        let sb = document.querySelector('.settings-button')
+
+        sb.onclick = () => {
+          sc.classList.toggle('active')
+          document.querySelector('#themeToggle').classList.toggle('inactive')
+        }
+      </script>
+    </div>
+  {% for p in projects %}
+    <div class='tasks-container' id='task{{p.project.id}}'>
+      <div class='table-container'>
+        <table class='tasks-table'>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Project</th>
+              <th>Assigned Date</th>
+              <th>Due Date</th>
+              <th>Status</th>
+              <th>Completed Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for task in p.tasks %}
+            <tr>
+              <td>{{task.id}}</td>
+              <td>{{task.project.title}}</td>
+              <td>{{task.assigned_date}}</td>
+              <td>{{task.due_date}}</td>
+              <td class='status {{task.status}}'>{{task.status}}</td>
+              <td>{{task.completed_date|default:'-'}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {% endfor %}
+
+  <script>
+
+  </script>
+  
+    <style>
+      :root {
+        --bg: rgba(167, 207, 240, 0.14);
+        --primary: #3b82f6;
+        --secondary: #6c757d;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --light: #f8f9fa;
+        --dark: #1f2937;
+        --glassy-bg: rgba(157, 182, 238, 0.4);
+        --box-shadow: rgba(0, 0, 0, 0.2);
+        --text: black;
+      }
+
+      .dark {
+        --bg: rgba(26, 25, 25, 1);
+        --primary: #0e0e0eea;
+        --secondary: #6c757d;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #d11616ef;
+        --light: #f8f9fa;
+        --dark: #5a9cf8e3;
+        --glassy-bg: rgba(51, 51, 51, 0.1);
+        --box-shadow: rgba(27, 27, 27, 0.2);
+        --text: rgba(255, 255, 255, 1);
+      }
+
+      body{
+        background: var(--bg);
+      }
+
+      .modal{
+        display: flex;
+        position: fixed;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        backdrop-filter: ;
+        background: rgba(0,0,0,0.3);
+        left: -100%;
+        visibility: hidden;
+        transition: all 0.3s;
+        z-index: 3;
+      }
+
+      .tasks-container{
+        position: fixed;
+        top: 15vh;
+        left: 25%;
+        min-height: 50%;
+        width: 50%;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 10px;
+        z-index: 4;
+        padding: 1rem;
+        color: white;
+        left: -100%;
+        visibility: hidden;
+        transition: all 0.3s;
+        box-shadow: 0px 10px 20px var(--shadow);
+      }
+
+      .show_modal{
+        left: 0;
+        visibility: visible;
+      }
+
+      .show_tasks{
+        left: 25%;
+        visibility: visible;
+      }
+
+      .employee-header {
+          background: linear-gradient(135deg, var(--primary), #1e40af);
+          color: white;
+          border-radius: 15px;
+          padding: 2rem;
+          margin-bottom: 2rem;
+          box-shadow: 0 4px 6px var(--box-shadow);
+      }
+
+      .profile-image {
+          width: 150px;
+          height: 150px;
+          border: 5px solid white;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .detail-card {
+          border: none;
+          border-radius: 12px;
+          box-shadow: 0 2px 4px var(--box-shadow);
+          transition: transform 0.3s ease;
+          margin-bottom: 1.5rem;
+      }
+
+      .detail-card:hover {
+          transform: translateY(-5px);
+      }
+
+      .glassy-card{
+                
+        background: var(--glassy-bg);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        border: 1px solid var(--glassy-bg);
+        color: var(--text);
+      }
+
+      .card-header {
+          background-color: var(--primary);
+          color: white;
+          border-radius: 12px 12px 0 0 !important;
+          padding: 1rem 1.5rem;
+          border-color: var(--box-shadow)
+      }
+
+      .info-item {
+          padding: 0.75rem 0;
+          border-bottom: 1px solid var(--box-shadow);
+      }
+
+      .info-item:last-child {
+          border-bottom: none;
+      }
+
+      .skill-bar {
+          height: 8px;
+          border-radius: 4px;
+          margin-top: 0.5rem;
+      }
+
+      .badge-custom {
+          padding: 0.5rem 1rem;
+          border-radius: 20px;
+          font-size: 0.85rem;
+      }
+
+      .contact-info i {
+          width: 30px;
+          color: var(--success);
+      }
+
+      .action-btn {
+          border-radius: 25px;
+          padding: 0.5rem 1.5rem;
+          font-weight: 500;
+      }
+
+      .status-active {
+          background-color: #dcfce7;
+          color: #166534;
+          padding: 0.5rem 1rem;
+          border-radius: 20px;
+          font-weight: 500;
+      }
+
+      .status-inactive {
+          background-color: #fef2f2;
+          color: #991b1b;
+          padding: 0.5rem 1rem;
+          border-radius: 20px;
+          font-weight: 500;
+      }
+
+      .metric{
+        background: rgba(255, 255, 255, 0.3);
+      }
+      
+      .dark .metric{
+        background: rgba(0,0,0,0.3);
+      }
+        
+    </style>
+
+    {% include "dashboard/components/nav.html" %}
+    <div class="page-wrapper">
+        <div class="page-content">
+          <div class="container-fluid">
+            <div class="employee-dashboard">
+            <div class="container-fluid py-4">
+              <!-- Header Section -->
+              <div class="employee-header">
+                  <div class="row align-items-center">
+                      <div class="col-md-8">
+                          <div class="d-flex align-items-center">
+                              <img src="{%get_media_prefix%}{{employee.picture}}" 
+                                  alt="Employee Photo" class="profile-image rounded-circle me-4">
+                              <div>
+                                <h1 class="h2 mb-1">{{employee.name}}</h1>
+                                <p class="h5 mb-2 opacity-75">{{employee.role}}</p>
+                                <span class="status-active">
+                                  <i class="fas fa-circle me-1" style="font-size: 0.6rem;"></i>
+                                  {{employee.status}}
+                                </span>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-4 text-md-end">
+                          <div class="mt-3 mt-md-0">
+                              <button class="btn btn-light action-btn me-2">
+                                  <i class="fas fa-edit me-1"></i>Edit Profile
+                              </button>
+                              <button class="btn btn-outline-light action-btn">
+                                  <i class="fas fa-download me-1"></i>Export
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="row glassy-card" style='padding: 1.5rem 0.5rem; border-radius: 5px; box-shadow: 0px 0px 3px rgba(26, 26, 26, 0.5);'>
+                <!-- Left Column -->
+                <div class="col-lg-8" >
+                  <!-- Personal Information -->
+                  <div class="card detail-card glassy-card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-user me-2"></i>Personal Information</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                          <div class="col-md-6" style='background: transparent;'>
+                              <div class="info-item">
+                                  <strong>Employee ID:</strong> {{employee.staff_id}}
+                              </div>
+                              <div class="info-item">
+                                  <strong>Date of Birth:</strong> {{employee.date_of_birth}}
+                              </div>
+                              <div class="info-item">
+                                  <strong>Gender:</strong> {{employee.gender}}
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="info-item">
+                                  <strong>Nationality:</strong> {{employee.nationality|default:'Ghanaian'}}
+                              </div>
+                              <div class="info-item">
+                                  <strong>Marital Status:</strong> {{employee.marital_status}}
+                              </div>
+                              <div class="info-item">
+                                  <strong>Emergency Contact:</strong> Jane Smith (Spouse) - (555) 123-4567
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Professional Information -->
+                  <div class="card detail-card glassy-card">
+                      <div class="card-header">
+                          <h5 class="mb-0"><i class="fas fa-briefcase me-2"></i>Professional Information</h5>
+                      </div>
+                      <div class="card-body">
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <div class="info-item">
+                                      <strong>Department:</strong> {{employee.department.name}}
+                                  </div>
+                                  <div class="info-item">
+                                      <strong>Position:</strong> {{employee.status}}
+                                  </div>
+                                  <div class="info-item">
+                                      <strong>Employee Type:</strong> Full-time
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="info-item">
+                                      <strong>Manager:</strong> Sarah Johnson
+                                  </div>
+                                  <div class="info-item">
+                                      <strong>Work Location:</strong> New York Office
+                                  </div>
+                                  <div class="info-item">
+                                      <strong>Employment Status:</strong> Active
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- Skills & Expertise -->
+                  <div class="card detail-card glassy-card">
+                    <div class="card-header">
+                      <h5 class="mb-0"><i class="fas fa-star me-2"></i>Skills & Expertise</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="mb-3">
+                        <strong>JavaScript</strong>
+                        <div class="progress skill-bar">
+                          <div class="progress-bar bg-success" style="width: 95%"></div>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <strong>React.js</strong>
+                        <div class="progress skill-bar">
+                          <div class="progress-bar bg-info" style="width: 90%"></div>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <strong>Node.js</strong>
+                        <div class="progress skill-bar">
+                          <div class="progress-bar bg-primary" style="width: 88%"></div>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <strong>Python</strong>
+                        <div class="progress skill-bar">
+                          <div class="progress-bar bg-warning" style="width: 85%"></div>
+                        </div>
+                      </div>
+                      <div class="mb-0">
+                        <strong>Cloud Architecture</strong>
+                        <div class="progress skill-bar">
+                          <div class="progress-bar bg-danger" style="width: 80%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card detail-card glassy-card">
+                    <div class="card-header">
+                      <h5 class="mb-0"><i class=""><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h168q13-36 43.5-58t68.5-22q38 0 68.5 22t43.5 58h168q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm80-80h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm200-190q13 0 21.5-8.5T510-820q0-13-8.5-21.5T480-850q-13 0-21.5 8.5T450-820q0 13 8.5 21.5T480-790ZM200-200v-560 560Z"/></svg></i>Projects</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-container">
+                        <table class="projects-table">
+                          <thead>
+                            <tr>
+                              <th> # </th>
+                              <th> Title </th>
+                              <th> Client </th>
+                              <th> Status </th>
+                              <th> Your Tasks </th>
+                            </tr>
+                          </thead>
+
+                          <tbody>
+                            {% for p in projects %}
+                            <tr>
+                              <td>{{forloop.counter}}</td>
+                              <td>{{p.project.title}}</td>
+                              <td>{{p.project.client.name}}</td>
+                              <td class='{{p.status}} status'>{{p.project.status}}</td>
+                              <td>
+                                <button class='show_tasks_btn' style='border: none; padding: 0.5rem; border-radius: 5px;' data-task='{{p.project.id}}'>{{p.tasks.count}}</button>
+                              </td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+
+
+                    </div>
+                  </div>
+                </div>
+
+                <script>
+                  let btns = document.querySelectorAll('.show_tasks_btn')
+                  let mo = document.querySelector('#modal')
+                  let t = ''
+                  btns.forEach(btn => {
+                    btn.addEventListener('click', e => {
+                      n = Number(e.target.dataset.task)
+                      t = document.getElementById(`task${n}`)
+                      t.classList.toggle('show_tasks')
+                      mo.classList.toggle('show_modal')
+                    })
+
+                    
+                    mo.onclick = () => {
+                      t.classList.toggle('show_tasks')
+                      mo.classList.toggle('show_modal')
+                    }
+                  })
+
+                </script>
+
+                <!-- Right Column -->
+                <div class="col-lg-4">
+                  <!-- Contact Information -->
+                  <div class="card detail-card glassy-card">
+                    <div class="card-header">
+                      <h5 class="mb-0"><i class="fas fa-address-book me-2"></i>Contact Information</h5>
+                    </div>
+                    <div class="card-body contact-info">
+                      <div class="info-item d-flex align-items-center">
+                        <i class="fas fa-envelope"></i>
+                        <span>{{employee.email}}</span>
+                      </div>
+                      <div class="info-item d-flex align-items-center">
+                        <i class="fas fa-phone"></i>
+                        <span>{{employee.phone_number}}</span>
+                      </div>
+                      <div class="info-item d-flex align-items-center">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>{{employee.phone_number}}</span>
+                      </div>
+                      <div class="info-item d-flex align-items-start">
+                        <i class="fas fa-map-marker-alt mt-1"></i>
+                        <span>{{employee.house_code}}<br>{{employee.location}}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Employment Details -->
+                  <div class="card detail-card glassy-card">
+                    <div class="card-header">
+                      <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Employment Details</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="info-item">
+                        <strong>Hire Date:</strong> {{employee.date_joined}}
+                      </div>
+                      <div class="info-item">
+                        <strong>Years of Service:</strong> 5 years, 4 months
+                      </div>
+                      <div class="info-item">
+                        <strong>Probation End Date:</strong> September 15, 2018
+                      </div>
+                      <div class="info-item">
+                        <strong>Last Promotion:</strong> January 15, 2022
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Quick Stats -->
+                  <div class="card detail-card glassy-card">
+                    <div class="card-header">
+                      <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Quick Stats</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="row text-center" >
+                        <div class="col-6 mb-3" style='background: transparent;'>
+                          <div class="p-3 rounded" style='background:var(--bg);'> 
+                            <h4 class="text-primary mb-1">4.8</h4>
+                            <small class="text-muted">Performance</small>
+                          </div>
+                        </div>
+                        <div class="col-6 mb-3" style='background: transparent;'>
+                          <div class="p-3 rounded" style='background:var(--bg);'> 
+                            <h4 class="text-success mb-1">{{projects|length}}</h4>
+                            <small class="text-muted">Projects</small>
+                          </div>
+                        </div>
+                        <div class="col-6" style='background: transparent;'>
+                          <div class="p-3 rounded" style='background:var(--bg);'>
+                            <h4 class="text-info mb-1">5</h4>
+                            <small class="text-muted">Awards</small>
+                          </div>
+                        </div>
+                        <div class="col-6" style='background: transparent;'>
+                          <div class="p-3 rounded" style='background:var(--bg);'>
+                            <h4 class="text-warning mb-1">12</h4>
+                            <small class="text-muted">Leave Days</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Certifications -->
+                  <div class="card detail-card glassy-card">
+                    <div class="card-header">
+                      <h5 class="mb-0"><i class="fas fa-award me-2"></i>Certifications</h5>
+                    </div>
+                    <div class="card-body">
+                      <span class="badge badge-custom bg-primary me-2 mb-2">AWS Solutions Architect</span>
+                      <span class="badge badge-custom bg-success me-2 mb-2">React Professional</span>
+                      <span class="badge badge-custom bg-info me-2 mb-2">Node.js Certified</span>
+                      <span class="badge badge-custom bg-warning mb-2">Scrum Master</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="row mt-4">
+                <div class="col-12 text-center">
+                  <button class="btn btn-primary action-btn me-3">
+                    <i class="fas fa-file-contract me-1"></i>Generate Report
+                  </button>
+                  <button class="btn btn-success action-btn me-3">
+                    <i class="fas fa-paper-plane me-1"></i>Send Message
+                  </button>
+                  <button class="btn btn-outline-secondary action-btn me-3">
+                    <i class="fas fa-print me-1"></i>Print Profile
+                  </button>
+                  <button class="btn btn-outline-danger action-btn">
+                    <i class="fas fa-user-slash me-1"></i>Deactivate
+                  </button>
+                </div>
+              </div>
+            </div>
+
+
+            {% comment %} MODALS {% endcomment %}
+
+            <!-- Edit Profile Button -->
+            <form id='send'>
+              {% csrf_token %}
+              <button type='submit'>Send</button>
+            </form>
+
+    <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+
+    
+    
+    <!-- jQuery (load once!) -->
+    <script src="{%static 'dashboard/assets/js/jquery.js'%}"></script>
+
+    <!-- DataTables core -->
+    <script src="{%static 'dashboard/assets/js/dataTables.min.js'%}"></script>
+
+    <!-- Buttons -->
+    <script src="{%static 'dashboard/assets/js/dataTables.buttons.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/jsButtonsHTML5.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/jsButtons.print.min.js'%}"></script>
+
+    <script src="{%static 'dashboard/assets/js/pdfmake.min.js'%}"></script>
+
+    <script src="{%static 'dashboard/assets/js/vsffonts.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/szip.min.js'%}"></script>
+    
+    <div id = 'error-alert' class = 'error-alert'>
+      <div class="alert alert-danger shadow-sm border-theme-white-2" role="alert">
+        <div class="d-inline-flex justify-content-center align-items-center thumb-xs bg-danger rounded-circle mx-auto me-1">
+            <i class="fas fa-xmark align-self-center mb-0 text-white "></i>
+        </div>
+        <div class='text'>
+          
+        </div>
+      </div>
+    </div>
+    <style>
+      .error-alert{
+        position: fixed;
+        width: 100%;
+        height: 10%;
+        top: -100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 4;
+        transition: all 1s linear;
+      }
+
+      .error-alert div:first-child{
+        display: flex;
+        gap: 0.2rem;
+      }
+
+      .show_alert{
+        position: fixed;
+        top: 8%;
+      }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('.projects-table').DataTable({
+          pageLength: 10,
+          lengthMenu: [5, 10, 25, 50, 100]
+        });
+      }); 
+
+      
+      $(document).ready(function () {
+        $('.tasks-table').DataTable({
+          pageLength: 10,
+          lengthMenu: [5, 10, 25, 50, 100],
+          dom: 'Bfrtip',
+          buttons: [
+            'csv', 'excel', 'pdf', 'print'
+          ],
+          responsive: true
+        });
+      });
+
+      document.querySelector('#send').addEventListener('submit',async e => {
+        e.preventDefault()
+        let res = await fetch(`/api/send-payment/{{employee.id}}`, {method:'POST', body: new FormData(document.querySelector('#send'))})
+        let data = await res.json()
+        if (!data.success){
+          console.error(data.message)
+          let f = document.querySelector('#error-alert')
+          f.classList.add('show_alert')
+          f.querySelector('.text').innerText = data.message
+
+          setTimeout(() => {
+          f.classList.remove('show_alert')}
+          , 4000)}
+      })
+    </script>
+</body>
+</html> 

@@ -1,0 +1,313 @@
+<!DOCTYPE html> {%load static%}
+<html lang="en" dir="ltr" data-startbar="light" data-bs-theme="light">
+
+    
+<!-- Mirrored from mannatthemes.com/ TAS -bs5/default/projects-teams.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Sep 2025 17:58:44 GMT -->
+<head>
+        
+
+        <meta charset="utf-8" />
+                <title>Teams |  TAS - Engineering Firm DashBoard</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+                <meta content="" name="author" />
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+                <!-- App favicon -->
+                <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+       
+         <!-- App css -->
+         <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+         <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+         <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+         <link href="{% static 'dashboard/assets/css/projects-teams.css' %}" rel="stylesheet" type="text/css" />
+
+    </head>
+    
+    <!-- Top Bar Start -->
+    <body>
+        <div class="modals">
+
+            <!-- Modal -->
+            <div class="modal" id="teamModal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>Create Team</h2>
+                <form id="teamForm">
+                    {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Team Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter team name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="leader">Leader</label>
+                        <select id="leader" name="leader" required>
+                            
+                        {% if leaders.count != 0 %}
+                        {% for leader in leaders %}
+                        <option value="{{leader.id}}">{{leader.name}}</option>
+                        {% endfor %}
+                        {% else %}
+                        <option value="">--No Leaders Available--</option>
+                        {% endif %}
+                        
+                        </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="members">Members</label>
+                        <select id="employee" name="members" multiple required>
+                        {% if employee.count != 0 %}
+                            {% for employee in employees %}
+                            <option value="{{employee.id}}">{{employee.name}}</option>
+                            {% endfor %}
+                        {% endif %}
+                        
+                        </select>
+                </div>
+
+                <button type="submit" class="submit-btn">Create Team</button>
+                </form>
+            </div>
+            </div>
+
+        </div>
+        
+        
+        {% include "dashboard/components/nav.html" %}
+
+        <div class="add-team">
+
+            <div class="hidden pop-up-wrapper">
+                <div class="pop-up">
+                    <ul class="items">
+                        <li class='item clickable'>
+                            <span class="description">Add Team</span>
+                            <svg class = 'open-add-team-modal-btn'  xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000ff"><path d="M500-482q29-32 44.5-73t15.5-85q0-44-15.5-85T500-798q60 8 100 53t40 105q0 60-40 105t-100 53Zm220 322v-120q0-36-16-68.5T662-406q51 18 94.5 46.5T800-280v120h-80Zm80-280v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80Zm-480-40q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM0-160v-112q0-34 17.5-62.5T64-378q62-31 126-46.5T320-440q66 0 130 15.5T576-378q29 15 46.5 43.5T640-272v112H0Zm320-400q33 0 56.5-23.5T400-640q0-33-23.5-56.5T320-720q-33 0-56.5 23.5T240-640q0 33 23.5 56.5T320-560ZM80-240h480v-32q0-11-5.5-20T540-306q-54-27-109-40.5T320-360q-56 0-111 13.5T100-306q-9 5-14.5 14T80-272v32Zm240-400Zm0 400Z"/></svg>
+                        </li>
+                        <li class='item clickable'>
+                            <span class="description">Assign Team</span>
+                            <svg  xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000ff"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h168q13-36 43.5-58t68.5-22q38 0 68.5 22t43.5 58h168q33 0 56.5 23.5T840-760v268q-19-9-39-15.5t-41-9.5v-243H200v560h242q3 22 9.5 42t15.5 38H200Zm0-120v40-560 243-3 280Zm80-40h163q3-21 9.5-41t14.5-39H280v80Zm0-160h244q32-30 71.5-50t84.5-27v-3H280v80Zm0-160h400v-80H280v80Zm200-190q13 0 21.5-8.5T510-820q0-13-8.5-21.5T480-850q-13 0-21.5 8.5T450-820q0 13 8.5 21.5T480-790ZM720-40q-83 0-141.5-58.5T520-240q0-83 58.5-141.5T720-440q83 0 141.5 58.5T920-240q0 83-58.5 141.5T720-40Zm-20-80h40v-100h100v-40H740v-100h-40v100H600v40h100v100Z"/></svg>
+                        </li>
+                        <li class='item clickable'>
+                            <span class="description">Assign Project</span>
+                            <svg  xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000ff"><path d="M500-482q29-32 44.5-73t15.5-85q0-44-15.5-85T500-798q60 8 100 53t40 105q0 60-40 105t-100 53Zm220 322v-120q0-36-16-68.5T662-406q51 18 94.5 46.5T800-280v120h-80Zm80-280v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80Zm-480-40q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM0-160v-112q0-34 17.5-62.5T64-378q62-31 126-46.5T320-440q66 0 130 15.5T576-378q29 15 46.5 43.5T640-272v112H0Zm320-400q33 0 56.5-23.5T400-640q0-33-23.5-56.5T320-720q-33 0-56.5 23.5T240-640q0 33 23.5 56.5T320-560ZM80-240h480v-32q0-11-5.5-20T540-306q-54-27-109-40.5T320-360q-56 0-111 13.5T100-306q-9 5-14.5 14T80-272v32Zm240-400Zm0 400Z"/></svg>
+                        </li>
+                        <li class='item clickable'>
+                            <span class="description">Add Team</span>
+                            <svg  xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000ff"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h168q13-36 43.5-58t68.5-22q38 0 68.5 22t43.5 58h168q33 0 56.5 23.5T840-760v268q-19-9-39-15.5t-41-9.5v-243H200v560h242q3 22 9.5 42t15.5 38H200Zm0-120v40-560 243-3 280Zm80-40h163q3-21 9.5-41t14.5-39H280v80Zm0-160h244q32-30 71.5-50t84.5-27v-3H280v80Zm0-160h400v-80H280v80Zm200-190q13 0 21.5-8.5T510-820q0-13-8.5-21.5T480-850q-13 0-21.5 8.5T450-820q0 13 8.5 21.5T480-790ZM720-40q-83 0-141.5-58.5T520-240q0-83 58.5-141.5T720-440q83 0 141.5 58.5T920-240q0 83-58.5 141.5T720-40Zm-20-80h40v-100h100v-40H740v-100h-40v100H600v40h100v100Z"/></svg>
+                        </li>
+                        <li class='item clickable'>
+                            <span class="description">Add Team</span>
+                            <svg  xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000ff"><path d="M500-482q29-32 44.5-73t15.5-85q0-44-15.5-85T500-798q60 8 100 53t40 105q0 60-40 105t-100 53Zm220 322v-120q0-36-16-68.5T662-406q51 18 94.5 46.5T800-280v120h-80Zm80-280v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80Zm-480-40q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM0-160v-112q0-34 17.5-62.5T64-378q62-31 126-46.5T320-440q66 0 130 15.5T576-378q29 15 46.5 43.5T640-272v112H0Zm320-400q33 0 56.5-23.5T400-640q0-33-23.5-56.5T320-720q-33 0-56.5 23.5T240-640q0 33 23.5 56.5T320-560ZM80-240h480v-32q0-11-5.5-20T540-306q-54-27-109-40.5T320-360q-56 0-111 13.5T100-306q-9 5-14.5 14T80-272v32Zm240-400Zm0 400Z"/></svg>
+                        </li>
+                        <li class='item clickable'>
+                            <span class="description">Add Team</span>
+                            <svg  xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000ff"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h168q13-36 43.5-58t68.5-22q38 0 68.5 22t43.5 58h168q33 0 56.5 23.5T840-760v268q-19-9-39-15.5t-41-9.5v-243H200v560h242q3 22 9.5 42t15.5 38H200Zm0-120v40-560 243-3 280Zm80-40h163q3-21 9.5-41t14.5-39H280v80Zm0-160h244q32-30 71.5-50t84.5-27v-3H280v80Zm0-160h400v-80H280v80Zm200-190q13 0 21.5-8.5T510-820q0-13-8.5-21.5T480-850q-13 0-21.5 8.5T450-820q0 13 8.5 21.5T480-790ZM720-40q-83 0-141.5-58.5T520-240q0-83 58.5-141.5T720-440q83 0 141.5 58.5T920-240q0 83-58.5 141.5T720-40Zm-20-80h40v-100h100v-40H740v-100h-40v100H600v40h100v100Z"/></svg>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="add-team-button ran clickable">
+                <span class='add'></span>
+            </div>
+
+        </div>
+
+
+        <div class="page-wrapper">
+
+            <!-- Page Content-->
+            <div class="page-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="page-title-box d-md-flex justify-content-md-between align-items-center">
+                                <h4 class="page-title">Teams</h4>
+                                <div class="">
+                                    <ol class="breadcrumb mb-0">
+                                        <li class="breadcrumb-item"><a href="#"> TAS </a>
+                                        </li><!--end nav-item-->
+                                        <li class="breadcrumb-item"><a href="#">Projects</a>
+                                        </li><!--end nav-item-->
+                                        <li class="breadcrumb-item active">Teams</li>
+                                    </ol>
+                                </div>                                
+                            </div><!--end page-title-box-->
+                        </div><!--end col-->
+                    </div><!--end row-->
+                    {% if teams.count > 0 %}
+                    <div class="row team_container">
+                        {% for team in teams %}               
+                        <div class="col-lg-4" style='width:minmax(33%, 40%);'>
+                            <div class="card">
+                                <div class="card-body">    
+                                    <div class="row" style = 'display: flex; flex-flow: row wrap;'>
+                                        <div class="col-md-6">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-shrink-0">
+                                                    <img src="{%get_static_prefix%}dashboard/assets/images/logos/lang-logo/nextjs.png" alt="" class="thumb-lg rounded-circle"> 
+                                                </div>
+                                                <div class="flex-grow-1 ms-2 text-truncate">
+                                                    <h4 class="m-0 fw-semibold text-dark fs-16">{{team.name}}</h4>   
+                                                    <p class="text-dark mb-0 fs-13">Recently : 
+                                                        {% if team.availability %}
+                                                        <span class="text-success">Available </span>
+                                                        {% else %}
+                                                        <span class="text-failure" style='color: rgba(200, 0, 0, 0.9);'>Not Available </span>
+                                                        {% endif %}
+                                                    </p> 
+                                                </div><!--end media-body-->
+                                            </div>
+                                        </div><!--end col-->
+                                        <div class="col-md-6 text-end">
+                                            <div class="d-flex align-items-center">
+                                                
+                                                <div class="flex-grow-1 me-2 text-truncate">
+                                                    <h4 class="m-0 fw-semibold text-dark fs-14">{{team.leader.name}}</h4>   
+                                                    <p class="text-dark mb-0 fs-13">Team Leader</p> 
+                                                </div><!--end media-body-->
+                                                <div class="flex-shrink-0">
+                                                    <img src="{%get_media_prefix%}{{team.leader.picture}}" alt="" class="thumb-lg rounded-circle"> 
+                                                </div>
+                                            </div>
+                                        </div><!--end col-->
+                                    </div><!--end row-->
+                                    <div class="mt-3">
+                                        <p class="text-muted mb-1 text-t">{{team.assigned_project.first.description}}
+                                        </p>
+                                        <p class="text-muted text-end mb-1">{{team.progress|default:'0'}}% Complete</p>
+                                        <div class="progress mb-3" style="height: 3px;">
+                                            <div class="progress-bar bg-primary" role="progressbar" style="width: {{team.progress|default:'0'}}%;" aria-valuenow="{{team.progress|default:'0'}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        
+                                        <div class="d-flex justify-content-between">
+                                            <div class="img-group d-flex justify-content-center">
+                                                <a class="user-avatar position-relative d-inline-block" href="#">
+                                                    <img src="{%get_static_prefix%}dashboard/assets/images/users/avatar-1.jpg" alt="avatar" class="thumb-md shadow-sm rounded-circle">
+                                                </a>
+                                                <a class="user-avatar position-relative d-inline-block ms-n2" href="#">
+                                                    <img src="{%get_static_prefix%}dashboard/assets/images/users/avatar-4.jpg" alt="avatar" class="thumb-md shadow-sm rounded-circle">
+                                                </a>
+                                                <a class="user-avatar position-relative d-inline-block ms-n2" href="#">
+                                                    <img src="{%get_static_prefix%}dashboard/assets/images/users/avatar-6.jpg" alt="avatar" class="thumb-md shadow-sm rounded-circle">
+                                                </a>
+                                                <a class="user-avatar position-relative d-inline-block ms-n2" href="#">
+                                                    <img src="{%get_static_prefix%}dashboard/assets/images/users/avatar-5.jpg" alt="avatar" class="thumb-md shadow-sm rounded-circle">
+                                                </a>
+                                                <a class="user-avatar position-relative d-inline-block ms-n2" href="#">
+                                                    <img src="{%get_static_prefix%}dashboard/assets/images/users/avatar-7.jpg" alt="avatar" class="thumb-md shadow-sm rounded-circle">
+                                                </a>
+                                                <a href="#" class="user-avatar position-relative d-inline-block ms-1">
+                                                    <span class="thumb-md shadow-sm justify-content-center d-flex align-items-center bg-soft-primary rounded-circle fw-semibold fs-6">+6</span>
+                                                </a>                    
+                                            </div>
+                                            <div class="align-self-center">
+                                                <button class="btn btn-sm btn-soft-primary"><i class="fa-regular fa-message me-1"></i>Massage</button>
+                                            </div>
+                                        </div>                                        
+                                    </div><!--end task-box--> 
+                                </div><!--end card-body-->                                
+                            </div><!--end card-->
+                        </div><!--end col-->
+                        {% endfor %}
+                    </div><!--end row--> 
+                    {% else %}
+                    <div style = 'position: fixed; top: 45%; height: auto; width: 100%; display: flex; justify-content: center; align-items:center'>
+                        <div>
+                            <h1>No Teams Available</h1>
+                            <h2>Move to the 'Create Team' Section to create your teams</h2>
+                        </div>
+                    </div>
+                    {% endif %}                                        
+                </div><!-- container -->
+                
+                
+                <!--Start Rightbar-->
+                <!--Start Rightbar/offcanvas-->
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="Appearance" aria-labelledby="AppearanceLabel">
+                    <div class="offcanvas-header border-bottom justify-content-between">
+                      <h5 class="m-0 font-14" id="AppearanceLabel">Appearance</h5>
+                      <button type="button" class="btn-close text-reset p-0 m-0 align-self-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">  
+                        <h6>Account Settings</h6>
+                        <div class="p-2 text-start mt-3">
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch1">
+                                <label class="form-check-label" for="settings-switch1">Auto updates</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch2" checked>
+                                <label class="form-check-label" for="settings-switch2">Location Permission</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="settings-switch3">
+                                <label class="form-check-label" for="settings-switch3">Show offline Contacts</label>
+                            </div><!--end form-switch-->
+                        </div><!--end /div-->
+                        <h6>General Settings</h6>
+                        <div class="p-2 text-start mt-3">
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch4">
+                                <label class="form-check-label" for="settings-switch4">Show me Online</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch5" checked>
+                                <label class="form-check-label" for="settings-switch5">Status visible to all</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="settings-switch6">
+                                <label class="form-check-label" for="settings-switch6">Notifications Popup</label>
+                            </div><!--end form-switch-->
+                        </div><!--end /div-->               
+                    </div><!--end offcanvas-body-->
+                </div>
+                <!--end Rightbar/offcanvas-->
+                <!--end Rightbar-->
+                <!--Start Footer-->
+                
+                <footer class="footer text-center text-sm-start d-print-none">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card mb-0 border-bottom-0 rounded-bottom-0">
+                                    <div class="card-body">
+                                        <p class="text-muted mb-0">
+                                            ©
+                                            <script> document.write(new Date().getFullYear()) </script>
+                                             TAS 
+                                            <span
+                                                class="text-muted d-none d-sm-inline-block float-end">
+                                                Design with
+                                                <i class="iconoir-heart-solid text-danger align-middle"></i>
+                                                by Mannatthemes</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                
+                <!--end footer-->
+            </div>
+            <!-- end page content -->
+        </div>
+        <!-- end page-wrapper -->
+
+        <!-- Javascript  -->  
+        <!-- vendor js -->
+        
+        <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/js/projects-teams.js"></script>
+    </body>
+    <!--end body-->
+
+<!-- Mirrored from mannatthemes.com/ TAS -bs5/default/projects-teams.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Sep 2025 17:58:45 GMT -->
+</html>

@@ -1,0 +1,13 @@
+project_id,task,status,due_date
+1,Excavation and foundation,Completed,2025-02-10
+1,Structural framing,Completed,2025-02-28
+2,Mechanical assembly testing,In Progress,2025-03-18
+2,System diagnostics,Pending,2025-03-25
+3,Component molding,Completed,2025-02-05
+3,Final quality inspection,Completed,2025-02-20
+4,Network cable laying,In Progress,2025-03-20
+4,Switch cabinet installation,Pending,2025-03-30
+5,Bolt machining,Completed,2025-02-12
+5,Packaging and delivery,Completed,2025-02-25
+6,Cooling system prototype design,In Progress,2025-03-22
+6,Thermal signature tests,Pending,2025-04-03

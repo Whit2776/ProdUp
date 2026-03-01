@@ -1,0 +1,86 @@
+main #our-contact-banner{
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  color: white;
+  flex-direction: column;
+}
+
+#contact-cards{
+  display: flex;
+  flex-flow: row wrap;
+  margin: 2rem 0rem;
+  gap: 1rem;
+  justify-content: center;
+}
+
+#contact-cards .contact-card{
+  display: flex;
+  flex-flow: column nowrap;
+  max-width: 300px;
+  border: 1px solid rgba(0, 0, 0, 0.406);
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.403);
+}
+
+#contact-cards .contact-card-image{
+  width: 100%;
+}
+
+#get-in-touch h3{
+  text-align: center;
+}
+
+#get-in-touch-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem;
+  height: 100vh;
+}
+
+#get-in-touch-form div{
+  display: flex;
+  width: 100%;
+  gap: 0.75rem;
+}
+
+#get-in-touch-form div input, #get-in-touch-form div textarea{
+  width: 100%;
+  height: 3rem;
+  padding: 1rem;
+}
+
+#get-in-touch-form div textarea{
+  height: 10rem;
+}
+
+#get-in-touch-form div:first-child{
+  display: flex;
+  flex-flow: row wrap;
+}
+
+#get-in-touch-form button{
+  padding: 1rem;
+  color: white;
+  background: linear-gradient(to left, rgb(87, 43, 206), rgb(1, 55, 253));
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.433);
+  transition: all 0.3s;
+}
+
+#get-in-touch-form button:hover{
+  background: linear-gradient(to right, rgb(87, 43, 206), rgb(1, 55, 253));
+  cursor: pointer;
+  animation: buttonBubble 0.3s;
+}
+
+@keyframes buttonBubble {
+  0%{transform: scale(1.005);}
+  80%{transform: scale(1.1);}
+  100%{transform: scale(1);}
+}

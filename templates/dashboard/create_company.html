@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Company</title>
+</head>
+<body>
+  <span id='lolo' style='position: fixed; top: 10%; left: 8%; font-weight:bold; color:#111;'>ProdUp</span>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body{
+      min-height: 100vh;
+      /* Modern, subtle gradient */
+      background: linear-gradient(to right, #f4f4f5, #e0e0e0);
+      font-family: 'Segoe UI', sans-serif;
+      color: #111; /* dark neutral for text */
+    }
+
+    main{
+      height: 100vh;
+      display: grid;
+      grid-template-areas: "form display-video";
+      grid-template-columns: 2fr 1fr;
+    }
+
+    #form-container{
+      grid-area: form;
+      display: grid;
+      place-content: center;
+    }
+
+    #form-container .header{
+      margin-bottom: 30px;
+      color: #111;
+    }
+
+    #form-container form{
+      display: flex;
+      flex-flow: column nowrap;
+      gap: 1.5rem;
+      transform: translateY(-20%);
+      width: 150%;
+      height: auto;
+    }
+
+    .display-video{
+      grid-area: display-video;
+      height: 100%;
+      max-height: 100vh;
+      display: flex;
+      padding:0.5rem;
+      background: transparent;
+    }
+
+    .display-video video{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0.5rem;
+    }
+
+    .field-group{
+      position: relative;
+      width: 50%;
+      min-width: 250px;
+      align-self: center;
+    }
+
+    .field-group input{
+      padding: 1rem 1.5rem;
+      border-radius: 0.5rem;
+      border: 2px solid #c4c4c4; /* neutral border */
+      width: 100%;
+      justify-content: center;
+      transition: all 0.3s;
+      font-size: 1rem;
+    }
+
+    .field-group label{
+      position: absolute;
+      left: 5%;
+      transform: translateY(50%);
+      transition: all 0.3s;
+      color: #555; /* muted label */
+      pointer-events: none;
+    }
+
+    /* Focus and valid state use the accent color */
+    .field-group input:focus-within, 
+    .field-group input:valid{
+      border-color: #4f46e5; /* primary accent - purple */
+      box-shadow: 0px 0px 4px 1px rgba(79,70,229,0.3);
+      outline: none;
+    }
+
+    .field-group input:focus-within + label, 
+    .field-group input:valid + label{
+      transform: translateY(-50%);
+      font-size: 75%;
+      color: #4f46e5; /* match accent color */
+      background: white;
+      padding: 0.25rem 0.5rem;
+      font-weight: bolder;
+    }
+
+    .header{
+      text-align: center;
+    }
+
+    button{
+      align-self: center;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      width: 65%;
+      background: #4f46e5; /* same accent for consistency */
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    button:hover{
+      background: #3730a3; /* slightly darker purple on hover */
+    }
+  </style>
+
+  <main>
+    <section id="form-container">
+      <form action="" id="create-company">
+        <div class="header">
+          <h1>Get started Now!</h1>
+          <p>
+            A gift for any entreprenuer.
+            Create a company now.  
+          </p>
+        </div>
+
+        <div class="field-group">
+          <input type="text" name='name' required>
+          <label for="name"> Company Name</label>
+        </div>
+        <div class="field-group">
+          <input type="text" name='address' required>
+          <label for="address">Address</label>
+        </div>
+        <div class="field-group">
+          <input type="text" name='email' required>
+          <label for="email">Email</label>
+        </div>
+        <div class="field-group">
+          <input type="text" name='phone_number' required>
+          <label for="phone_number">Phone Number</label>
+        </div>
+        {% csrf_token %}
+        <button type="submit">Create</button>
+      </form>
+    </section>
+
+    <div class="display-video">
+      <video autoplay muted loop playsinline class="bg-video">
+        <source src="{% static 'dashboard/design/create_company/sign_up.mp4' %}" type="video/mp4">
+      </video>
+    </div>
+  </main>
+  <script>
+    let form = document.querySelector('#create-company')
+    let url = '/api/create-company'
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault()
+      let formdata = new FormData(form)
+
+      let res = await fetch(url, {method: 'POST', body: formdata})
+      let res_json = await res.json()
+
+      if (res_json.success){
+        location.href = '/emails/check-email'
+      }
+
+    })
+  </script>
+</body>
+</html>

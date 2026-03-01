@@ -1,0 +1,193 @@
+<!DOCTYPE html> {%load static%}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Employee Carousel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 40px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      width: 500%; /* 5 slides * 100% */
+    }
+
+    .slide {
+      width: 100%;
+      flex-shrink: 0;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 15px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .employee {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .employee img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    .nav {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    .nav button {
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 50%;
+      font-size: 18px;
+    }
+
+    /* Radio buttons to control slides */
+    input[type="radio"] {
+      display: none;
+    }
+
+    #s1:checked ~ .slides { transform: translateX(0); }
+    #s2:checked ~ .slides { transform: translateX(-100%); }
+    #s3:checked ~ .slides { transform: translateX(-200%); }
+    #s4:checked ~ .slides { transform: translateX(-300%); }
+    #s5:checked ~ .slides { transform: translateX(-400%); }
+
+    /* Pagination dots */
+    .dots {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .dots label {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: #bbb;
+      border-radius: 50%;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+
+    input[type="radio"]:checked + label {
+      background: #333;
+    }
+  </style>
+</head>
+<body>
+  <h2>Meet Our Employees</h2>
+
+  <!-- Slide controls -->
+  <input type="radio" name="slider" id="s1" checked>
+  <input type="radio" name="slider" id="s2">
+  <input type="radio" name="slider" id="s3">
+  <input type="radio" name="slider" id="s4">
+  <input type="radio" name="slider" id="s5">
+
+  <div class="carousel">
+    <div class="slides">
+      <!-- Slide 1 -->
+      <div class="slide">
+        <div class="employee">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Alice">
+          <h4>Alice Johnson</h4>
+          <p>Software Engineer</p>
+        </div>
+        <div class="employee">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael">
+          <h4>Michael Brown</h4>
+          <p>Project Manager</p>
+        </div>
+        <div class="employee">
+          <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="Sophia">
+          <h4>Sophia Williams</h4>
+          <p>HR Specialist</p>
+        </div>
+        <div class="employee">
+          <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Daniel">
+          <h4>Daniel Carter</h4>
+          <p>Accountant</p>
+        </div>
+        <div class="employee">
+          <img src="https://randomuser.me/api/portraits/women/8.jpg" alt="Emily">
+          <h4>Emily Davis</h4>
+          <p>Marketing Officer</p>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="slide">
+        <div class="employee">
+          <img src="https://randomuser.me/api/portraits/men/50.jpg" alt="James">
+          <h4>James Wilson</h4>
+          <p>UI/UX Designer</p>
+        </div>
+        <div class="employee">
+          <img src="https://randomuser.me/api/portraits/men/20.jpg" alt="David">
+          <h4>David Smith</h4>
+          <p>Data Analyst</p>
+        </div>
+        <div class="employee">
+          <img src="https://randomuser.me/api/portraits/women/15.jpg" alt="Grace">
+          <h4>Grace Lee</h4>
+          <p>Recruiter</p>
+        </div>
+        <div class="employee">
+          <img src="https://randomuser.me/api/portraits/men/18.jpg" alt="Chris">
+          <h4>Chris Evans</h4>
+          <p>DevOps Engineer</p>
+        </div>
+        <div class="employee">
+          <img src="https://randomuser.me/api/portraits/women/25.jpg" alt="Hannah">
+          <h4>Hannah Moore</h4>
+          <p>Business Analyst</p>
+        </div>
+      </div>
+
+      <!-- You can continue adding Slide 3, 4, 5 with more employees -->
+    </div>
+  </div>
+
+  <!-- Dots navigation -->
+  <div class="dots">
+    <label for="s1"></label>
+    <label for="s2"></label>
+    <label for="s3"></label>
+    <label for="s4"></label>
+    <label for="s5"></label>
+  </div>
+</body>
+</html>

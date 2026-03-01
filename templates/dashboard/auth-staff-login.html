@@ -1,0 +1,107 @@
+<!DOCTYPE html> {%load static%}
+<html lang="en" dir="ltr" data-startbar="light" data-bs-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <title>Login |  TAS - Engineering Firm DashBoard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+
+    <!-- App css -->
+    <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+  </head>
+
+    
+  <body>
+    <div class="form-container">
+      <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            height: 100vh;
+            background: linear-gradient(to right, rgba(6, 173, 0, 0.86), rgba(21, 166, 177, 1));
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .form-container {
+            width: 35%;
+            height: 100%;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (max-width: 500px){
+          .form-container{
+            width: 300px;
+          }
+        }
+
+        .emp-login-container {
+            width: 80%;
+            background: rgba(255,255,255,0.2);
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.3);
+        }
+
+        #emp-login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        #emp-login-form input {
+            padding: 12px;
+            font-size: 15px;
+            border-radius: 6px;
+            border: none;
+            outline: none;
+            background: rgba(255,255,255,0.8);
+        }
+
+        #emp-login-form button {
+            padding: 12px;
+            border: none;
+            font-size: 16px;
+            background: #1d72b8;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        #emp-login-form button:hover {
+            background: #17598f;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+      </style>
+
+      <div class="emp-login-container">
+          <h2>Employee Login</h2>
+          <form id="emp-login-form" method="post">
+              {% csrf_token %}
+              <input type="text" name="emp_id" placeholder="Employee ID" required>
+              <input type="password" name="password" placeholder="Password" required>
+              <button type="submit">Login</button>
+          </form>
+      </div>
+    </div>
+  </body>
+</html>

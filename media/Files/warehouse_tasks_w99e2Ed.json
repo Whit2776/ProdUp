@@ -1,0 +1,35 @@
+{
+    "project": "Warehouse Expansion",
+    "days": {
+        "Day 1": {
+            "Employee A": "Assess current warehouse capacity and identify expansion boundaries",
+            "Employee B": "Draft initial warehouse layout concept (rack placement, flow)",
+            "Employee C": "Conduct safety assessment of current warehouse (risks, hazards)",
+            "Employee D": "Document current inventory levels and categorize product types"
+        },
+        "Day 2": {
+            "Employee A": "Meet with construction vendor to discuss space requirements",
+            "Employee B": "Map loading/unloading zones and traffic flow improvements",
+            "Employee C": "Review fire safety regulations and emergency exit requirements",
+            "Employee D": "Archive existing stock records and prepare a reorganization list"
+        },
+        "Day 3": {
+            "Employee A": "Inspect available storage areas for potential expansion",
+            "Employee B": "Optimize shelving height and aisle spacing plan",
+            "Employee C": "Develop list of safety equipment needed",
+            "Employee D": "Identify slow-moving items to relocate to new storage zones"
+        },
+        "Day 4": {
+            "Employee A": "Approve contractor expansion draft and provide feedback",
+            "Employee B": "Plan new pallet racking system placement",
+            "Employee C": "Create updated emergency evacuation route draft",
+            "Employee D": "Label inventory sections for post-expansion relocation"
+        },
+        "Day 5": {
+            "Employee A": "Final site walkthrough and approval of expansion blueprint",
+            "Employee B": "Confirm material handling equipment requirements",
+            "Employee C": "Perform safety compliance checklist against expansion layout",
+            "Employee D": "Prepare updated inventory location map for staff training"
+        }
+    }
+}

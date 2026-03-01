@@ -1,0 +1,329 @@
+<!DOCTYPE html> {%load static%} {% load static %}
+<html lang="zxx">
+    
+<!-- Mirrored from templates.hibootstrap.com/TAS/default/service-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 16 Sep 2025 23:01:15 GMT -->
+<head>
+        <!-- Required Meta Tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        
+        <!-- Bootstrap CSS --> 
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/bootstrap.min.css">
+        <!-- Flaticon CSS --> 
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/fonts/flaticon.css">
+        <!-- Boxicons CSS --> 
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/boxicons.min.css">
+        <!-- Owl Carousel Min CSS --> 
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/owl.theme.default.min.css">
+        <!-- Magnific Popup CSS --> 
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/magnific-popup.css">
+        <!-- Animate Min CSS -->
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/animate.min.css">
+        <!-- Meanmenu CSS -->
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/meanmenu.css">
+         <!-- Nice Select CSS -->
+         <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/nice-select.min.css">
+        <!-- Style CSS -->
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/style.css">
+        <!-- Responsive CSS -->
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/responsive.css">
+        <!-- Theme Dark CSS -->
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/theme-dark.css">
+
+        <title>Tas-Engineering Firm</title>
+
+        <!-- Favicon -->
+        <link rel="icon" type="image/x.icon" href='{% static "images/tas-logo.jpg"%}'>
+    </head>
+    <body>
+        {% include 'home_2/components/preloader.html'%}{% include "home_2/components/nav.html" %}
+
+        <!-- Sidebar Modal -->
+        <div class="sidebar-modal">
+            <div class="sidebar-modal-inner">
+				<div class="sidebar-header">
+					<div class="sidebar-logo">
+						<img src="{% get_static_prefix %}home_2/assets/img/logo/logo2.png" class="sidebar-logo1" alt="Image">
+                        <img src="{% get_static_prefix %}home_2/assets/img/logo/logo1.png" class="sidebar-logo2" alt="Image">
+					</div>
+					
+					<span class="close-btn sidebar-modal-close-btn">
+						<i class="bx bx-x"></i>
+					</span>
+				</div>
+
+                <div class="sidebar-about">
+                    <div class="title">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
+                            incididunt ut tur incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="contact-us">
+                    <h2>Contact Us</h2>
+
+                    <ul>
+						<li>
+							<i class='bx bx-current-location'></i>
+							Address: 2659 Autostrad St, London, UK
+						</li>
+
+						<li>
+							<i class='bx bx-mail-send'></i>
+							<a href="https://templates.hibootstrap.com/cdn-cgi/l/email-protection#c2aaa7aeaead82b1b2b0abadeca1adaf"><span class="__cf_email__" data-cfemail="b6ded3dadad9f6c5c6c4dfd998d5d9db">[email&#160;protected]</span></a>
+							<a href="#">Skype: example</a>
+						</li>
+
+						<li>
+							<i class='bx bx-phone-call'></i>
+							<a href="tel:+215-123-4567"> +215 - 123 - 4567</a>
+							<a href="tel:+215-123-8587"> +215 - 123 - 8587</a>
+						</li>
+					</ul>
+				</div>
+				
+                <div class="sidebar-instagram-feed">
+                    <h2>Instagram</h2>
+
+                    <ul>
+                        <li>
+							<a href="#">
+								<img src="{% get_static_prefix %}home_2/assets/img/instagram/instagram1.jpg" alt="image">
+							</a>
+						</li>
+                        <li>
+							<a href="#">
+								<img src="{% get_static_prefix %}home_2/assets/img/instagram/instagram2.jpg" alt="image">
+							</a>
+						</li>
+                        <li>
+							<a href="#">
+								<img src="{% get_static_prefix %}home_2/assets/img/instagram/instagram3.jpg" alt="image">
+							</a>
+						</li>
+                        <li>
+							<a href="#">
+								<img src="{% get_static_prefix %}home_2/assets/img/instagram/instagram4.jpg" alt="image">
+							</a>
+						</li>
+                        <li>
+							<a href="#">
+								<img src="{% get_static_prefix %}home_2/assets/img/instagram/instagram5.jpg" alt="image">
+							</a>
+						</li>
+                        <li>
+							<a href="#">
+								<img src="{% get_static_prefix %}home_2/assets/img/instagram/instagram6.jpg" alt="image">
+							</a>
+						</li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-follow-us">
+					<h2>Sidebar Follow</h2>
+
+					<ul class="social-wrap">
+						<li>
+							<a href="#" target="_blank">
+								<i class="bx bxl-twitter"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#" target="_blank">
+								<i class="bx bxl-instagram"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#" target="_blank">
+								<i class="bx bxl-facebook"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#" target="_blank">
+								<i class="bx bxl-youtube"></i>
+							</a>
+						</li>
+					</ul>
+                </div>
+            </div>
+        </div>
+		<!-- End Sidebar Modal -->
+
+        <!-- Inner Banner -->
+        <div class="inner-banner inner-bg11">
+            <div class="container">
+                <div class="inner-title text-center">
+                    <h3>Architecture</h3>
+                    <ul>
+                        <li>
+                            <i class="flaticon-fireplace"></i>
+                        </li>
+                        <li>
+                            <a href="index.html">Home /</a>
+                        </li>
+                        <li>Services /</li>
+                        <li>Architecture</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Inner Banner End -->
+
+        <!-- Service Details Area -->
+        <div class="service-details-area pt-100 pb-70">
+           <div class="container">
+               <div class="row">
+                   <div class="col-lg-8">
+                        <div class="service-details-content">
+                            <div class="section-title-two">
+                                <span class="sp-before">Architecture</span>
+                                <h2>All Kinds of Buildings in Downtown Working for Architecture</h2>
+                            </div>
+
+                            <div class="service-slider owl-carousel owl-theme">
+                                <div class="servicer-slider-item">
+                                    <img src="{% get_static_prefix %}home_2/assets/img/services/service-details-1.jpg" alt="Images">
+                                </div>
+                                <div class="servicer-slider-item">
+                                    <img src="{% get_static_prefix %}home_2/assets/img/services/service-details-2.jpg" alt="Images">
+                                </div>
+                                <div class="servicer-slider-item">
+                                    <img src="{% get_static_prefix %}home_2/assets/img/services/service-details-2.jpg" alt="Images">
+                                </div>
+                            </div>
+                            <div class="service-details-article">
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
+                                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                                    dolore eu fugiat nulla pariatur. 
+                                </p>
+    
+                                <p>
+                                    Ecespiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, 
+                                    eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim 
+                                    ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui 
+                                    ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quci velit modi tempora incidunt 
+                                    ut labore et dolore magnam aliquam quaerat voluptatem.
+                                </p>
+
+                                <blockquote class="blockquote"> 
+                                    <p>
+                                        Awesome dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                        Ut enim ad minim veniam, quis nostrud exercitationaco laboris nisi ut aliquip commodo consequat. 
+                                    </p>
+                                </blockquote>
+
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                                    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                                </p>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-6">
+                                    <div class="service-circle">
+                                        <h2>60%</h2>
+                                        <h3>Interrior Design</h3>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-sm-6">
+                                    <div class="service-circle">
+                                        <h2>55%</h2>
+                                        <h3>3D Modeling</h3>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-sm-6 offset-lg-0 offset-sm-3">
+                                    <div class="service-circle">
+                                        <h2>50%</h2>
+                                        <h3>Design Development</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="side-bar-wrap">
+                            <div class="side-bar-widget">
+                                <h3 class="title">Others Services</h3>
+                                <div class="side-bar-categories">
+                                    <ul>
+                                        <li>
+                                            <a href="#">Architecture </a>
+                                            <span>(1)</span>
+                                        </li>
+                                        <li>
+                                            <a href="#">3D Animation </a>
+                                            <span>(2)</span>
+                                        </li>
+                                        <li>
+                                            <a href="#">Renovation </a>
+                                            <span>(3)</span>
+                                        </li>
+                                        <li>
+                                            <a href="#">Construction </a>
+                                            <span>(4)</span>
+                                        </li>
+                                        <li>
+                                            <a href="#">Furniture & decor </a>
+                                            <span>(5)</span>
+                                        </li>
+                                        <li>
+                                            <a href="#">Custom solution </a>
+                                            <span>(6)</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="side-bar-contact">
+                                <i class="flaticon-phone-call"></i>
+                                <h3>Want to know Cal us for info</h3>
+                                <span><a href="tel:(+123)-456-876">(+123) 456 876</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           </div>
+        </div>
+        <!-- Service Details Area End -->
+
+        <script defer src='{% static "home_2/assets/js/contact.js" %}'></script> {% include 'home_2/components/contact.html'%}
+
+       {% include "home_2/components/footer.html" %}
+
+
+       <!-- Jquery Min JS -->
+        <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="{% get_static_prefix %}home_2/assets/js/jquery.min.js"></script>
+        <!-- Bootstrap Bundle Min JS -->
+        <script src="{% get_static_prefix %}home_2/assets/js/bootstrap.bundle.min.js"></script>
+        <!-- Owl Carousel Min JS -->
+        <script src="{% get_static_prefix %}home_2/assets/js/owl.carousel.min.js"></script>
+        <script src="{% get_static_prefix %}home_2/assets/js/carousel-thumbs.js"></script>
+        <!-- Magnific Popup JS -->
+        <script src="{% get_static_prefix %}home_2/assets/js/jquery.magnific-popup.min.js"></script>
+        <!-- Wow Min JS -->
+        <script src="{% get_static_prefix %}home_2/assets/js/wow.min.js"></script>
+        <!-- Meanmenu JS -->
+        <script src="{% get_static_prefix %}home_2/assets/js/meanmenu.js"></script>
+        <!-- Nice Select Min JS -->
+        <script src="{% get_static_prefix %}home_2/assets/js/jquery.nice-select.min.js"></script>
+        <!-- Ajaxchimp Min JS -->
+        <script src="{% get_static_prefix %}home_2/assets/js/jquery.ajaxchimp.min.js"></script>
+        <!-- Form Validator Min JS -->
+        <script src="{% get_static_prefix %}home_2/assets/js/form-validator.min.js"></script>
+        <!-- Contact Form JS -->
+        <script src="{% get_static_prefix %}home_2/assets/js/contact-form-script.js"></script>
+        
+        <script src="{%get_static_prefix%}home_2/assets/js/nav.js?44"></script>
+        <script src="{% get_static_prefix %}home_2/assets/js/custom.js"></script>
+    </body>
+
+<!-- Mirrored from templates.hibootstrap.com/TAS/default/service-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 16 Sep 2025 23:01:16 GMT -->
+</html>

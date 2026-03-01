@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Main Admin Access</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+:root{
+  --bg:#060b16;
+  --panel:#0f172a;
+  --border:#1e293b;
+  --primary:#f1f5f9;
+  --muted:#64748b;
+  --accent:#1d4ed8;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  height:100vh;
+  background:var(--bg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--primary);
+}
+
+.admin-card{
+  width:100%;
+  max-width:380px;
+  padding:40px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:8px;
+}
+
+.admin-header{
+  margin-bottom:32px;
+}
+
+.admin-header h1{
+  font-size:1.4rem;
+  font-weight:600;
+}
+
+.admin-header p{
+  font-size:0.85rem;
+  color:var(--muted);
+  margin-top:6px;
+}
+
+.field{
+  margin-bottom:22px;
+}
+
+.label{
+  font-size:0.75rem;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:var(--muted);
+  margin-bottom:6px;
+  display:block;
+}
+
+.input-wrapper{
+  display:flex;
+  align-items:center;
+  border:1px solid var(--border);
+  border-radius:6px;
+  background:#0b1324;
+  transition:0.15s;
+}
+
+.input-wrapper:focus-within{
+  border-color:var(--accent);
+}
+
+.input-wrapper input{
+  width:100%;
+  padding:0.85rem 1rem;
+  background:transparent;
+  border:none;
+  outline:none;
+  color:var(--primary);
+  font-size:0.9rem;
+}
+
+.input-wrapper.password input{
+  padding-right:2.5rem;
+}
+
+.toggle-btn{
+  position:absolute;
+  right:14px;
+  background:none;
+  border:none;
+  color:var(--muted);
+  cursor:pointer;
+}
+
+.submit-btn{
+  width:100%;
+  margin-top:10px;
+  padding:0.9rem;
+  border:none;
+  border-radius:6px;
+  font-size:0.9rem;
+  font-weight:600;
+  cursor:pointer;
+  background:var(--accent);
+  color:white;
+  transition:0.15s;
+}
+
+.submit-btn:hover{
+  background:#1e40af;
+}
+
+.footer{
+  margin-top:26px;
+  padding-top:18px;
+  border-top:1px solid var(--border);
+  font-size:0.75rem;
+  color:var(--muted);
+  text-align:center;
+}
+
+.footer span{
+  color:var(--primary);
+  font-weight:500;
+}
+</style>
+</head>
+
+<body>
+
+<div class="admin-card">
+  <div class="admin-header">
+    <h1>Main Administrator Access</h1>
+    <p>Restricted system-level authentication</p>
+  </div>
+
+  <form>
+    <div class="field">
+      <label class="label">Admin ID</label>
+      <div class="input-wrapper">
+        <input type="text" placeholder="ADM-001">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Password</label>
+      <div class="input-wrapper password" style="position:relative;">
+        <input type="password" id="adminPass" placeholder="••••••••">
+        <button type="button" class="toggle-btn" id="togglePass">
+          <i data-lucide="eye"></i>
+        </button>
+      </div>
+    </div>
+
+    <button class="submit-btn">Authenticate</button>
+  </form>
+
+  <div class="footer">
+    System Status: <span>Secure</span>
+    <div>
+      Don't have an account? <a href="{% url 'create-company' %}">Create Account</a>
+    </div>
+  </div>
+</div>
+
+<script>
+lucide.createIcons();
+
+const toggle = document.getElementById('togglePass');
+const pass = document.getElementById('adminPass');
+
+toggle.addEventListener('click', () => {
+  if(pass.type === 'password'){
+    pass.type = 'text';
+  } else {
+    pass.type = 'password';
+  }
+});
+</script>
+
+</body>
+</html>

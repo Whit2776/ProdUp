@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+    <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+      <style>
+        :root {
+            --primary: #3498db;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --gray: #95a5a6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .non-scroll{
+          overflow: none;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            padding: 20px;
+        }
+        
+        .page-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: var(--dark);
+        }
+        
+        select, button {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        select:focus, button:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            font-weight: 500;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+        
+        
+        
+        .status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .status-in_progress {
+            background: #e8f6ef;
+            color: var(--success);
+        }
+        
+        .status-pending {
+            background: #fef9e7;
+            color: var(--warning);
+        }
+        
+        .status-completed {
+            background: #e8f4fd;
+            color: var(--primary);
+        }
+        
+        .status-on-hold {
+            background: #fbeeee;
+            color: var(--danger);
+        }
+        
+        .priority-high {
+            color: var(--danger);
+            font-weight: 600;
+        }
+        
+        .priority-medium {
+            color: var(--warning);
+            font-weight: 600;
+        }
+        
+        .priority-low {
+            color: var(--success);
+            font-weight: 600;
+        }
+        
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+            flex: 1;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+        
+        .progress-75 {
+            width: 75%;
+            background: var(--success);
+        }
+        
+        .progress-50 {
+            width: 50%;
+            background: var(--warning);
+        }
+        
+        .progress-90 {
+            width: 90%;
+            background: var(--success);
+        }
+        
+        .progress-25 {
+            width: 25%;
+            background: var(--danger);
+        }
+        
+        .progress-100 {
+            width: 100%;
+            background: var(--primary);
+        }
+        
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-action {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .btn-edit {
+            background: #e8f4fd;
+            color: var(--primary);
+        }
+        
+        .btn-edit:hover {
+            background: #d4e9fb;
+        }
+        
+        .btn-delete {
+            background: #fbeeee;
+            color: var(--danger);
+        }
+        
+        .btn-delete:hover {
+            background: #f8e0e0;
+        }
+        
+        .btn-view {
+            background: #e8f6ef;
+            color: var(--success);
+        }
+        
+        .btn-view:hover {
+            background: #d4f0e4;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .modal.active {
+            display: flex;
+        }
+
+        
+        .modal-content:-webkit-scrollbar{
+          display: none;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 20px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            color: var(--dark);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-cancel {
+            background: #f8f9fa;
+            color: var(--dark);
+            border: 1px solid #ddd;
+        }
+
+        .btn-cancel:hover {
+            background: #e9ecef;
+        }
+
+        .btn-save {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-save:hover {
+            background: #2980b9;
+        }
+
+        .btn-delete-modal {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-delete-modal:hover {
+            background: #c0392b;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* Project Details Styles */
+        .project-detail {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .project-detail:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .project-detail label {
+            font-weight: 600;
+            color: var(--gray);
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .project-detail .value {
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        .team-members {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .team-member {
+            background: #e8f4fd;
+            color: var(--primary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+            
+            .filters {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .stats-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        
+      .stats-container {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        max-width: 1000px;
+        margin: auto;
+        margin-bottom: 0.5rem; 
+      }
+
+      .stats{
+        display: flex;
+        flex-flow: row nowrap;
+        overflow: auto;
+        scroll-snap-type: x mandatory;
+        gap: 1rem;
+      }
+
+      .stats::-webkit-scrollbar{
+        display: none;
+      }
+        
+      .stat-card {
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        border-left: 4px solid var(--primary);
+        scroll-snap-align: start;
+        min-width: max(24%, 100px);
+        scroll-snap-align: start;
+        background: var(--bg);
+      }
+
+      @media (max-width: 500px){
+        .stat-card {
+          min-width: max(100%, 100px);
+        }
+      }
+
+      .stat-card:nth-child(2){
+        border-color: rgba(63, 255, 73, 1)
+      }.stat-card:nth-child(3){
+        border-color: rgba(186, 113, 255, 1)
+      }.stat-card:nth-child(4){
+        border-color: rgba(255, 47, 47, 1)
+      }.stat-card:nth-child(5){
+        border-color: rgba(72, 249, 255, 1)
+      }
+      
+      .stat-card h3 {
+        font-size: 14px;
+        color: var(--gray);
+        margin-bottom: 10px;
+      }
+      
+      .stat-card .value {
+        font-size: 28px;
+        font-weight: bold;
+        color: var(--dark);
+        text-align: right;
+      }
+    </style>
+
+    {% include "dashboard/staff_dashboard/components/nav.html" %}
+    <div class="page-wrapper">
+      <div class="page-content">
+        <div class="container-fluid">
+          <h1 class="page-title">Project Management</h1>
+  
+          <button id='new-project-btn' class='editable'></button>
+          <!-- Stats Cards -->
+
+          <div class="stats-container">
+              <div class="stats-track">
+                <div class="stats">
+                  <div class="stat-card">
+                    <h3>Total Projects</h3>
+                    <div class="value">{{projects.count}}</div>
+                  </div>
+                  <div class="stat-card">
+                    <h3>Active</h3>
+                    <div class="value">{{active.count}}</div>
+                  </div>
+                  <div class="stat-card">
+                    <h3>Completed</h3>
+                    <div class="value">{{completed.count}}</div>
+                  </div>
+                  <div class="stat-card">
+                    <h3>Pending</h3>
+                    <div class="value">{{pending.count}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+          <!-- Projects Table -->
+          <div class="table-container" style = 'overflow: hidden;'>
+            <div class="table-wrapper" style = 'overflow: scroll;'>
+              <table class='projects-table'>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Project Id</th>
+                    <th>Project Name</th>
+                    <th>Team</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Progress</th>
+                    <th>Due Date</th>
+                    <th>Days Left</th>
+                    {% if not employee.role.permissions.can_edit_projects %}
+                    <th class='editable'>Actions</th>
+                    {% endif %}
+                  </tr>
+                </thead>
+                <tbody>
+                {% for project in projects %}
+                  <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{project.id}}</td>
+                    <td> <a href="{% url 'staff-project' project.id %}">{{project.title}}</a> </td>
+                    <td>{% for team in project.team.all %}{{team.name}}{% endfor %}</td>
+                    <td><span class="status status-{{project.status}}">{{project.status}}</span></td>
+                    <td class="priority-high">{{project.priority}}</td>
+                    <td>
+                      <div style = 'display: flex; justify-content: space-between; align-items:center;'>
+                        <div style='display: flex; width: 100%; height: 10px; background: transparent; border: 1px solid black; border-radius: 10px;'>
+                          <div style='display:flex; height: 100%; background: linear-gradient(to right, rgba(57, 176, 255, 1), rgba(46, 255, 203, 0)); width: {{project.progress}}%;'> </div>
+                        </div>
+                        <small>{{project.progress}}%</small>
+                      </div>
+                    </td>
+                    <td>{{project.deadline}}</td>
+                    <td>{{project.days_left}}</td>
+                    {% if not employee.role.permissions.can_edit_projects %}
+                    <td class="actions  editable">
+                      <button class="btn-action btn-view editable" data-project="{{project.title}}">View</button>
+                      <button class="btn-action btn-edit editable" data-project="{{project.title}}">Edit</button>
+                      <button class="btn-action btn-delete editable" data-project="{{project.title}}">Delete</button>
+                    </td>
+                    {% endif %}
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          {% for p in projects %}
+          <!-- View Project Modal -->
+          <div class="modal view-project-modal editable" id="view-project-modal" data-project='{{p.title}}'>
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h2>Project Details</h2>
+                      <button class="close-btn">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="project-detail">
+                          <label>Project Name</label>
+                          <div class="value" id="view-project-name">{{p.title}}</div>
+                      </div>
+                      <div class="project-detail">
+                          <label>Description</label>
+                          <div class="value" id="view-project-description">{{p.description}}</div>
+                      </div>
+                      <div class="form-row">
+                          <div class="project-detail">
+                              <label>Status</label>
+                              <div class="value" id="view-project-status">{{p.status}}</div>
+                          </div>
+                          <div class="project-detail">
+                              <label>Priority</label>
+                              <div class="value" id="view-project-priority">{{p.priority}}</div>
+                          </div>
+                      </div>
+                      <div class="form-row">
+                          <div class="project-detail">
+                              <label>Start Date</label>
+                              <div class="value" id="view-project-start">{{p.start_date}}</div>
+                          </div>
+                          <div class="project-detail">
+                              <label>Due Date</label>
+                              <div class="value" id="view-project-due">{{p.due_date}}</div>
+                          </div>
+                      </div>
+                      <div class="project-detail">
+                          <label>Progress</label>
+                          <div class="value">
+                              <div class="progress-container">
+                                  <div class="progress-bar">
+                                      <div class="progress-fill" id="view-project-progress-bar"></div>
+                                  </div>
+                                  <small id="view-project-progress-text">{{p.progress}}%</small>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="project-detail">
+                          <label>Team Members</label>
+                          <div class="value">
+                              <div class="team-members" id="view-project-team"></div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button class="btn btn-cancel">Close</button>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+
+          {% for p in projects %}
+          <!-- Edit Project Modal -->
+          <div class="modal edit-project-modal editable" id="edit-project-modal" data-project='{{p.title}}'>
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h2>Edit Project</h2>
+                      <button class="close-btn">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                      <form id="edit-project-form">
+                          <div class="form-group">
+                              <label for="edit-project-name">Project Name</label>
+                              <input type="text" id="edit-project-name" value='{{p.title}}' name ='title' required>
+                          </div>
+                          <div class="form-group">
+                              <label for="edit-project-description">Description</label>
+                              <textarea id="edit-project-description" name = 'description'>{{p.description}}</textarea>
+                          </div>
+                          <div class="form-row">
+                              <div class="form-group">
+                                  <label for="edit-project-status">Status</label>
+                                  <select id="edit-project-status" name='status'>
+                                      <option value="active">Active</option>
+                                      <option value="pending">Pending</option>
+                                      <option value="completed">Completed</option>
+                                      <option value="on-hold">On Hold</option>
+                                  </select>
+                              </div>
+                              <div class="form-group">
+                                  <label for="edit-project-priority">Priority</label>
+                                  <select id="edit-project-priority" name ='priority'>
+                                      <option value="high">High</option>
+                                      <option value="medium">Medium</option>
+                                      <option value="low">Low</option>
+                                  </select>
+                              </div>
+                          </div>
+                          <div class="form-row">
+                              <div class="form-group">
+                                  <label for="edit-project-start">Start Date</label>
+                                  <input type="date" id="edit-project-start" name='start-date' value='{{p.start_date}}' required>
+                              </div>
+                              <div class="form-group">
+                                  <label for="edit-project-due">Due Date</label>
+                                  <input type="date" id="edit-project-due" name='due_date' value='{{p.due_date}}' required>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label for="edit-project-progress">Progress (%)</label>
+                              <input type="number" id="edit-project-progress" min="0" max="100" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="edit-project-team">Team Members (comma separated)</label>
+                              <input type="text" id="edit-project-team" placeholder="John, Jane, Bob">
+                          </div>
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                      <button class="btn btn-cancel">Cancel</button>
+                      <button class="btn btn-save" id="save-project-btn">Save Changes</button>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+
+          <!-- New Project Modal -->
+          <div class="modal " id="new-project-modal">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h2>Create New Project</h2>
+                      <button class="close-btn">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                      <form id="new-project-form">
+                          <div class="form-group">
+                              <label for="new-project-name">Project Name</label>
+                              <input type="text" id="new-project-name" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="new-project-description">Description</label>
+                              <textarea id="new-project-description"></textarea>
+                          </div>
+                          <div class="form-row">
+                              <div class="form-group">
+                                  <label for="new-project-status">Status</label>
+                                  <select id="new-project-status">
+                                      <option value="active">Active</option>
+                                      <option value="pending">Pending</option>
+                                      <option value="on-hold">On Hold</option>
+                                  </select>
+                              </div>
+                              <div class="form-group">
+                                  <label for="new-project-priority">Priority</label>
+                                  <select id="new-project-priority">
+                                      <option value="high">High</option>
+                                      <option value="medium">Medium</option>
+                                      <option value="low">Low</option>
+                                  </select>
+                              </div>
+                          </div>
+                          <div class="form-row">
+                              <div class="form-group">
+                                  <label for="new-project-start">Start Date</label>
+                                  <input type="date" id="new-project-start" required>
+                              </div>
+                              <div class="form-group">
+                                  <label for="new-project-due">Due Date</label>
+                                  <input type="date" id="new-project-due" required>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label for="new-project-team">Team Members (comma separated)</label>
+                              <input type="text" id="new-project-team" placeholder="John, Jane, Bob">
+                          </div>
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                      <button class="btn btn-cancel">Cancel</button>
+                      <button class="btn btn-save" id="create-project-btn">Create Project</button>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Delete Confirmation Modal -->
+          {% for p in projects %}
+          <div class="modal delete-modal editable" id="delete-modal" data-project = '{{p.title}}'>
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2>Delete Project</h2>
+                <button class="close-btn">&times;</button>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure you want to delete "<span id="delete-project-name">{{p.title}}</span>"? This action cannot be undone.</p>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-cancel">Cancel</button>
+                <button class="btn btn-delete-modal" id="confirm-delete-btn">Delete Project</button>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/js/main.js"></script>
+
+    <script>
+    </script>
+    
+    <!-- jQuery (load once!) -->
+    <script src="{%static 'dashboard/assets/js/jquery.js'%}"></script>
+
+    <!-- DataTables core -->
+    <script src="{%static 'dashboard/assets/js/dataTables.min.js'%}"></script>
+
+    <!-- Buttons -->
+    <script src="{%static 'dashboard/assets/js/dataTables.buttons.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/jsButtonsHTML5.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/jsButtons.print.min.js'%}"></script>
+
+    <script src="{%static 'dashboard/assets/js/pdfmake.min.js'%}"></script>
+
+    <script src="{%static 'dashboard/assets/js/vsffonts.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/szip.min.js'%}"></script>
+
+    
+    {% if employee.role.permissions.can_edit_projects %}
+    <script>
+      const viewModals = document.querySelectorAll('.view-project-modal');
+      const editModals = document.querySelectorAll('.edit-project-modal');
+      const deleteModals = document.querySelectorAll('.delete-modal');
+
+      const newModal = document.getElementById('new-project-modal');
+
+      const closeButtons = document.querySelectorAll('.close-btn');
+      const cancelButtons = document.querySelectorAll('.btn-cancel');
+
+      // Initialize modals
+      document.addEventListener('DOMContentLoaded', function() {
+          
+        // View project buttons
+        document.querySelectorAll('.btn-view').forEach(button => {
+          button.addEventListener('click', function() {
+            const projectId = this.getAttribute('data-project');
+            const viewModal = Array.from(viewModals).find(vM =>  vM.getAttribute('data-project') == projectId)
+            viewModal.classList.add('active');
+          });
+        });
+        
+        // Edit project buttons
+        document.querySelectorAll('.btn-edit').forEach(button => {
+          button.addEventListener('click', function() {
+            const projectId = this.getAttribute('data-project');
+            const editModal = Array.from(editModals).find(eM => eM.getAttribute('data-project') == projectId)
+            editModal.classList.add('active');
+          });
+        });
+        
+        // Delete project buttons
+        document.querySelectorAll('.btn-delete').forEach(button => {
+          button.addEventListener('click', function() {
+            const projectId = this.getAttribute('data-project');
+            const deleteModal = Array.from(deleteModals).find(dM => dM.getAttribute('data-project') == projectId)
+            deleteModal.classList.add('active');
+          });
+        });
+        
+        // New project button
+        document.getElementById('new-project-btn').addEventListener('click', function() {
+          newModal.classList.add('active');
+        });
+        
+        // Save project button
+        document.getElementById('save-project-btn').addEventListener('click', function() {
+          alert('Project Saved')
+          closeModals()
+        });
+        
+        // Create project button
+        document.getElementById('create-project-btn').addEventListener('click', function() {
+          alert('Project Created');
+          closeModals()
+        });
+        
+        // Confirm delete button
+        document.getElementById('confirm-delete-btn').addEventListener('click', function() {
+          alert('Project Deleted');
+          closeModals()
+        });
+        
+        // Close modal events
+        closeButtons.forEach(button => {
+          button.addEventListener('click', closeModals);
+        });
+        
+        cancelButtons.forEach(button => {
+          button.addEventListener('click', closeModals);
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+          if (event.target.classList.contains('modal')) {
+            closeModals();
+          }
+        });
+      });
+
+
+      function closeModals() {
+        viewModals.forEach(viewModal => {
+          viewModal.classList.remove('active');
+        })
+        editModals.forEach(editModal => {
+          editModal.classList.remove('active');
+        })
+        deleteModals.forEach(deleteModal => {
+          deleteModal.classList.remove('active');
+        })
+        newModal.classList.remove('active');
+      }
+
+      
+    </script>
+    {% else %}
+    <script>
+      $(document).ready(function() {
+        $('.projects-table').DataTable({
+          responsive: true,
+          dom: 'Bfrtip',
+          buttons: [
+            'csv', 'excel', 'pdf', 'print'
+          ],
+          pageLength: 10,
+        });
+      });
+
+      document.querySelectorAll('.editable').forEach(e => {e.remove()})
+    </script>
+    {% endif %}
+  </body>
+</html>

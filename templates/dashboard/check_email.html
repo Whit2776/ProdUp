@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check your email</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #f5f7fa;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .card {
+      max-width: 400px;
+      width: 100%;
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      padding: 2.5rem 1.8rem;
+      text-align: center;
+    }
+    .icon {
+      font-size: 3.2rem;
+      line-height: 1;
+      margin-bottom: 1.2rem;
+    }
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #1a2b3e;
+      margin-bottom: 1rem;
+    }
+    .email {
+      background: #eef2f6;
+      padding: 0.8rem 1.8rem;
+      border-radius: 40px;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #0f2b3d;
+      margin: 0.5rem 0 1rem 0;
+      word-break: break-word;
+      border: 1px solid #dae2ed;
+      display: inline-block;
+    }
+    p {
+      color: #3d556b;
+      font-size: 1rem;
+      line-height: 1.5;
+      margin: 1rem 0 1.5rem 0;
+    }
+    .resend {
+      background: none;
+      border: none;
+      color: #1f70b5;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: underline;
+      display: inline-block;
+      margin: 0.2rem 0 1rem 0;
+      cursor: default;
+      opacity: 0.8;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 1.8rem;
+      color: #6f7f8f;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border-top: 1px solid #dde3e9;
+      padding-top: 1.5rem;
+      width: 100%;
+      cursor: default;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">✉️</div>
+    <h1>Check your email</h1>
+    {% comment %} <div class="email">a.smith@example.com</div> {% endcomment %}
+    <p>We sent a sign-in link to your inbox.</p>
+    {% comment %} <div class="resend">Didn't get it? Resend</div> {% endcomment %}
+    <div class="back-link">← Back to sign in</div>
+  </div>
+</body>
+</html>

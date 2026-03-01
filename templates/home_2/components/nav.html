@@ -1,0 +1,195 @@
+
+{% load static %}
+<header class='nav_1 header'>
+  <div class='logo'>
+    <h1>TAS Eng.</h1>
+  </div>
+
+  <nav class='main_nav hide_on_mobile'>
+    <ul class='container'>
+      <li class='nav_item' >
+        <a class='nav_link' href="{% url 'home' %}">Home</a>
+      </li>
+      
+      <li class='nav_item' >
+        <a class='nav_link' href="{% url 'about' %}">About</a>
+      </li>
+
+      <li class='nav_item' >
+        <a class='nav_link special_nav_link' href="">Pages</a>
+        
+        <div class='dropdown_wrapper'>
+          <ul class="dropdown">
+            <li class='dropdown_list clickable'><a href="{% url 'team' %}">Team</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'coming_soon' %}">Single Team</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'faq' %}">FAQ</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'coming_soon' %}">Testimonials</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'not_found_404_page' %}">404</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'coming_soon' %}">Sign In</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'coming_soon' %}">Sign Up</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'terms_conditions' %}">Terms and Conditions</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class='nav_item' >
+        <a class='nav_link special_nav_link' href="">Portfolio</a>
+        
+        <div class='dropdown_wrapper'>
+          <ul class="dropdown">
+            <li class='dropdown_list clickable'><a href="{% url 'portfolio' %}">Portfolio</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'coming_soon' %}">Portfolio Details</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class='nav_item' >
+        <a class='nav_link special_nav_link' href="">Services</a>
+        
+        <div class='dropdown_wrapper'>
+          <ul class="dropdown">
+            <li class='dropdown_list clickable'><a href="{% url 'services_1' %}">Services 1</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'services_2' %}">Services 2</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class='nav_item' >
+        <a class='nav_link special_nav_link' href="">Shop</a>
+        
+        <div class='dropdown_wrapper'>
+          <ul class="dropdown">
+            <li class='dropdown_list clickable'><a href="{% url 'shop' %}">Shop</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'cart' %}">Cart</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class='nav_item' >
+        <a class='nav_link' href="{% url 'blog_2' %}">Blog</a>
+      </li>
+
+      <li class='nav_item' >
+        <a class='nav_link' href="{% url 'contact' %}">Contact</a>
+      </li>
+      {% if user != None %}
+        <li class='nav_item' >
+          <a class='nav_link' href="{% url 'messages' %}">Messages</a>
+        </li>
+      {% endif %}
+    </ul>
+
+  </nav>
+
+  
+    <ol class='menu-icon show_on_mobile'>
+      <li class="box"></li>
+      <li class="box"></li>
+      <li class="box"></li>
+      <li class="box"></li>
+    </ol>
+</header>
+
+  
+
+
+
+
+
+<header class='nav_2 header2'>
+  <div class='logo show_on_mobile'>
+    <h1>TAS Eng.</h1>
+  </div>
+
+  <nav class='main_nav secondary_nav'>
+    <ul class='container'>
+      <li class='nav_item' >
+        <a class='nav_link' href="{% url 'home' %}">Home</a>
+      </li>
+      
+      <li class='nav_item' >
+        <a class='nav_link' href="{% url 'about' %}">About</a>
+      </li>
+
+      <li class='nav_item' >
+        <a class='nav_link special_nav_link' href="">Pages</a>
+          
+        <div class='dropdown_wrapper'>
+          <ul class="dropdown">
+            <li class='dropdown_list clickable'><a href="{% url 'team' %}">Team</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'coming_soon' %}">Single Team</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'faq' %}">FAQ</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'coming_soon' %}">Testimonials</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'coming_soon' %}">Sign In</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'coming_soon' %}">Sign Up</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'terms_conditions' %}">Terms and Conditions</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class='nav_item' >
+        <a class='nav_link special_nav_link' href="">Portfolio</a>
+
+        <div class='dropdown_wrapper'>
+          <ul class="dropdown">
+            <li class='dropdown_list clickable'><a href="{% url 'portfolio' %}">Portfolio</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'coming_soon' %}">Portfolio Details</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class='nav_item' >
+        <a class='nav_link special_nav_link' href="">Services</a>
+        
+        <div class='dropdown_wrapper'>
+          <ul class="dropdown">
+            <li class='dropdown_list clickable'><a href="{% url 'services_1' %}">Services 1</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'services_2' %}">Services 2</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class='nav_item' >
+        <a class='nav_link special_nav_link' href="">Shop</a>
+        
+        <div class='dropdown_wrapper'>
+          <ul class="dropdown">
+            <li class='dropdown_list clickable'><a href="{% url 'shop' %}">Shop</a></li>
+            <li class='dropdown_list clickable'><a href="{% url 'cart' %}">Cart</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class='nav_item' >
+        <a class='nav_link' href="{% url 'blog_2' %}">Blog</a>
+      </li>
+
+      <li class='nav_item' >
+        <a class='nav_link' href="{% url 'contact' %}">Contact</a>
+      </li>
+
+      
+      {% if user != None %}
+        <li class='nav_item' >
+          <a class='nav_link' href="{% url 'messages' %}">Messages</a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+
+  
+    <ol class='menu-icon show_on_mobile'>
+      <li class="box"></li>
+      <li class="box"></li>
+      <li class="box"></li>
+      <li class="box"></li>
+    </ol>
+
+</header>
+
+    
+<div class="modal">
+  
+</div>

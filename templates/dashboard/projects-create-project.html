@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en" dir="ltr" data-startbar="light" data-bs-theme="light">
+
+    
+<!-- Mirrored from mannatthemes.com/ TAS -bs5/default/projects-create-project.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Sep 2025 17:58:47 GMT -->
+<head>
+        
+
+        <meta charset="utf-8" />
+                <title>Create new |  TAS - Engineering Firm DashBoard</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                <meta content="Immium Multipurpose Admin & Dashboard Template" name="description" />
+                <meta content="" name="author" />
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+                <!-- App favicon -->
+                <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+       
+         <!-- App css -->
+         <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+         <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+         <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+         <link href="{% static 'dashboard/assets/css/create-project.css' %}" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    <style>
+        body{
+            height: 100vh;
+        }
+    </style>
+
+    
+    <!-- Top Bar Start -->
+    <body>
+        {% include "dashboard/components/nav.html" %}
+
+
+        <div class="page-wrapper">
+
+            <!-- Page Content-->
+            <div class="page-content">
+                <div class="container-fluid">
+                    <div class= 'form-page'>
+                        <form id = 'create-project-form' enctype='multipart/form-data' method = 'post'>
+                          {% csrf_token %}
+                            <div class="form-header">
+                                <div>
+                                    <div style="font-size:13px;color:var(--muted)">New Project</div>
+                                    <div style="font-weight:800;font-size:18px">Create project — quick setup</div>
+                                </div>
+
+                                <div style="display:flex;align-items:center;gap:12px">
+                                    <div class="progress" ><i id="progressBar" style='width: 25%;'></i></div>
+                                    <div class="step-indicators" >
+                                        <div class="indicator active" data-step="0">1</div>
+                                        <div class="indicator" data-step="1">2</div>
+                                        <div class="indicator" data-step="2">3</div>
+                                        <div class="indicator" data-step="3">4</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid">
+                            <!-- LEFT: Multi-step form -->
+                                <div>
+                                    <div class="steps" id="steps">
+
+                                        <!-- STEP 1: Project Info -->
+                                        <section class="step active" data-step="0" aria-hidden="false">
+                                            <div class="field">
+                                            <label>Project Title <span class="small" style="color:var(--accent)">*</span></label>
+                                            <input class='calc' required id="title" type="text" placeholder="E.g. Warehouse fit-out" data-tooltip="Give a short, clear title" name = 'title'>
+                                            </div>
+
+                                            <div class="field">
+                                            <label>Client</label>
+                                            <div class="search-wrapper" id="clientSearch">
+                                                <div class="search-input" tabindex="0" data-placeholder="Search or type client name...">
+                                                    <select class='calc' required name="client" id="client">
+                                                        {% for client in clients %}
+                                                        <option value="{{client.id}}">{{client.name}} - {{client.company_name}}</option>
+                                                        {% endfor %}
+                                                    </select>
+
+                                                    <button type='button' class='place-button'>
+                                                        Add Client
+                                                    </button>
+                                            </div>
+                                            <div class="hint">Tip: typing will filter clients (vanilla JS search)</div>
+                                            </div>
+
+                                            <div class="two-inline">
+                                            <div class="field">
+                                                <label>Project Type</label>
+                                                <input class='calc' required id="type" name = 'type' type="text" placeholder="Construction, IT, Consultancy" data-tooltip="Optional - tag the project type">
+                                            </div>
+                                            <div class="field">
+                                                <label>Location</label>
+                                                <input class='calc' required id="location" name = 'location' type="text" placeholder="City, site address">
+                                            </div>
+                                            </div>
+
+                                            <div class="two-inline">
+                                            <div class="field">
+                                                <label>Size</label>
+                                                <select class='calc' required id="size" name = 'size'>
+                                                    <option value="unknown">Unknown</option>
+                                                    <option value="small">Small</option>
+                                                    <option value="medium">Medium</option>
+                                                    <option value="large">Large</option>
+                                                </select>
+                                            </div>
+                                            <div class="field">
+                                                <label>Priority</label>
+                                                <select class='calc' required id="priority" name = 'priority'>
+                                                    <option value="low">Low</option>
+                                                    <option value="moderate">Moderate</option>
+                                                    <option value="high">High</option>
+                                                    <option value="very high">Very High</option>
+                                                </select>
+                                            </div>
+                                            </div>
+
+                                            <div class="nav-actions">
+                                            <div class="small muted">Step 1 of 4</div>
+                                            <div>
+                                                <button type='button' class="btn btn-ghost next" >Next →</button>
+                                            </div>
+                                            </div>
+                                        </section>
+
+                                        <!-- STEP 2: Team & Supervisor -->
+                                        <section class="step" data-step="1" >
+                                            <div class="field">
+                                            <label>Assign Teams</label>
+                                            <div class="search-wrapper" id="teamSearch"  name = 'type'>
+                                                <select class='calc' required name="team" id="team">
+                                                    {% for team in teams %}
+                                                    <option value="{{team.id}}">{{team.name}} - {{team.leader.name}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <button type='button' class='place-button'>
+                                                    Create Team
+                                                </button>
+                                            </div>
+                                            <div class="hint">Select multiple teams — click to add. Searchable (vanilla JS).</div>
+                                            </div>
+
+                                            <div class="field">
+                                            <label>Supervisor</label>
+                                            <div class="search-wrapper" id="supervisorSearch">
+                                                <div class="search-input" tabindex="0">
+                                                    <select class='calc' required name="supervisor" id="supervisor">
+                                                        {% for s in available_supervisors %}
+                                                        <option value="{{s.id}}">{{s.name}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="dropdown-list" id="supervisorDropdown" ></div>
+                                            </div>
+                                            </div>
+
+                                            <div class="nav-actions">
+                                            <div>
+                                                <button type='button' class="btn btn-ghost back" >← Back</button>
+                                                <button type='button' class="btn btn-primary next"  style="margin-left:8px">Next</button>
+                                            </div>
+                                            <div class="small muted">Step 2 of 4</div>
+                                            </div>
+                                        </section>
+
+                                        <!-- STEP 3: Finance -->
+                                        <section class="step" data-step="2" >
+                                            <div class="field">
+                                            <label>Amount Charged (GHC)</label>
+                                            <input id="amount_charged" name="amount_charged" class="calc amount_charged" required type="number" step="0.01" placeholder="e.g. 35000.00">
+                                            </div>
+
+                                            <div class="field">
+                                            <label>Budget (GHC)</label>
+                                            <input id="budget" name="budget" class="budget calc" required type="number" step="0.01" placeholder="e.g. 40000.00">
+                                            </div>
+
+                                            <div class="nav-actions">
+                                            <div>
+                                                <button type='button' class="btn btn-ghost back" >← Back</button>
+                                                <button type='button' class="btn btn-primary next"  style="margin-left:8px">Next</button>
+                                            </div>
+                                            <div class="small muted">Step 3 of 4</div>
+                                            </div>
+                                        </section>
+
+                                        <!-- STEP 4: Files & Review -->
+                                        <section class="step" data-step="3" >
+                                            <div class="field">
+                                            <label>Project Logo / Image</label>
+                                            <div class="dropzone" id="dropzone" style = 'cursor: pointer;' >
+                                              <div class='dro' style="text-align:center; align-self: center;">
+                                                <div style="font-weight:800;color:var(--muted)">Drag & drop or click to upload</div>
+                                                <div class="small muted">PNG, JPG — max 3MB recommended</div>
+                                              </div>
+
+                                              <input id="fileInput" class='logo calc' required type="file" accept="image/*" style="display:none">
+
+                                              <div class="preview" id="preview" style="display:none">
+                                                <img id="previewImg" alt="preview">
+                                              </div>
+                                              </div>
+                                            </div>
+
+                                            <div class="field">
+                                            <label>Additional Notes</label>
+                                            <textarea class='calc' required id="description" name = 'description' placeholder="Optional notes, status reason, or instructions..."></textarea>
+                                            </div>
+
+                                            <div style="border-radius:10px;padding:10px;border:1px solid rgba(0,0,0,0.03);margin-bottom:10px">
+                                            <div style="font-weight:700">Review</div>
+                                            <div class="small muted" id="reviewSummary" style="margin-top:8px">—</div>
+                                            </div>
+
+                                            <div class="nav-actions">
+                                            <div>
+                                                <button type='button' class="btn btn-ghost back">← Back</button>
+                                                <button type='submit' class="btn btn-primary" id="createProject" style="margin-left:8px">Create Project</button>
+                                            </div>
+                                            <div class="small muted">Step 4 of 4</div>
+                                            </div>
+                                        </section>
+
+                                    </div>
+                                </div>
+
+                                <!-- RIGHT: Meta & quick actions -->
+                                <aside class="meta">
+                                    <div class="group">
+                                    <div style="display:flex;align-items:center;justify-content:space-between">
+                                        <div style="font-weight:700">Quick Actions</div>
+                                        <div class="small muted">Autosave: <span id="autosaveState">On</span></div>
+                                    </div>
+
+                                    <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
+                                        <button type='button' class="btn btn-primary" id="save_draft_btn">Save Draft</button>
+                                        <button type='button' class="btn btn-ghost" id="clear_draft_btn">Clear Draft</button>
+                                        <button type='button' class="btn btn-ghost" id="loadDraft">Load Draft</button>
+                                    </div>
+                                    </div>
+
+                                    <div class="group" data-tooltip="Progress is calcu requiredlated from filled steps">
+                                    <div style="font-weight:700">Status</div>
+                                    <div class="small muted" style="margin-top:8px">Not submitted — fill out the form and press Create</div>
+                                    </div>
+
+                                    <div class="group">
+                                    <div style="font-weight:700">Shortcuts</div>
+                                    <div class="small muted" style="margin-top:8px">
+                                        • Use keyboard: <strong>Enter</strong> to next, <strong>Shift+Enter</strong> to previous.<br>
+                                        • Click the progress dots to jump steps.
+                                    </div>
+                                    </div>
+                                </aside>
+                            </div> <!-- grid -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Javascript  -->  
+        <!-- vendor js -->
+        <div class="alert-container">
+          <div class="alert alert-success shadow-sm border-theme-white-2" style='display: flex; gap: 0.2rem;' id ='first-alert' role="alert">
+            <div class="d-inline-flex justify-content-center align-items-center thumb-xs bg-success rounded-circle mx-auto me-1">
+              <i class="fas fa-check align-self-center mb-0 text-white "></i>
+            </div>
+            <p class = 'text'><strong>Well done!</strong> You successfully read this important alert message.</p>
+          </div>
+        </div>
+
+        <style>
+          .hidden{
+            visibility: hidden;
+          }
+
+          .alert-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: -10%;
+            width: 100%;
+            transform: scale(0);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 3s;
+          }
+
+          .alert-display{
+            transform: scale(1);
+            opacity: 1;
+            top: 10%;
+            visibility: visible;
+          }
+
+          .text{
+            margin: 0;
+          }
+
+        </style>
+        
+        <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/js/jquery.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/js/create-project.js"></script>
+
+        <script>
+          let save_draft_btn = document.querySelector('#save_draft_btn')
+          let clear_draft_btn = document.querySelector('#clear_draft_btn')
+
+          let savables = document.querySelectorAll('.calc')
+          
+          let dze = document.querySelector('.dropzone')
+          let dz = dze.querySelector('.dro')
+          let logo = dze.querySelector('.logo')
+          let pre = dze.querySelector('#preview')
+          let preIm = dze.querySelector('#previewImg')
+
+          let alert = document.querySelector('.alert-container')
+
+          dz.onclick = () => {
+            logo.click()
+            console.log('hello')
+          }
+
+          logo.addEventListener('change', e => {
+            let f = URL.createObjectURL(e.target.files[0])
+            pre.style.display = 'flex'
+            preIm.src = f
+            preIm.style.width = '100%'
+            preIm.style.height = '100%'
+          })
+
+
+          save_draft_btn.addEventListener('click', e => {
+            e.preventDefault()
+            let draft = {}
+            savables.forEach(s => {
+              if(s.name === 'fileInput'){
+                draft[`${s.name}`] = URL.createObjectURL(s.value)
+              } else{
+                draft[`${s.name}`] = s.value
+              }
+            })
+            let json_draft = JSON.stringify(draft)
+            console.log(json_draft)
+            localStorage.setItem('json_draft', json_draft)
+
+            let alert_clone = alert.cloneNode(true)
+            let text = alert_clone.querySelector('.text')
+            text.innerHTML = '<strong>Well Done</strong> You have Successfully saved a draft'
+            alert_clone.classList.add('alert-display')
+            document.body.appendChild(alert_clone)
+
+            setTimeout(()=> {
+              alert_clone.remove()
+            }, 3000)
+          })
+
+          clear_draft_btn.addEventListener('click', e => {
+            e.preventDefault()
+            savables.forEach(s => {
+              s.value = ''
+            })
+            let alert_clone = alert.cloneNode(true)
+            let text = alert_clone.querySelector('.text')
+            text.innerHTML = '<strong>Well Done</strong> You have Successfully cleared the draft'
+            alert_clone.classList.add('alert-display')
+            document.body.appendChild(alert_clone)
+
+            setTimeout(()=> {
+              alert_clone.remove()
+            }, 3000)
+          })
+
+
+          window.onload = () => {
+            let json_draft = localStorage.getItem('json_draft')
+            let draft = ''
+            try{draft = JSON.parse(json_draft)} catch{console.log('hello')}
+            console.log(draft)
+            if (draft != ''){
+              if (confirm('Do you want to load your data?')){
+                let savables = document.querySelectorAll('.calc')
+                savables.forEach(s => {
+                  let in_value = draft[`${s.name}`]
+
+                  if (s.type != "file") {s.value = in_value || "";};
+
+                })
+                //preIm.style.display = 'flex'
+                //preIm.style.width = '100%'
+                //preIm.style.height = '100%'
+
+                console.log('Data Loaded')
+              } else{
+                localStorage.setItem('json_draft', '')
+              }
+            } 
+          }
+        </script>
+        <style>
+          .indicator{
+            cursor: pointer;
+          }
+        </style>
+    </body>
+    <!--end body-->
+
+<!-- Mirrored from mannatthemes.com/ TAS -bs5/default/projects-create-project.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Sep 2025 17:58:47 GMT -->
+</html>

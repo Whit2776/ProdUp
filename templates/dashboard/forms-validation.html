@@ -1,0 +1,325 @@
+<!DOCTYPE html> {%load static%}
+<html lang="en" dir="ltr" data-startbar="light" data-bs-theme="light">
+
+    
+<!-- Mirrored from mannatthemes.com/ TAS -bs5/default/forms-validation.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Sep 2025 17:59:10 GMT -->
+<head>
+        
+
+        <meta charset="utf-8" />
+                <title>Validation |  TAS - Engineering Firm DashBoard</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+                <meta content="" name="author" />
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+                <!-- App favicon -->
+                <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+       
+
+         <!-- App css -->
+         <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+         <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+         <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    
+    <!-- Top Bar Start -->
+    <body>
+        {% include "dashboard/components/nav.html" %}
+
+
+        <div class="page-wrapper">
+
+            <!-- Page Content-->
+            <div class="page-content">
+                <div class="container-fluid"> 
+                  <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box d-md-flex justify-content-md-between align-items-center">
+                            <h4 class="page-title">Validation</h4>
+                            <div class="">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item"><a href="#"> TAS </a>
+                                    </li><!--end nav-item-->
+                                    <li class="breadcrumb-item"><a href="#">Forms</a>
+                                    </li><!--end nav-item-->
+                                    <li class="breadcrumb-item active">Validation</li>
+                                </ol>
+                            </div>                                
+                        </div><!--end page-title-box-->
+                    </div><!--end col-->
+                </div><!--end row-->                   
+                    <div class="row justify-content-center">
+                        <div class="col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <div class="col">                      
+                                            <h4 class="card-title">Bootstrap Custom Styles</h4>                      
+                                        </div><!--end col-->
+                                    </div>  <!--end row-->                                  
+                                </div><!--end card-header-->
+                                <div class="card-body">
+                                    <form class="row g-3 needs-validation" novalidate>
+                                        <div class="col-md-4">
+                                          <label for="validationCustom01" class="form-label">First name</label>
+                                          <input type="text" class="form-control" id="validationCustom01" value="Mark" required>
+                                          <div class="valid-feedback">
+                                            Looks good!
+                                          </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                          <label for="validationCustom02" class="form-label">Last name</label>
+                                          <input type="text" class="form-control" id="validationCustom02" value="Otto" required>
+                                          <div class="valid-feedback">
+                                            Looks good!
+                                          </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                          <label for="validationCustomUsername" class="form-label">Username</label>
+                                          <div class="input-group has-validation">
+                                            <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                            <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                                            <div class="invalid-feedback">
+                                              Please choose a username.
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                          <label for="validationCustom03" class="form-label">City</label>
+                                          <input type="text" class="form-control" id="validationCustom03" required>
+                                          <div class="invalid-feedback">
+                                            Please provide a valid city.
+                                          </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                          <label for="validationCustom04" class="form-label">State</label>
+                                          <select class="form-select" id="validationCustom04" required>
+                                            <option selected disabled value="">Choose...</option>
+                                            <option>...</option>
+                                          </select>
+                                          <div class="invalid-feedback">
+                                            Please select a valid state.
+                                          </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                          <label for="validationCustom05" class="form-label">Zip</label>
+                                          <input type="text" class="form-control" id="validationCustom05" required>
+                                          <div class="invalid-feedback">
+                                            Please provide a valid zip.
+                                          </div>
+                                        </div>
+                                        <div class="col-12">
+                                          <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                                            <label class="form-check-label" for="invalidCheck">
+                                              Agree to terms and conditions
+                                            </label>
+                                            <div class="invalid-feedback">
+                                              You must agree before submitting.
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-12">
+                                          <button class="btn btn-primary" type="submit">Submit form</button>
+                                        </div>
+                                    </form><!--end form-->                
+                                </div><!--end card-body--> 
+                            </div><!--end card--> 
+                        </div> <!--end col--> 
+                        <div class="col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <div class="col">                      
+                                            <h4 class="card-title">Validation Tooltips</h4>                      
+                                        </div><!--end col-->
+                                    </div>  <!--end row-->                                  
+                                </div><!--end card-header-->
+                                <div class="card-body">
+                                    <form class="row g-3 needs-validation" novalidate>
+                                        <div class="col-md-4 position-relative">
+                                          <label for="validationTooltip01" class="form-label">First name</label>
+                                          <input type="text" class="form-control" id="validationTooltip01" value="Mark" required>
+                                          <div class="valid-tooltip">
+                                            Looks good!
+                                          </div>
+                                        </div>
+                                        <div class="col-md-4 position-relative">
+                                          <label for="validationTooltip02" class="form-label">Last name</label>
+                                          <input type="text" class="form-control" id="validationTooltip02" value="Otto" required>
+                                          <div class="valid-tooltip">
+                                            Looks good!
+                                          </div>
+                                        </div>
+                                        <div class="col-md-4 position-relative">
+                                          <label for="validationTooltipUsername" class="form-label">Username</label>
+                                          <div class="input-group has-validation">
+                                            <span class="input-group-text" id="validationTooltipUsernamePrepend">@</span>
+                                            <input type="text" class="form-control" id="validationTooltipUsername" aria-describedby="validationTooltipUsernamePrepend" required>
+                                            <div class="invalid-tooltip">
+                                              Please choose a unique and valid username.
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-md-6 position-relative">
+                                          <label for="validationTooltip03" class="form-label">City</label>
+                                          <input type="text" class="form-control" id="validationTooltip03" required>
+                                          <div class="invalid-tooltip">
+                                            Please provide a valid city.
+                                          </div>
+                                        </div>
+                                        <div class="col-md-3 position-relative">
+                                          <label for="validationTooltip04" class="form-label">State</label>
+                                          <select class="form-select" id="validationTooltip04" required>
+                                            <option selected disabled value="">Choose...</option>
+                                            <option>...</option>
+                                          </select>
+                                          <div class="invalid-tooltip">
+                                            Please select a valid state.
+                                          </div>
+                                        </div>
+                                        <div class="col-md-3 position-relative">
+                                          <label for="validationTooltip05" class="form-label">Zip</label>
+                                          <input type="text" class="form-control" id="validationTooltip05" required>
+                                          <div class="invalid-tooltip">
+                                            Please provide a valid zip.
+                                          </div>
+                                        </div>
+                                        <div class="col-12">
+                                          <button class="btn btn-primary" type="submit">Submit form</button>
+                                        </div>
+                                    </form><!--end form-->
+                                </div><!--end card-body--> 
+                            </div><!--end card--> 
+                        </div> <!--end col-->                                                       
+                    </div><!--end row-->
+
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <div class="col">                      
+                                            <h4 class="card-title">Custom Validation Form</h4>                      
+                                        </div><!--end col-->
+                                    </div>  <!--end row-->                                  
+                                </div><!--end card-header-->
+                                <div class="card-body">
+                                    <form id="form-validation-2" class="form">
+                                        <div class="mb-2">
+                                            <label for="username" class="form-label">Username</label>
+                                            <input class="form-control" type="text" id="username" placeholder="Enter Username">
+                                            <small>Error Message</small>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input class="form-control" type="text" id="email" placeholder="Enter email">
+                                            <small>Error Message</small>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="password" class="form-label">Password</label>
+                                            <input class="form-control" type="password" id="password" placeholder="Enter password">
+                                            <small>Error Message</small>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="password2" class="form-label">Confirm Password</label>
+                                            <input class="form-control" type="password" id="password2" placeholder="Enter password again">
+                                            <small>Error Message</small>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit form</button>
+                                    </form><!--end form-->            
+                                </div><!--end card-body--> 
+                            </div><!--end card--> 
+                        </div> <!--end col-->                                                                                
+                    </div><!--end row-->
+                                      
+                </div><!-- container -->
+                <!--Start Rightbar-->
+                <!--Start Rightbar/offcanvas-->
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="Appearance" aria-labelledby="AppearanceLabel">
+                    <div class="offcanvas-header border-bottom justify-content-between">
+                      <h5 class="m-0 font-14" id="AppearanceLabel">Appearance</h5>
+                      <button type="button" class="btn-close text-reset p-0 m-0 align-self-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">  
+                        <h6>Account Settings</h6>
+                        <div class="p-2 text-start mt-3">
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch1">
+                                <label class="form-check-label" for="settings-switch1">Auto updates</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch2" checked>
+                                <label class="form-check-label" for="settings-switch2">Location Permission</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="settings-switch3">
+                                <label class="form-check-label" for="settings-switch3">Show offline Contacts</label>
+                            </div><!--end form-switch-->
+                        </div><!--end /div-->
+                        <h6>General Settings</h6>
+                        <div class="p-2 text-start mt-3">
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch4">
+                                <label class="form-check-label" for="settings-switch4">Show me Online</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="settings-switch5" checked>
+                                <label class="form-check-label" for="settings-switch5">Status visible to all</label>
+                            </div><!--end form-switch-->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="settings-switch6">
+                                <label class="form-check-label" for="settings-switch6">Notifications Popup</label>
+                            </div><!--end form-switch-->
+                        </div><!--end /div-->               
+                    </div><!--end offcanvas-body-->
+                </div>
+                <!--end Rightbar/offcanvas-->
+                <!--end Rightbar-->
+                <!--Start Footer-->
+                
+                <footer class="footer text-center text-sm-start d-print-none">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card mb-0 border-bottom-0 rounded-bottom-0">
+                                    <div class="card-body">
+                                        <p class="text-muted mb-0">
+                                            ©
+                                            <script> document.write(new Date().getFullYear()) </script>
+                                             TAS 
+                                            <span
+                                                class="text-muted d-none d-sm-inline-block float-end">
+                                                Design with
+                                                <i class="iconoir-heart-solid text-danger align-middle"></i>
+                                                by Mannatthemes</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                
+                <!--end footer-->
+            </div>
+            <!-- end page content -->
+        </div>
+        <!-- end page-wrapper -->
+
+        <!-- Javascript  -->  
+        <!-- vendor js -->
+        
+        <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/js/pages/form-validation.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+    </body>
+    <!--end body-->
+
+<!-- Mirrored from mannatthemes.com/ TAS -bs5/default/forms-validation.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Sep 2025 17:59:11 GMT -->
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAS DashBoard | List Employees</title>
+    <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+    <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  {% include "dashboard/components/nav.html" %}
+
+  <div class="page-wrapper">
+    <div class="page-content">
+      <div class="container-fluid">
+        <table class="table table-striped mb-0" id="employees_table">
+  <thead class="table-light">
+    <tr>
+      <th>Customer</th>
+      <th>Email</th>
+      <th>Contact No</th>
+      <th class="text-end">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for e in employees %}
+      <tr>
+        <td>
+          <img src="{%get_media_prefix%}{{e.picture}}" alt="" class="rounded-circle thumb-md me-1 d-inline">
+          <a href="{% url 'employee' e.id %}">{{e.name}}</a>
+        </td>
+        <td>{{ e.email }}</td>
+        <td>{{ e.phone_number }}</td>
+        <td class="text-end">
+          <a href="#"><i class="las la-pen text-secondary font-16"></i></a>
+          <a href="#"><i class="las la-trash-alt text-secondary font-16"></i></a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+      </div>  
+    </div>
+  </div>
+
+  <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+  <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+
+  
+  <!-- jQuery (load once!) -->
+  <script src="{%static 'dashboard/assets/js/jquery.js'%}"></script>
+
+  <!-- DataTables core -->
+  <script src="{%static 'dashboard/assets/js/dataTables.min.js'%}"></script>
+
+  <!-- Buttons -->
+  <script src="{%static 'dashboard/assets/js/dataTables.buttons.min.js'%}"></script>
+  <script src="{%static 'dashboard/assets/js/jsButtonsHTML5.min.js'%}"></script>
+  <script src="{%static 'dashboard/assets/js/jsButtons.print.min.js'%}"></script>
+
+  <script src="{%static 'dashboard/assets/js/pdfmake.min.js'%}"></script>
+
+  <script src="{%static 'dashboard/assets/js/vsffonts.js'%}"></script>
+  <script src="{%static 'dashboard/assets/js/szip.min.js'%}"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const table = document.querySelector("#employees_table");
+      if (table) {
+        new simpleDatatables.DataTable(table, {
+          searchable: true,
+          fixedHeight: true,
+          perPage: 10,
+        });
+      }
+    });
+  </script>
+<style>
+  /* Pagination container */
+.datatable-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+/* Pagination list */
+.datatable-pagination-list {
+  list-style: none;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+}
+
+/* Pagination buttons */
+.datatable-pagination-list-item-link {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+/* Hover effect */
+.datatable-pagination-list-item-link:hover {
+  background: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+/* Active page */
+.datatable-pagination-list-item.datatable-active .datatable-pagination-list-item-link {
+  background: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+/* Disabled buttons */
+.datatable-pagination-list-item.datatable-disabled .datatable-pagination-list-item-link {
+  background: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+</style>
+</body>
+</html>

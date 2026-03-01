@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{folder.name}}</title>
+    <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+    <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    
+
+<style>
+/* =========================
+   Root variables for theme
+========================= */
+
+/* Light mode */
+:root {
+  --bg: #f6f7fb;
+  --card-bg: #fff;
+  --sidebar-bg: #f0f2ff;
+  --border: #e3e4ec;
+  --text: #2d2d37;
+  --accent: #7d5fff;
+  --shadow: 0 4px 18px rgba(0,0,0,0.06);
+}
+
+/* Dark mode */
+.dark {
+  --bg: #121317;
+  --card-bg: #1b1c22;
+  --sidebar-bg: #15161b;
+  --border: #2c2c35;
+  --text: #e5e5ea;
+  --accent: #9f84ff;
+  --shadow: 0 4px 18px rgba(0,0,0,0.45);
+}
+
+/* =========================
+   Base styling
+========================= */
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
+  width: 100%;
+}
+
+.folder-page {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* =========================
+   Layout
+========================= */
+
+.files-container {
+  width: max(60%, 250px);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* =========================
+   Folder headers
+========================= */
+.folder-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.folder-desc {
+  font-size: 0.875rem;
+  opacity: 0.75;
+  margin-bottom: 2rem;
+}
+
+/* =========================
+   Files grid
+========================= */
+.files-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+/* =========================
+   File cards
+========================= */
+.file-card {
+  position: relative;
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.file-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 6px 20px rgba(125,95,255,0.28);
+}
+
+/* =========================
+   File icon
+========================= */
+.file-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  color: #fff;
+  background: #6b7280; /* default */
+}
+
+/* Color by type */
+.file-card .file-icon:has(> i.fa-file-excel) { background: #16a34a; } /* Excel */
+.file-card .file-icon:has(> .image-icon) { background: #10b981; }
+.file-card .file-icon:has(> .pdf-icon)   { background: #ef4444; }
+.file-card .file-icon:has(> .video-icon) { background: #3b82f6; }
+.file-card .file-icon:has(> .csv-icon)   { background: #f59e0b; }
+.file-card .file-icon:has(> .json-icon)  { background: #6366f1; }
+
+/* =========================
+   File info text
+========================= */
+.file-info .file-name {
+  font-weight: 500;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 4px;
+  white-space: wrap;
+  word-break: break-word;
+}
+
+.file-info .file-type {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  word-break: break-word;
+}
+
+/* =========================
+   Empty state
+========================= */
+.no-files {
+  text-align: center;
+  margin-top: 40px;
+  opacity: 0.6;
+}
+
+/* =========================
+   Hover preview (glassy box)
+========================= */
+.file-card .file-preview {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  width: 280px;
+  max-width: 90vw;
+  max-height: 200px;
+  background: var(--bg);
+  color: var(--text);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.4);
+  padding: 10px;
+  overflow: hidden;
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  z-index: 10;
+}
+
+.file-card:hover .file-preview {
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+}
+
+/* =========================
+   Preview content
+========================= */
+.file-preview img,
+.file-preview video,
+.file-preview iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.file-preview pre {
+  max-height: 180px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.85rem;
+  background: var(--bg);
+  color: var(--text)
+}
+
+.file-preview table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.file-preview td {
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 4px;
+}
+
+</style>
+    {% include "dashboard/staff_dashboard/components/nav.html" %}
+    <div class="page-wrapper">
+      <div class="page-content">
+        <div class="container-fluid">
+
+          <div class="folder-page">
+            <!-- Center content -->
+            <main class="files-container">
+              <div style ='padding: 0.5rem; width: 100%;'>
+                <div>
+                  <h2 class="folder-title" style=''>{{ folder.name }}</h2>
+                  <p class="folder-desc" style=''>{{ folder.description }}</p>
+                </div>
+                <div style =''>
+                  <span style=' color: rgba(68, 77, 67, 0.75);  font-size: 1rem; background: rgba(35, 252, 28, 1); border-radius: 5px; padding: 0.5rem;'>{{files.count}}</span>
+                </div>
+              </div>
+
+              <div class="files-grid">
+                {% for file in files %}
+                <div class="file-card">
+
+                  <div class="file-icon
+                    {% if 'image' in file.type %}img-file
+                    {% elif 'pdf' in file.type %}pdf-file
+                    {% elif 'video' in file.type %}video-file
+                    {% elif 'csv' in file.type %}csv-file
+                    {% elif 'json' in file.type %}json-file
+                    {% else %}other-file
+                    {% endif %}
+                  ">
+                    {% if "image" in file.type %}
+                      🖼️
+                    {% elif "pdf" in file.type %}
+                      📄
+                    {% elif "video" in file.type %}
+                      🎞️
+                    {% elif "csv" in file.type %}
+                      📊
+                    {% elif "json" in file.type %}
+                      🧩
+                    {% elif 'spreadsheet' in file.type %}
+                      <i class="fa fa-file-excel"></i>
+                    {% else %}
+                      📁
+                    {% endif %}
+                  </div>
+
+                  <div class="file-info">
+                    <span class="file-name">{{ file.name }}</span>
+                    <span class="file-type" style='word-break: break-word;'>{{ file.type }}</span>
+                    <span>{{file.size}}</span>
+                  </div>
+
+                  <div class="file-preview">
+                    {% if "image" in file.type %}
+                      <img src="{{ file.path.url }}" alt="{{ file.name }}">
+                    {% elif "pdf" in file.type %}
+                    <iframe src="{{ file.path.url }}" ></iframe>
+                    {% elif "video" in file.type %}
+                      <video src="{{ file.path }}" controls></video>
+                    {% elif "json" in file.type %}
+                      <pre>
+                        {% if file.name and file.path %}
+                          {% with file_content=file.path.read|truncatechars:300 %}
+                            {{ file_content }}
+                          {% endwith %}
+                        {% endif %}
+                      </pre>
+                    {% else %}
+                      <p>No preview available</p>
+                    {% endif %}
+                  </div>
+
+                </div>
+                {% empty %}
+                  <h3 class="no-files">This folder has no files yet.</h3>
+                {% endfor %}
+              </div>
+            </main>
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/js/main.js"></script>
+
+    
+    <!-- jQuery (load once!) -->
+    <script src="{%static 'dashboard/assets/js/jquery.js'%}"></script>
+
+    <!-- DataTables core -->
+    <script src="{%static 'dashboard/assets/js/dataTables.min.js'%}"></script>
+
+    <!-- Buttons -->
+    <script src="{%static 'dashboard/assets/js/dataTables.buttons.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/jsButtonsHTML5.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/jsButtons.print.min.js'%}"></script>
+
+    <script src="{%static 'dashboard/assets/js/pdfmake.min.js'%}"></script>
+
+    <script src="{%static 'dashboard/assets/js/vsffonts.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/szip.min.js'%}"></script>
+  </body>
+</html>

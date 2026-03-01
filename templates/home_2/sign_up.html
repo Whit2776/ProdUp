@@ -1,0 +1,703 @@
+<!DOCTYPE html> {%load static%} {% load static %}
+<html lang="zxx">
+    
+<!-- Mirrored from templates.hibootstrap.com/TAS/default/sign-up.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 16 Sep 2025 23:01:14 GMT -->
+<head>
+        <!-- Required Meta Tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        
+        <!-- Bootstrap CSS --> 
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/bootstrap.min.css">
+        <!-- Flaticon CSS --> 
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/fonts/flaticon.css">
+        <!-- Boxicons CSS --> 
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/boxicons.min.css">
+        <!-- Owl Carousel Min CSS --> 
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/owl.theme.default.min.css">
+        <!-- Magnific Popup CSS --> 
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/magnific-popup.css">
+        <!-- Animate Min CSS -->
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/animate.min.css">
+        <!-- Meanmenu CSS -->
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/meanmenu.css">
+         <!-- Nice Select CSS -->
+         <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/nice-select.min.css">
+        <!-- Style CSS -->
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/style.css">
+        <!-- Responsive CSS -->
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/responsive.css">
+        <!-- Theme Dark CSS -->
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/theme-dark.css">
+        
+        <title>Tas-Engineering Firm</title>
+
+        <!-- Favicon -->
+        <link rel="icon" type="image/x.icon" href='{% static "images/tas-logo.jpg"%}'>
+    </head>
+    <body>
+        {% include 'home_2/components/preloader.html'%}
+        <!-- Start Navbar Area -->
+        <div class="navbar-area">
+            <!-- Menu For Mobile Device -->
+            <div class="mobile-nav">
+                <a href="index.html" class="logo">
+                    <img src="{% get_static_prefix %}home_2/assets/img/logo/logo1.png" alt="Logo">
+                </a>
+            </div>
+
+            <!-- Menu For Desktop Device -->
+            <div class="main-nav nav-three">
+                <div class="container-fluid">
+                    <nav class="container-max-2 navbar navbar-expand-md navbar-light ">
+                        <a class="navbar-brand" href="index.html">
+                            <img src="{% get_static_prefix %}home_2/assets/img/logo/logo3.png" class="logo-one" alt="Logo">
+                            <img src="{% get_static_prefix %}home_2/assets/img/logo/logo1.png" class="logo-two" alt="Logo">
+                        </a>
+
+                        <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                            <ul class="navbar-nav m-auto">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <span>01</span>
+                                        Home 
+                                        <i class='bx bx-chevron-down'></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="index.html" class="nav-link">
+                                                Home One  
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="index-2.html" class="nav-link">
+                                                Home Two
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="index-3.html" class="nav-link">
+                                                Home Three
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="about.html" class="nav-link">
+                                        <span>02</span>
+                                        About
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link active">
+                                        <span class="active">03</span>
+                                        Pages 
+                                        <i class='bx bx-chevron-down'></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="team.html" class="nav-link">
+                                                Team
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="single-team.html" class="nav-link">
+                                                Single Team 
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="faq.html" class="nav-link">
+                                                FAQ
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="testimonials.html" class="nav-link">
+                                                Testimonials
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="404.html" class="nav-link">
+                                                404 page
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="sign-in.html" class="nav-link">
+                                                Sign In
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="sign-up.html" class="nav-link active">
+                                                Sign Up
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="terms-condition.html" class="nav-link">
+                                                Terms & Conditions
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="privacy-policy.html" class="nav-link">
+                                                Privacy Policy
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="coming-soon.html" class="nav-link">
+                                                Coming Soon
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <span>04</span>
+                                        Portfolio 
+                                        <i class='bx bx-chevron-down'></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="portfolio.html" class="nav-link">
+                                                Portfolio 
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="portfolio-details.html" class="nav-link">
+                                                Portfolio Details 
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <span>05</span>
+                                        Services 
+                                        <i class='bx bx-chevron-down'></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="services-1.html" class="nav-link">
+                                                Services Style One 
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="services-2.html" class="nav-link">
+                                                Services Style Two 
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="service-details.html" class="nav-link">
+                                                Service Details 
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <span>06</span>
+                                        Shop
+                                        <i class='bx bx-chevron-down'></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="shop.html" class="nav-link">
+                                                Shop
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="cart.html" class="nav-link">
+                                                Cart
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="checkout.html" class="nav-link">
+                                                Checkout 
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="shop-details.html" class="nav-link">
+                                                Shop Details 
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <span>07</span>
+                                        Blog 
+                                        <i class='bx bx-chevron-down'></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="blog-1.html" class="nav-link">
+                                                Blog Style One 
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="blog-2.html" class="nav-link">
+                                                Blog Style Two 
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="blog-details.html" class="nav-link">
+                                                Blog Details 
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="contact.html" class="nav-link">
+                                        <span>08</span>
+                                        Contact
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <div class="other-side d-in-line">
+                                <div class="search-area">
+                                    <div class="other-option">
+                                        <div class="search-item">
+                                            <a href="#" class="search-btn-2">
+                                                <i class="bx bx-search"></i>
+                                            </a>
+                                            <i class="close-btn bx bx-x"></i>
+                                            <div class="search-overlay search-popup">
+                                                <div class="search-box-2">
+                                                    <form class="search-form">
+                                                        <input class="search-input" name="search" placeholder="Search" type="text">
+                                                        <button class="search-button" type="submit">
+                                                            <i class="bx bx-search"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="menu-icon d-in-line">
+                                    <a href="#" class="burger-menu menu-icon-two">
+                                        <i class='flaticon-menu'></i>
+                                    </a>
+                                </div>	
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="side-nav-responsive nav-three-responsive">
+                <div class="container">
+                    <div class="dot-menu">
+                        <div class="circle-inner">
+                            <div class="circle circle-one"></div>
+                            <div class="circle circle-two"></div>
+                            <div class="circle circle-three"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="container">
+                        <div class="side-nav-inner">
+                            <div class="side-nav justify-content-center  align-items-center">
+                                <div class="side-item">
+                                    <div class="responsive-search-box">
+                                        <form class="search-form">
+                                            <input class="form-control" name="search" placeholder="Search Your Result" type="text">
+                                            <button class="search-btn" type="submit">
+                                                <i class="bx bx-search"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="side-item">
+                                    <div class="responsive-menu-icon">
+                                        <a href="#" class="burger-menu menu-icon-bg">
+                                            <i class='flaticon-menu'></i>
+                                        </a>
+                                    </div>	
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Navbar Area -->
+
+        <!-- Sidebar Modal -->
+        <div class="sidebar-modal">
+            <div class="sidebar-modal-inner">
+				<div class="sidebar-header">
+					<div class="sidebar-logo">
+						<img src="{% get_static_prefix %}home_2/assets/img/logo/logo2.png" class="sidebar-logo1" alt="Image">
+                        <img src="{% get_static_prefix %}home_2/assets/img/logo/logo1.png" class="sidebar-logo2" alt="Image">
+					</div>
+					
+					<span class="close-btn sidebar-modal-close-btn">
+						<i class="bx bx-x"></i>
+					</span>
+				</div>
+
+                <div class="sidebar-about">
+                    <div class="title">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
+                            incididunt ut tur incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="contact-us">
+                    <h2>Contact Us</h2>
+
+                    <ul>
+						<li>
+							<i class='bx bx-current-location'></i>
+							Address: 2659 Autostrad St, London, UK
+						</li>
+
+						<li>
+							<i class='bx bx-mail-send'></i>
+							<a href="https://templates.hibootstrap.com/cdn-cgi/l/email-protection#b8d0ddd4d4d7f8cbc8cad1d796dbd7d5"><span class="__cf_email__" data-cfemail="751d1019191a350605071c1a5b161a18">[email&#160;protected]</span></a>
+							<a href="#">Skype: example</a>
+						</li>
+
+						<li>
+							<i class='bx bx-phone-call'></i>
+							<a href="tel:+215-123-4567"> +215 - 123 - 4567</a>
+							<a href="tel:+215-123-8587"> +215 - 123 - 8587</a>
+						</li>
+					</ul>
+				</div>
+				
+                <div class="sidebar-instagram-feed">
+                    <h2>Instagram</h2>
+
+                    <ul>
+                        <li>
+							<a href="#">
+								<img src="{% get_static_prefix %}home_2/assets/img/instagram/instagram1.jpg" alt="image">
+							</a>
+						</li>
+                        <li>
+							<a href="#">
+								<img src="{% get_static_prefix %}home_2/assets/img/instagram/instagram2.jpg" alt="image">
+							</a>
+						</li>
+                        <li>
+							<a href="#">
+								<img src="{% get_static_prefix %}home_2/assets/img/instagram/instagram3.jpg" alt="image">
+							</a>
+						</li>
+                        <li>
+							<a href="#">
+								<img src="{% get_static_prefix %}home_2/assets/img/instagram/instagram4.jpg" alt="image">
+							</a>
+						</li>
+                        <li>
+							<a href="#">
+								<img src="{% get_static_prefix %}home_2/assets/img/instagram/instagram5.jpg" alt="image">
+							</a>
+						</li>
+                        <li>
+							<a href="#">
+								<img src="{% get_static_prefix %}home_2/assets/img/instagram/instagram6.jpg" alt="image">
+							</a>
+						</li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-follow-us">
+					<h2>Sidebar Follow</h2>
+
+					<ul class="social-wrap">
+						<li>
+							<a href="#" target="_blank">
+								<i class="bx bxl-twitter"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#" target="_blank">
+								<i class="bx bxl-instagram"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#" target="_blank">
+								<i class="bx bxl-facebook"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#" target="_blank">
+								<i class="bx bxl-youtube"></i>
+							</a>
+						</li>
+					</ul>
+                </div>
+            </div>
+        </div>
+		<!-- End Sidebar Modal -->
+
+        <!-- Inner Banner -->
+        <div class="inner-banner inner-bg2">
+            <div class="container">
+                <div class="inner-title text-center">
+                    <h3>Sign Up</h3>
+                    <ul>
+                        <li>
+                            <i class="flaticon-fireplace"></i>
+                        </li>
+                        <li>
+                            <a href="index.html">Home /</a>
+                        </li>
+                        <li>Sign Up</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Inner Banner End -->
+
+        <!-- Sign Up Area -->
+        <div class="sign-up-area pt-100 pb-70">
+            <div class="container">
+                <div class="section-title-two text-center">
+                    <span class="sp-before sp-after">Sign Up</span>
+                    <h2 class="h2-color">Create an Account!</h2>
+                </div>
+                <div class="row align-items-center pt-45">
+                    <div class="col-lg-6">
+                        <div class="user-all-img">
+                            <img src="{% get_static_prefix %}home_2/assets/img/user-img.jpg" alt="Images">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="user-all-form">
+                            <div class="contact-wrap-form">
+                                <form id="contactForm">
+                                    <div class="row">
+                                        <div class="col-lg-12 ">
+                                            <div class="form-group">
+                                                <i class='bx bx-user'></i>
+                                                <input type="text" name="name" id="name" class="form-control" required data-error="Please enter your Username" placeholder="Username">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <i class='bx bx-mail-send'></i>
+                                                <input type="email" name="email" id="email" class="form-control" required data-error="Please enter email" placeholder="Email">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <i class='bx bx-lock-alt'></i>
+                                                <input class="form-control" type="password" name="password" placeholder="Password">
+                                            </div>
+                                        </div>
+        
+                                        <div class="col-lg-12 col-md-12 text-center">
+                                            <button type="submit" class="default-btn">
+                                                Sign Up
+                                            </button>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <p class="account-desc">
+                                                Already have an account? 
+                                                <a href="sign-in.html">Sign In</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Sign Up Area End -->
+    
+        <!--
+        <div class="footer-area footer-bg pt-100 pb-70">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="footer-widget footer-widget-color">
+                            <a href="index.html" class="footer-logo">
+                                <img src="{% get_static_prefix %}home_2/assets/img/logo/logo1.png" alt="Images">
+                            </a>
+                            <ul class="footer-contact-list">
+                                <li>
+                                    <span> Address:</span> 2659 Autostrad St, London, UK
+                                </li> 
+                                <li>
+                                    <span>Message:</span> <a href="https://templates.hibootstrap.com/cdn-cgi/l/email-protection#097a7c7979667b7d497a797b6066276a6664"></a> <a href="https://templates.hibootstrap.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="88fbfdf8f8e7fafcc8fbf8fae1e7a6ebe7e5">[email&#160;protected]</a>
+                                </li> 
+                                <li>
+                                    <span>Phone:</span> <a href="tel:215-123-4567"> 215 - 123 - 4567</a>
+                                </li> 
+                                <li>
+                                    <span>Open:</span>  Mon - Fri / 9:00 AM - 6:00 PM
+                                </li>  
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 footer-plr">
+                        <div class="footer-widget footer-widget-color">
+                            <h3>OUR SERVICES</h3>
+                            <ul class="footer-list">
+                                <li>
+                                    <a href="services-1.html" target="_blank">
+                                        <i class='bx bx-plus'></i>
+                                        Interior Design
+                                    </a>
+                                </li> 
+                                <li>
+                                    <a href="services-1.html" target="_blank">
+                                        <i class='bx bx-plus'></i>
+                                        Architecture Modeling
+                                    </a>
+                                </li> 
+                                <li>
+                                    <a href="services-1.html" target="_blank">
+                                        <i class='bx bx-plus'></i>
+                                        Rendering Buildings
+                                    </a>
+                                </li> 
+                                <li>
+                                    <a href="services-1.html" target="_blank">
+                                        <i class='bx bx-plus'></i>
+                                        Landscape works
+                                    </a>
+                                </li> 
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-widget-color">
+                        <div class="footer-widget footer-widget-color pl-4">
+                            <h3>LATEST PROJECTS</h3>
+                            <ul class="footer-list">
+                                <li>
+                                    <a href="services-1.html" target="_blank">
+                                        Chemical Engineering Projects
+                                    </a>
+                                </li> 
+                                <li>
+                                    <a href="services-1.html" target="_blank">
+                                        Construction Engineering 
+                                    </a>
+                                </li> 
+                                <li>
+                                    <a href="services-1.html" target="_blank">
+                                        Interior Welding Engineering
+                                    </a>
+                                </li> 
+                                <li>
+                                    <a href="services-1.html" target="_blank">
+                                        Welding Engineering
+                                    </a>
+                                </li> 
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget footer-widget-color">
+                            <h3>RECENT NEWS</h3>
+                            <ul class="footer-news">
+                                <li>
+                                    <i class='bx bx-time-five'></i>
+                                    <div class="content">
+                                        <span>12 Jun 2024</span>
+                                        <a href="#">Visiting rabat bridge</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class='bx bx-time-five'></i>
+                                    <div class="content">
+                                        <span>30 April 2024</span>
+                                        <a href="#">Meet iceland’s rivers & hills</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        -->
+
+        <!-- Copy-right Area two End -->
+        <div class="copy-right-area-two">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-5">
+                        <div class="copy-right-icon-two">
+                            <ul class="social-link">
+                                <li>
+                                    <a href="#" target="_blank"><i class='bx bxl-facebook'></i></a>
+                                </li> 
+                                <li>
+                                    <a href="#" target="_blank"><i class='bx bxl-twitter'></i></a>
+                                </li> 
+                                <li>
+                                    <a href="#" target="_blank"><i class='bx bxl-instagram'></i></a>
+                                </li> 
+                                <li>
+                                    <a href="#" target="_blank"><i class='bx bxl-pinterest-alt'></i></a>
+                                </li> 
+                                <li>
+                                    <a href="#" target="_blank"><i class='bx bxl-youtube'></i></a>
+                                </li> 
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-7">
+                        <div class="copyright-text-two">
+                            <p>
+                                Copyright TAS. All Rights Reserved by 
+                                <a href="https://hibootstrap.com/" target="_blank">HiBootstrap</a> 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Copy-right Area two End -->
+
+
+       <!-- Jquery Min JS -->
+        <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="{% get_static_prefix %}home_2/assets/js/jquery.min.js"></script>
+        <!-- Bootstrap Bundle Min JS -->
+        <script src="{% get_static_prefix %}home_2/assets/js/bootstrap.bundle.min.js"></script>
+        <!-- Owl Carousel Min JS -->
+        <script src="{% get_static_prefix %}home_2/assets/js/owl.carousel.min.js"></script>
+        <script src="{% get_static_prefix %}home_2/assets/js/carousel-thumbs.js"></script>
+        <!-- Magnific Popup JS -->
+        <script src="{% get_static_prefix %}home_2/assets/js/jquery.magnific-popup.min.js"></script>
+        <!-- Wow Min JS -->
+        <script src="{% get_static_prefix %}home_2/assets/js/wow.min.js"></script>
+        <!-- Meanmenu JS -->
+        <script src="{% get_static_prefix %}home_2/assets/js/meanmenu.js"></script>
+        <!-- Nice Select Min JS -->
+        <script src="{% get_static_prefix %}home_2/assets/js/jquery.nice-select.min.js"></script>
+        <!-- Ajaxchimp Min JS -->
+        <script src="{% get_static_prefix %}home_2/assets/js/jquery.ajaxchimp.min.js"></script>
+        <!-- Form Validator Min JS -->
+        <script src="{% get_static_prefix %}home_2/assets/js/form-validator.min.js"></script>
+        <!-- Contact Form JS -->
+        <script src="{% get_static_prefix %}home_2/assets/js/contact-form-script.js"></script>
+        
+        <script src="{%get_static_prefix%}home_2/assets/js/nav.js?44"></script>
+        <script src="{% get_static_prefix %}home_2/assets/js/custom.js"></script>
+    </body>
+
+<!-- Mirrored from templates.hibootstrap.com/TAS/default/sign-up.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 16 Sep 2025 23:01:14 GMT -->
+</html>

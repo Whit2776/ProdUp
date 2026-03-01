@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client - {{client.name}}</title>
+  <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+  <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+  <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+  <style>
+    :root {
+      /* Light Mode Colors */
+      --bg: #f3f8ff;
+      --card-bg: #ffffff;
+      --text: #1c1f26;
+      --text-light: #4e5564;
+      --accent: #2f80ed;
+      --border: #dce6f9;
+      --toggle: #1c1e22;
+    }
+    body.dark {
+      /* Dark Mode Colors */
+      --bg: #1c1e22;
+      --card-bg: #2a2d33;
+      --text: #f3f3f3;
+      --text-light: #b5b8c4;
+      --accent: #6aa4ff;
+      --border: #3b3e45;
+      --toggle: #f3f8ff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      padding: 30px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    /* Toggle Button */
+    .theme-toggle {
+      background: var(--toggle);
+      border: none;
+      border-radius: 5px 0px 0px 5px;
+      padding: 0.25rem 0.5rem;
+      box-shadow: 0px 0px 3px rgba(0,0,0,0.5);
+      position: fixed;
+      right: 0;
+      top: 50%;
+    }
+
+    .page-title {
+      font-size: 26px;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    /* Layout */
+    .client-layout {
+      display: grid;
+      grid-template-columns: 320px auto;
+      gap: 25px;
+    }
+
+    /* Client Card */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 25px;
+      border-radius: 12px;
+      transition: 0.3s;
+    }
+
+    .client-photo {
+      width: 100%;
+      height: 220px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+    }
+
+    .client-name {
+      margin-top: 15px;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .client-company {
+      font-size: 14px;
+      color: var(--text-light);
+      margin-bottom: 15px;
+    }
+
+    .info-list {
+      margin-top: 20px;
+      font-size: 15px;
+      color: var(--text-light);
+      line-height: 1.8em;
+    }
+
+    /* Projects Table */
+    .section-title {
+      font-size: 20px;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card-bg);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    table thead {
+      background: var(--accent);
+      color: white;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      font-size: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tr:hover {
+      background: rgba(0, 0, 0, 0.03);
+    }
+    body.dark tr:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .status-badge {
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: white;
+    }
+    .ongoing { background: #f39c12; }
+    .completed { background: #27ae60; }
+    .pending { background: #7f8c8d; }
+    .cancelled { background: #c0392b; }
+
+  </style>
+</head>
+<body>
+  {% include "dashboard/components/nav.html" %}
+  <div class="page-wrapper">
+    <div class="container-fluid">
+      <div class="page-content">
+         <button class="theme-toggle" onclick="toggleTheme()">🌞</button>
+          <div class="container">
+            <h1 class="page-title">Client Details</h1>
+
+            <div class="client-layout">
+              <!-- Left: Client Profile Card -->
+              <div class="card">
+                <img src="{%get_media_prefix%}{{client.picture}}" class="client-photo" alt="Client Photo" />
+                <h2 class="client-name">{{client.name}}</h2>
+                <p class="client-company">{{client.company_name}}</p>
+
+                <div class="info-list">
+                  <p><strong>Email:</strong> {{client.email}}</p>
+                  <p><strong>Phone:</strong> {{client.phone}}</p>
+                  <p><strong>Location:</strong> {{client.location}}</p>
+                </div>
+              </div>
+
+              <!-- Right: Projects Table -->
+              <div>
+                <h2 class="section-title">Client Projects</h2>
+
+                <table id='clientTable'>
+                  <thead>
+                    <tr>
+                      <th>Project</th>
+                      <th>Type</th>
+                      <th>Budget</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for project in projects %}
+                    <tr>
+                      <td><a href="{% url 'project' project.id %}">{{project.title}}</a></td>
+                      <td>{{project.type}}</td>
+                      <td>{{project.amount_charged}}</td>
+                      <td><span class="status-badge {{project.status}}">{{project.status}}</span></td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+  <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+  
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+        $('#clientTable').DataTable({
+            pageLength: 10,
+            lengthMenu: [5, 10, 25, 50, 100]
+        });
+    });
+  </script>
+
+  <script>
+    function toggleTheme() {
+      const toggle = document.querySelector('.theme-toggle')
+      if(toggle.innerText === '🌞'){
+        toggle.innerText = '🌙'
+      } else{
+        toggle.innerText = '🌞'
+      }
+      document.body.classList.toggle("dark");
+      localStorage.setItem("theme", 
+        document.body.classList.contains("dark") ? "dark" : "light"
+      );
+    }
+
+    // Keep theme persistent
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Design Studio</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        /* All the CSS from previous implementation */
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --primary-light: #4895ef;
+            --secondary: #7209b7;
+            --accent: #f72585;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --error: #e63946;
+            --dark: #2b2d42;
+            --dark-light: #414563;
+            --light: #f8f9fa;
+            --light-dark: #e9ecef;
+            --gray: #adb5bd;
+            --border: #dee2e6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+            --radius-sm: 4px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Include all previous CSS styles here */
+        /* ... (copy all CSS from previous implementation) ... */
+        
+        .react-design-studio {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <div id="react-design-root"></div>
+
+    <script type="text/babel">
+        const { useState, useRef, useEffect, useCallback } = React;
+
+        // Main Design Studio Component
+        const DesignStudio = () => {
+            const [elements, setElements] = useState([]);
+            const [selectedElement, setSelectedElement] = useState(null);
+            const [currentTool, setCurrentTool] = useState('select');
+            const [currentColor, setCurrentColor] = useState('#4361ee');
+            const [zoom, setZoom] = useState(1);
+            const [history, setHistory] = useState([]);
+            const [historyIndex, setHistoryIndex] = useState(-1);
+            
+            const canvasRef = useRef(null);
+            const [canvasSize, setCanvasSize] = useState({ width: 800, height: 1000 });
+            
+            // Initialize canvas
+            useEffect(() => {
+                const canvas = canvasRef.current;
+                if (canvas) {
+                    const ctx = canvas.getContext('2d');
+                    redrawCanvas(ctx);
+                }
+                
+                // Load initial template
+                loadTemplate('invoice1');
+            }, []);
+
+            // Templates data
+            const templates = {
+                invoice1: {
+                    name: "Modern Invoice",
+                    elements: [
+                        { 
+                            id: 1, 
+                            type: 'text', 
+                            x: 50, 
+                            y: 50, 
+                            width: 200, 
+                            height: 30, 
+                            text: 'INVOICE', 
+                            fontSize: 24, 
+                            bold: true, 
+                            color: '#4361ee',
+                            font: 'Arial, sans-serif'
+                        },
+                        { 
+                            id: 2, 
+                            type: 'text', 
+                            x: 50, 
+                            y: 100, 
+                            width: 300, 
+                            height: 20, 
+                            text: 'From: Your Company Name', 
+                            fontSize: 14, 
+                            color: '#2b2d42',
+                            font: 'Arial, sans-serif'
+                        },
+                        { 
+                            id: 3, 
+                            type: 'rectangle', 
+                            x: 50, 
+                            y: 150, 
+                            width: 700, 
+                            height: 30, 
+                            fill: '#4361ee', 
+                            stroke: 'none',
+                            strokeWidth: 0
+                        }
+                    ]
+                },
+                quote1: {
+                    name: "Creative Quotation",
+                    elements: [
+                        { 
+                            id: 1, 
+                            type: 'text', 
+                            x: 50, 
+                            y: 50, 
+                            width: 250, 
+                            height: 30, 
+                            text: 'QUOTATION', 
+                            fontSize: 24, 
+                            bold: true, 
+                            color: '#f72585',
+                            font: 'Arial, sans-serif'
+                        },
+                        { 
+                            id: 2, 
+                            type: 'text', 
+                            x: 50, 
+                            y: 100, 
+                            width: 300, 
+                            height: 20, 
+                            text: 'Prepared for: Client Name', 
+                            fontSize: 14, 
+                            color: '#2b2d42',
+                            font: 'Arial, sans-serif'
+                        },
+                        { 
+                            id: 3, 
+                            type: 'line', 
+                            x: 50, 
+                            y: 140, 
+                            width: 700, 
+                            height: 2, 
+                            stroke: '#f72585', 
+                            strokeWidth: 2 
+                        }
+                    ]
+                }
+            };
+
+            // Canvas drawing functions
+            const drawCheckeredBackground = (ctx, width, height) => {
+                const size = 20;
+                for (let y = 0; y < height; y += size) {
+                    for (let x = 0; x < width; x += size) {
+                        if ((x + y) % (size * 2) === 0) {
+                            ctx.fillStyle = '#f0f0f0';
+                        } else {
+                            ctx.fillStyle = '#ffffff';
+                        }
+                        ctx.fillRect(x, y, size, size);
+                    }
+                }
+            };
+
+            const drawElement = (ctx, element) => {
+                ctx.save();
+                
+                // Set opacity
+                ctx.globalAlpha = element.opacity !== undefined ? element.opacity : 1;
+                
+                switch (element.type) {
+                    case 'text':
+                        ctx.font = `${element.bold ? 'bold ' : ''}${element.italic ? 'italic ' : ''}${element.fontSize}px ${element.font}`;
+                        ctx.fillStyle = element.color || '#2b2d42';
+                        ctx.fillText(element.text, element.x, element.y + element.fontSize);
+                        
+                        if (element.underline) {
+                            ctx.beginPath();
+                            ctx.moveTo(element.x, element.y + element.fontSize + 2);
+                            ctx.lineTo(element.x + ctx.measureText(element.text).width, element.y + element.fontSize + 2);
+                            ctx.strokeStyle = element.color || '#2b2d42';
+                            ctx.stroke();
+                        }
+                        break;
+                        
+                    case 'rectangle':
+                        ctx.fillStyle = element.fill || '#4361ee';
+                        ctx.fillRect(element.x, element.y, element.width, element.height);
+                        
+                        if (element.stroke && element.stroke !== 'none' && element.strokeWidth > 0) {
+                            ctx.strokeStyle = element.stroke;
+                            ctx.lineWidth = element.strokeWidth;
+                            ctx.strokeRect(element.x, element.y, element.width, element.height);
+                        }
+                        break;
+                        
+                    case 'circle':
+                        ctx.fillStyle = element.fill || '#4361ee';
+                        ctx.beginPath();
+                        ctx.ellipse(
+                            element.x + element.width/2, 
+                            element.y + element.height/2, 
+                            Math.abs(element.width)/2, 
+                            Math.abs(element.height)/2, 
+                            0, 0, 2 * Math.PI
+                        );
+                        ctx.fill();
+                        
+                        if (element.stroke && element.stroke !== 'none' && element.strokeWidth > 0) {
+                            ctx.strokeStyle = element.stroke;
+                            ctx.lineWidth = element.strokeWidth;
+                            ctx.stroke();
+                        }
+                        break;
+                        
+                    case 'line':
+                        ctx.strokeStyle = element.stroke || '#2b2d42';
+                        ctx.lineWidth = element.strokeWidth || 1;
+                        ctx.beginPath();
+                        ctx.moveTo(element.x, element.y);
+                        ctx.lineTo(element.x + element.width, element.y + element.height);
+                        ctx.stroke();
+                        break;
+                }
+                
+                ctx.restore();
+            };
+
+            const drawSelectionOutline = (ctx, element) => {
+                ctx.save();
+                
+                ctx.strokeStyle = '#4361ee';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.strokeRect(element.x - 2, element.y - 2, element.width + 4, element.height + 4);
+                ctx.setLineDash([]);
+                
+                // Draw resize handles
+                const handles = [
+                    { x: element.x - 4, y: element.y - 4, cursor: 'nw-resize' },
+                    { x: element.x + element.width - 4, y: element.y - 4, cursor: 'ne-resize' },
+                    { x: element.x - 4, y: element.y + element.height - 4, cursor: 'sw-resize' },
+                    { x: element.x + element.width - 4, y: element.y + element.height - 4, cursor: 'se-resize' }
+                ];
+                
+                handles.forEach(handle => {
+                    ctx.fillStyle = '#4361ee';
+                    ctx.fillRect(handle.x, handle.y, 8, 8);
+                });
+                
+                ctx.restore();
+            };
+
+            const redrawCanvas = useCallback(() => {
+                const canvas = canvasRef.current;
+                if (!canvas) return;
+                
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw checkered background
+                drawCheckeredBackground(ctx, canvas.width, canvas.height);
+                
+                // Draw all elements
+                elements.forEach(element => {
+                    drawElement(ctx, element);
+                });
+                
+                // Draw selection outline if element is selected
+                if (selectedElement) {
+                    drawSelectionOutline(ctx, selectedElement);
+                }
+            }, [elements, selectedElement]);
+
+            // Update canvas when elements change
+            useEffect(() => {
+                redrawCanvas();
+            }, [elements, selectedElement, redrawCanvas]);
+
+            // Tool functions
+            const handleToolSelect = (tool) => {
+                setCurrentTool(tool);
+            };
+
+            const handleColorSelect = (color) => {
+                setCurrentColor(color);
+                
+                // Update selected element color if applicable
+                if (selectedElement) {
+                    const updatedElements = elements.map(el => 
+                        el.id === selectedElement.id 
+                            ? { 
+                                ...el, 
+                                ...(el.type === 'text' ? { color } : { fill: color })
+                            }
+                            : el
+                    );
+                    setElements(updatedElements);
+                    setSelectedElement(updatedElements.find(el => el.id === selectedElement.id));
+                }
+            };
+
+            // Element management
+            const addElement = (type, x, y) => {
+                const newElement = {
+                    id: Date.now(),
+                    type,
+                    x: x || 100,
+                    y: y || 100,
+                    width: type === 'line' ? 200 : 150,
+                    height: type === 'line' ? 2 : 100,
+                    ...(type === 'text' ? {
+                        text: 'New Text',
+                        font: 'Arial, sans-serif',
+                        fontSize: 16,
+                        color: currentColor,
+                        bold: false,
+                        italic: false,
+                        underline: false
+                    } : {
+                        fill: currentColor,
+                        stroke: '#2b2d42',
+                        strokeWidth: 1
+                    })
+                };
+                
+                const newElements = [...elements, newElement];
+                setElements(newElements);
+                setSelectedElement(newElement);
+                
+                // Save to history
+                saveToHistory(newElements);
+            };
+
+            const updateElement = (elementId, updates) => {
+                const updatedElements = elements.map(el =>
+                    el.id === elementId ? { ...el, ...updates } : el
+                );
+                setElements(updatedElements);
+                
+                if (selectedElement && selectedElement.id === elementId) {
+                    setSelectedElement({ ...selectedElement, ...updates });
+                }
+            };
+
+            const deleteSelectedElement = () => {
+                if (selectedElement) {
+                    const updatedElements = elements.filter(el => el.id !== selectedElement.id);
+                    setElements(updatedElements);
+                    setSelectedElement(null);
+                    
+                    // Save to history
+                    saveToHistory(updatedElements);
+                }
+            };
+
+            // History management
+            const saveToHistory = (newElements) => {
+                const newHistory = history.slice(0, historyIndex + 1);
+                newHistory.push(JSON.parse(JSON.stringify(newElements)));
+                setHistory(newHistory);
+                setHistoryIndex(newHistory.length - 1);
+            };
+
+            const undo = () => {
+                if (historyIndex > 0) {
+                    const newIndex = historyIndex - 1;
+                    setHistoryIndex(newIndex);
+                    setElements(JSON.parse(JSON.stringify(history[newIndex])));
+                    setSelectedElement(null);
+                }
+            };
+
+            const redo = () => {
+                if (historyIndex < history.length - 1) {
+                    const newIndex = historyIndex + 1;
+                    setHistoryIndex(newIndex);
+                    setElements(JSON.parse(JSON.stringify(history[newIndex])));
+                    setSelectedElement(null);
+                }
+            };
+
+            // Template functions
+            const loadTemplate = (templateId) => {
+                if (templates[templateId]) {
+                    const templateElements = JSON.parse(JSON.stringify(templates[templateId].elements));
+                    setElements(templateElements);
+                    setSelectedElement(null);
+                    
+                    // Save to history
+                    saveToHistory(templateElements);
+                }
+            };
+
+            // Export functions
+            const exportDesign = (format = 'png') => {
+                const canvas = canvasRef.current;
+                if (!canvas) return;
+                
+                const link = document.createElement('a');
+                link.download = `design.${format}`;
+                link.href = canvas.toDataURL(`image/${format}`);
+                link.click();
+            };
+
+            const saveDesign = () => {
+                const designData = {
+                    elements,
+                    timestamp: new Date().toISOString(),
+                    canvasSize
+                };
+                
+                // In a real Django app, you would send this to your backend
+                localStorage.setItem('designStudioData', JSON.stringify(designData));
+                alert('Design saved successfully!');
+            };
+
+            // Canvas event handlers
+            const handleCanvasMouseDown = (e) => {
+                const canvas = canvasRef.current;
+                const rect = canvas.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / zoom;
+                const y = (e.clientY - rect.top) / zoom;
+                
+                if (currentTool === 'select') {
+                    // Find clicked element
+                    const clickedElement = [...elements].reverse().find(el =>
+                        x >= el.x && x <= el.x + el.width &&
+                        y >= el.y && y <= el.y + el.height
+                    );
+                    
+                    setSelectedElement(clickedElement || null);
+                } else if (['rectangle', 'circle', 'line'].includes(currentTool)) {
+                    addElement(currentTool, x, y);
+                } else if (currentTool === 'text') {
+                    addElement('text', x, y);
+                }
+            };
+
+            return (
+                <div className="react-design-studio">
+                    {/* Header */}
+                    <header>
+                        <div className="logo">
+                            <div className="logo-icon">✎</div>
+                            <h1>React Design <span>Studio</span></h1>
+                        </div>
+                        
+                        <nav>
+                            <ul>
+                                <li><a href="#" className="active"><i className="fas fa-palette"></i> Design</a></li>
+                                <li><a href="#"><i className="fas fa-folder-open"></i> Templates</a></li>
+                                <li><a href="#"><i className="fas fa-layer-group"></i> My Projects</a></li>
+                            </ul>
+                        </nav>
+                        
+                        <div className="user-actions">
+                            <button className="btn btn-primary" onClick={saveDesign}>
+                                <i className="fas fa-save"></i> Save
+                            </button>
+                            <button className="btn btn-accent" onClick={() => exportDesign('png')}>
+                                <i className="fas fa-download"></i> Export
+                            </button>
+                        </div>
+                    </header>
+
+                    {/* Main Content */}
+                    <main>
+                        {/* Left Sidebar - Tools */}
+                        <aside className="sidebar sidebar-left">
+                            <div className="sidebar-header">
+                                <h3>Design Tools</h3>
+                            </div>
+                            
+                            <div className="sidebar-content">
+                                <div className="sidebar-section">
+                                    <h4>Selection Tools</h4>
+                                    <div className="tool-group">
+                                        <button 
+                                            className={`tool-btn ${currentTool === 'select' ? 'active' : ''}`}
+                                            onClick={() => handleToolSelect('select')}
+                                        >
+                                            <i className="fas fa-mouse-pointer"></i>
+                                            <span>Select</span>
+                                        </button>
+                                        <button 
+                                            className={`tool-btn ${currentTool === 'move' ? 'active' : ''}`}
+                                            onClick={() => handleToolSelect('move')}
+                                        >
+                                            <i className="fas fa-arrows-alt"></i>
+                                            <span>Move</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div className="sidebar-section">
+                                    <h4>Drawing Tools</h4>
+                                    <div className="tool-group">
+                                        <button 
+                                            className={`tool-btn ${currentTool === 'text' ? 'active' : ''}`}
+                                            onClick={() => handleToolSelect('text')}
+                                        >
+                                            <i className="fas fa-font"></i>
+                                            <span>Text</span>
+                                        </button>
+                                        <button 
+                                            className={`tool-btn ${currentTool === 'rectangle' ? 'active' : ''}`}
+                                            onClick={() => handleToolSelect('rectangle')}
+                                        >
+                                            <i className="fas fa-square"></i>
+                                            <span>Rectangle</span>
+                                        </button>
+                                        <button 
+                                            className={`tool-btn ${currentTool === 'circle' ? 'active' : ''}`}
+                                            onClick={() => handleToolSelect('circle')}
+                                        >
+                                            <i className="fas fa-circle"></i>
+                                            <span>Circle</span>
+                                        </button>
+                                        <button 
+                                            className={`tool-btn ${currentTool === 'line' ? 'active' : ''}`}
+                                            onClick={() => handleToolSelect('line')}
+                                        >
+                                            <i className="fas fa-minus"></i>
+                                            <span>Line</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div className="sidebar-section">
+                                    <h4>Colors</h4>
+                                    <div className="color-picker">
+                                        {['#4361ee', '#7209b7', '#f72585', '#4cc9f0', '#f8961e', '#e63946', '#2b2d42', '#38b000', '#9d4edd'].map(color => (
+                                            <div
+                                                key={color}
+                                                className={`color-option ${currentColor === color ? 'active' : ''}`}
+                                                style={{ backgroundColor: color }}
+                                                onClick={() => handleColorSelect(color)}
+                                            />
+                                        ))}
+                                    </div>
+                                    
+                                    <div className="custom-color mt-2">
+                                        <input 
+                                            type="color" 
+                                            value={currentColor}
+                                            onChange={(e) => handleColorSelect(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                                
+                                <div className="sidebar-section">
+                                    <h4>Templates</h4>
+                                    <div className="tool-group">
+                                        <button 
+                                            className="btn btn-secondary w-100"
+                                            onClick={() => loadTemplate('invoice1')}
+                                        >
+                                            Invoice Template
+                                        </button>
+                                        <button 
+                                            className="btn btn-secondary w-100"
+                                            onClick={() => loadTemplate('quote1')}
+                                        >
+                                            Quotation Template
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+
+                        {/* Workspace */}
+                        <section className="workspace">
+                            <div className="workspace-header">
+                                <div className="workspace-controls">
+                                    <button 
+                                        className="btn btn-sm btn-secondary" 
+                                        onClick={undo}
+                                        disabled={historyIndex <= 0}
+                                    >
+                                        <i className="fas fa-undo"></i> Undo
+                                    </button>
+                                    <button 
+                                        className="btn btn-sm btn-secondary" 
+                                        onClick={redo}
+                                        disabled={historyIndex >= history.length - 1}
+                                    >
+                                        <i className="fas fa-redo"></i> Redo
+                                    </button>
+                                    <div className="zoom-controls d-flex align-items-center">
+                                        <button 
+                                            className="btn btn-sm btn-secondary" 
+                                            onClick={() => setZoom(prev => Math.max(0.5, prev - 0.1))}
+                                        >
+                                            -
+                                        </button>
+                                        <span className="mx-2">{Math.round(zoom * 100)}%</span>
+                                        <button 
+                                            className="btn btn-sm btn-secondary" 
+                                            onClick={() => setZoom(prev => Math.min(3, prev + 0.1))}
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div className="workspace-actions">
+                                    <button 
+                                        className="btn btn-sm btn-error"
+                                        onClick={deleteSelectedElement}
+                                        disabled={!selectedElement}
+                                    >
+                                        <i className="fas fa-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div className="canvas-container">
+                                <canvas
+                                    ref={canvasRef}
+                                    width={canvasSize.width}
+                                    height={canvasSize.height}
+                                    style={{
+                                        transform: `scale(${zoom})`,
+                                        transformOrigin: 'top left'
+                                    }}
+                                    onMouseDown={handleCanvasMouseDown}
+                                />
+                            </div>
+                        </section>
+
+                        {/* Right Sidebar - Properties */}
+                        <aside className="sidebar sidebar-right">
+                            <div className="sidebar-header">
+                                <h3>Properties</h3>
+                            </div>
+                            
+                            <div className="sidebar-content">
+                                {selectedElement ? (
+                                    <div className="properties-panel">
+                                        <div className="property-group">
+                                            <h5>Position & Size</h5>
+                                            <div className="property-row">
+                                                <label>X:</label>
+                                                <input 
+                                                    type="number" 
+                                                    value={Math.round(selectedElement.x)}
+                                                    onChange={(e) => updateElement(selectedElement.id, { x: parseInt(e.target.value) })}
+                                                />
+                                            </div>
+                                            <div className="property-row">
+                                                <label>Y:</label>
+                                                <input 
+                                                    type="number" 
+                                                    value={Math.round(selectedElement.y)}
+                                                    onChange={(e) => updateElement(selectedElement.id, { y: parseInt(e.target.value) })}
+                                                />
+                                            </div>
+                                            <div className="property-row">
+                                                <label>Width:</label>
+                                                <input 
+                                                    type="number" 
+                                                    value={Math.round(selectedElement.width)}
+                                                    onChange={(e) => updateElement(selectedElement.id, { width: parseInt(e.target.value) })}
+                                                />
+                                            </div>
+                                            <div className="property-row">
+                                                <label>Height:</label>
+                                                <input 
+                                                    type="number" 
+                                                    value={Math.round(selectedElement.height)}
+                                                    onChange={(e) => updateElement(selectedElement.id, { height: parseInt(e.target.value) })}
+                                                />
+                                            </div>
+                                        </div>
+                                        
+                                        {selectedElement.type === 'text' && (
+                                            <div className="property-group">
+                                                <h5>Text</h5>
+                                                <div className="property-row">
+                                                    <label>Content:</label>
+                                                    <input 
+                                                        type="text" 
+                                                        value={selectedElement.text}
+                                                        onChange={(e) => updateElement(selectedElement.id, { text: e.target.value })}
+                                                    />
+                                                </div>
+                                                <div className="property-row">
+                                                    <label>Size:</label>
+                                                    <select 
+                                                        value={selectedElement.fontSize}
+                                                        onChange={(e) => updateElement(selectedElement.id, { fontSize: parseInt(e.target.value) })}
+                                                    >
+                                                        {[8, 10, 12, 14, 16, 18, 24, 32, 48].map(size => (
+                                                            <option key={size} value={size}>{size}px</option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <div className="text-center text-gray p-3">
+                                        Select an element to edit its properties
+                                    </div>
+                                )}
+                                
+                                <div className="sidebar-section">
+                                    <h4>Layers ({elements.length})</h4>
+                                    <div className="layers-panel">
+                                        {elements.map(element => (
+                                            <div
+                                                key={element.id}
+                                                className={`layer-item ${selectedElement?.id === element.id ? 'active' : ''}`}
+                                                onClick={() => setSelectedElement(element)}
+                                            >
+                                                <div className="layer-icon">
+                                                    {element.type === 'text' ? 'T' : 
+                                                     element.type === 'rectangle' ? '▭' :
+                                                     element.type === 'circle' ? '●' : '─'}
+                                                </div>
+                                                <div className="layer-name">
+                                                    {element.type === 'text' ? element.text : element.type}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </main>
+                </div>
+            );
+        };
+
+        // Render the React component
+        ReactDOM.render(<DesignStudio />, document.getElementById('react-design-root'));
+    </script>
+</body>
+</html>

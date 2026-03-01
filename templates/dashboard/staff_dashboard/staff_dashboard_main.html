@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{employee.name}} - {{company.name}}</title>
+    <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+    <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    
+<style>
+/* ======================= */
+/* ======= Variables ===== */
+/* ======================= */
+:root {
+  --bg: #f8fafc;
+  --card-bg: #fff;
+  --text: #0f172a;
+  --text-muted: #94a3b8;
+  --border: #eef2f7;
+  --border-alt: #eef8ff;
+  --primary: #2563eb;
+  --pill-bg: #f1f5f9;
+  --pill-text: #0f172a;
+  --progress-bg: #eef2ff;
+  --progress-gradient-start: #34d399;
+  --progress-gradient-end: #60a5fa;
+  --icon-box-bg: #f1f8ff;
+  --icon-box-text: #025aa5;
+}
+
+.dark {
+  --bg: #161616ff;
+  --card-bg: #303030ff;
+  --text: #e2e2e2ff;
+  --text-muted: #ffffff81;
+  --border: #13473880;
+  --border-alt: #b1b1b17a;
+  --primary: #0887ff94;
+  --pill-bg: #002468ff;
+  --pill-text: #a7d3ffbe;
+  --progress-bg: #334155;
+  --progress-gradient-start: #10b981;
+  --progress-gradient-end: #3b82f6;
+  --icon-box-bg: #0062ffff;
+  --icon-box-text: #1b1b1bfaf;
+}
+
+/* ======================= */
+/* ====== Base Reset ===== */
+/* ======================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: var(--text);
+  background: var(--bg);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ======================= */
+/* ===== Layout Grid ===== */
+/* ======================= */
+.app {
+  display: flex;
+  min-height: 100%;
+}
+
+.content {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 2px rgba(15,23,42,0.03);
+}
+
+/* ======================= */
+/* ===== Grid Items ====== */
+.welcome {
+  grid-column: span 8;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.quick-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.small {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.tasks {
+  grid-column: span 4;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-alt);
+}
+
+.projects {
+  grid-column: span 8;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.project-card {
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.meetings { grid-column: span 4; }
+.announcements { grid-column: span 6; }
+.performance { grid-column: span 6; }
+
+/* ======================= */
+/* ===== Tiny UI Bits ==== */
+.progress {
+  height: 10px;
+  background: var(--progress-bg);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress > i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--progress-gradient-start), var(--progress-gradient-end));
+}
+
+.pill {
+  display: inline-flex;
+  padding: 6px 8px;
+  border-radius: 999px;
+  background: var(--pill-bg);
+  font-weight: 600;
+  color: var(--pill-text);
+}
+
+.muted {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.link {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--icon-box-bg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--icon-box-text);
+}
+
+/* ======================= */
+/* ===== Responsive ====== */
+@media (max-width: 900px) {
+  .sidebar { position: fixed; z-index: 40; transform: translateX(-8px); }
+  .sidebar.collapsed { transform: translateX(-320px); }
+  .app { flex-direction: column; }
+  .brand .title { display: none; }
+  .content { grid-template-columns: repeat(6, 1fr); }
+  .projects { grid-column: span 6; grid-template-columns: repeat(2, 1fr); }
+  .welcome { grid-column: span 6; }
+  .tasks { grid-column: span 6; }
+  .meetings { grid-column: span 6; }
+  .announcements { grid-column: span 6; }
+  .performance { grid-column: span 6; }
+}
+
+</style>
+    {% include "dashboard/staff_dashboard/components/nav.html" %}
+    <div class="page-wrapper">
+      <div class="page-content">
+        <div class="container-fluid">
+          <div class="app">
+  
+
+            <main class="main">
+
+              <section class="content" id="dashboard">
+                <!-- Welcome -->
+                <div class="card welcome">
+                  <div>
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                      <div>
+                        <div style="font-size:20px;font-weight:700">Good afternoon, {{employee.first_name}} 👋</div>
+                        <div class="small muted" style="margin-top:6px">Here's what needs your attention today.</div>
+                      </div>
+                      <div style="text-align:right">
+                        <div class="pill">2 tasks due</div>
+                        <div class="small muted" style="margin-top:8px">Next meeting: 3:30 PM</div>
+                      </div>
+                    </div>
+
+                    <div class="quick-actions" style="margin-top:14px">
+                      <button class="btn">Create Task</button>
+                      <button style="background:#fff;border:1px solid #e6eef6;padding:8px 12px;border-radius:8px;cursor:pointer">Clock In</button>
+                      <button style="background:#fff;border:1px solid #e6eef6;padding:8px 12px;border-radius:8px;cursor:pointer">Join Meeting</button>
+                    </div>
+                  </div>
+
+                  <div style="margin-top:18px">
+                    <div style="font-weight:700;margin-bottom:8px">Today's progress</div>
+                    <div class="small muted">Tasks completed</div>
+                    <div style="margin-top:8px">
+                      <div class="progress" aria-hidden><i style="width:48%"></i></div>
+                      <div class="small muted" style="margin-top:8px">48% completed</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tasks -->
+                <div class="card tasks">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                    <div style="font-weight:700">Tasks</div>
+                    <a class="link" href="#tasks">View all</a>
+                  </div>
+                  <div>
+                    <div class="task-item">
+                      <div>
+                        <div style="font-weight:700">Prepare monthly report</div>
+                        <div class="small muted">Due: Today • Project: Finance</div>
+                      </div>
+                      <div style="text-align:right">
+                        <div class="muted">High</div>
+                        <div style="margin-top:8px"><button style="background:#e6f7ee;border:0;padding:6px 10px;border-radius:8px">Complete</button></div>
+                      </div>
+                    </div>
+
+                    <div class="task-item">
+                      <div>
+                        <div style="font-weight:700">Review onboarding docs</div>
+                        <div class="small muted">Due: Tomorrow • Project: HR</div>
+                      </div>
+                      <div style="text-align:right">
+                        <div class="muted">Medium</div>
+                        <div style="margin-top:8px"><button style="background:#fff;border:1px solid #eef2ff;padding:6px 10px;border-radius:8px">Open</button></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Projects -->
+                <div class="card projects">
+                  <div style="display:flex;align-items:center;justify-content:space-between;grid-column:1/4;margin-bottom:6px">
+                    <div style="font-weight:700">Projects</div>
+                    <a class="link" href="#projects">See all</a>
+                  </div>
+
+                  <div style='display: flex; flex-flow: row wrap;'>
+                    <div class="project-card card" style="background:linear-gradient(180deg,#ffffff,#fbfdff)">
+                      <div style="display:flex;justify-content:space-between;align-items:center">
+                        <div>
+                          <div style="font-weight:700">Website Redesign</div>
+                          <div class="small muted">Due: Nov 20</div>
+                        </div>
+                        <div style="text-align:right"><div class="muted">Progress</div><div style="width:120px;margin-top:8px" class="progress"><i style="width:72%"></i></div></div>
+                      </div>
+                    </div>
+
+                    <div class="project-card card" style="">
+                      <div style="display:flex;justify-content:space-between;align-items:center">
+                        <div>
+                          <div style="font-weight:700">Mobile App</div>
+                          <div class="small muted">Due: Dec 5</div>
+                        </div>
+                        <div style="text-align:right"><div class="muted">Progress</div><div style="width:120px;margin-top:8px" class="progress"><i style="width:37%"></i></div></div>
+                      </div>
+                    </div>
+
+                    <div class="project-card card" style="">
+                      <div style="display:flex;justify-content:space-between;align-items:center">
+                        <div>
+                          <div style="font-weight:700">Recruitment Drive</div>
+                          <div class="small muted">Due: Ongoing</div>
+                        </div>
+                        <div style="text-align:right"><div class="muted">Progress</div><div style="width:120px;margin-top:8px" class="progress"><i style="width:54%"></i></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Meetings -->
+                <div class="card meetings">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                    <div style="font-weight:700">Meetings</div>
+                    <a class="link" href="#messages">Schedule</a>
+                  </div>
+                  <div style="margin-bottom:8px">
+                    <div style="font-weight:700">Product sync</div>
+                    <div class="small muted">Today • 3:30 PM • Zoom</div>
+                  </div>
+                  <div>
+                    <div style="font-weight:700">1:1 — with manager</div>
+                    <div class="small muted">Tomorrow • 10:00 AM</div>
+                  </div>
+                </div>
+
+                <!-- Announcements -->
+                <div class="card announcements">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                    <div style="font-weight:700">Announcements</div>
+                    <a class="link" href="#announcements">All</a>
+                  </div>
+                  <ul style="margin-left:16px" class="small muted">
+                    <li>Office closed Dec 24–26 for holidays</li>
+                    <li>New HR policy updated — please review</li>
+                    <li>Team lunch next Friday</li>
+                  </ul>
+                </div>
+
+                <!-- Performance -->
+                <div class="card performance">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                    <div style="font-weight:700">Performance snapshot</div>
+                    <div class="small muted">This week</div>
+                  </div>
+                  <div style="display:flex;gap:12px;align-items:center">
+                    <div style="flex:1">
+                      <div class="small muted">Task completion</div>
+                      <div style="font-weight:700;margin-top:6px">82%</div>
+                    </div>
+                    <div style="flex:1">
+                      <div class="small muted">Punctuality</div>
+                      <div style="font-weight:700;margin-top:6px">93%</div>
+                    </div>
+                    <div style="flex:1">
+                      <div class="small muted">Hours logged</div>
+                      <div style="font-weight:700;margin-top:6px">36h</div>
+                    </div>
+                  </div>
+                  <div style="margin-top:12px" class="small muted">View detailed report — <a href="#reports" class="link">Open</a></div>
+                </div>
+
+              </section>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/js/main.js"></script>
+
+    
+    <!-- jQuery (load once!) -->
+    <script src="{%static 'dashboard/assets/js/jquery.js'%}"></script>
+
+    <!-- DataTables core -->
+    <script src="{%static 'dashboard/assets/js/dataTables.min.js'%}"></script>
+
+    <!-- Buttons -->
+    <script src="{%static 'dashboard/assets/js/dataTables.buttons.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/jsButtonsHTML5.min.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/jsButtons.print.min.js'%}"></script>
+
+    <script src="{%static 'dashboard/assets/js/pdfmake.min.js'%}"></script>
+
+    <script src="{%static 'dashboard/assets/js/vsffonts.js'%}"></script>
+    <script src="{%static 'dashboard/assets/js/szip.min.js'%}"></script>
+  </body>
+</html>
+
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+from django.contrib import admin
+from .models import *
+# Register your models here.
+admin.site.register(Message)
+admin.site.register(Employee)
+admin.site.register(Project)
+admin.site.register(User)
+admin.site.register(Company)
+admin.site.register(Role)
+admin.site.register(Task)
+admin.site.register(Client)
+admin.site.register(Team)
+admin.site.register(Priority)
+admin.site.register(Employment_Type)
+admin.site.register(Task_Payment_Record)
+admin.site.register(Department)
+admin.site.register(Permission)
+admin.site.register(Wallet)
+admin.site.register(Transaction)
+admin.site.register(Folder)
+admin.site.register(Notification)

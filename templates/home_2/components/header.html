@@ -1,0 +1,244 @@
+{% load static %}
+<!-- Start Navbar Area -->
+<div class="navbar-area">
+<!-- Menu For Mobile Device -->
+<div class="mobile-nav">
+  <a href="index.html" class="logo">
+      <img src="{% get_static_prefix %}home_2/{% get_static_prefix %}home_2/assets/img/logo/logo1.png" alt="Logo">
+  </a>
+</div>
+
+<!-- Menu For Desktop Device -->
+<div class="main-nav nav-two">
+  <div class="container-fluid">
+    <nav class="container-max-2 navbar navbar-expand-md navbar-light ">
+      <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+        <li class="nav-item clickable logo">
+            <a href="index.html" class="nav-link">
+                <h2 class='tas-name'>
+                  TAS Eng.
+                </h2>
+            </a>
+        </li>
+
+        <ul class="navbar-nav m-auto">
+            <li class="nav-item clickable">
+                <a href="{% url 'home' %}" class="nav-link">
+                    Home 
+                </a>
+            </li>
+            <li class="nav-item clickable">
+                <a href="{% url 'about' %}" class="nav-link">
+                    About
+                </a>
+            </li>
+            <li class="nav-item clickable">
+                <a href="#" class="nav-link">
+                    Pages 
+                    
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="nav-item clickable">
+                        <a href="team.html" class="nav-link">
+                            Team
+                        </a>
+                    </li>
+                    <li class="nav-item clickable">
+                        <a href="single-team.html" class="nav-link">
+                            Single Team 
+                        </a>
+                    </li>
+                    <li class="nav-item clickable">
+                        <a href="faq.html" class="nav-link">
+                            FAQ
+                        </a>
+                    </li>
+                    <li class="nav-item clickable">
+                        <a href="testimonials.html" class="nav-link">
+                            Testimonials
+                        </a>
+                    </li>
+                    <li class="nav-item clickable">
+                        <a href="404.html" class="nav-link">
+                            404 page
+                        </a>
+                    </li>
+                    <li class="nav-item clickable">
+                        <a href="sign-in.html" class="nav-link">
+                            Sign In
+                        </a>
+                    </li>
+                    <li class="nav-item clickable">
+                        <a href="sign-up.html" class="nav-link">
+                            Sign Up
+                        </a>
+                    </li>
+                    <li class="nav-item clickable">
+                        <a href="terms-condition.html" class="nav-link">
+                            Terms & Conditions
+                        </a>
+                    </li>
+                    <li class="nav-item clickable">
+                        <a href="privacy-policy.html" class="nav-link">
+                            Privacy Policy
+                        </a>
+                    </li>
+                    <li class="nav-item clickable">
+                        <a href="coming-soon.html" class="nav-link">
+                            Coming Soon
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item clickable">
+                <a href="#" class="nav-link">
+                    Portfolio 
+                    
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="nav-item clickable">
+                        <a href="portfolio.html" class="nav-link">
+                            Portfolio 
+                        </a>
+                    </li>
+                    <li class="nav-item clickable">
+                        <a href="portfolio-details.html" class="nav-link">
+                            Portfolio Details 
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item clickable">
+                <a href="#" class="nav-link">
+                    Services 
+                    
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="nav-item clickable">
+                        <a href="services-1.html" class="nav-link">
+                            Services Style One 
+                        </a>
+                    </li>
+                    <li class="nav-item clickable">
+                        <a href="services-2.html" class="nav-link">
+                            Services Style Two 
+                        </a>
+                    </li>
+                    <li class="nav-item clickable">
+                        <a href="service-details.html" class="nav-link">
+                            Service Details 
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item clickable">
+                <a href="#" class="nav-link">
+                    Shop
+                    
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="nav-item clickable">
+                        <a href="shop.html" class="nav-link">
+                            Shop
+                        </a>
+                    </li>
+                    <li class="nav-item clickable">
+                        <a href="cart.html" class="nav-link">
+                            Cart
+                        </a>
+                    </li>
+                    <li class="nav-item clickable">
+                        <a href="checkout.html" class="nav-link">
+                            Checkout 
+                        </a>
+                    </li>
+                    <li class="nav-item clickable">
+                        <a href="shop-details.html" class="nav-link">
+                            Shop Details 
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item clickable">
+                <a href="#" class="nav-link">
+                    Blog 
+                    
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="nav-item clickable">
+                        <a href="blog-1.html" class="nav-link">
+                            Blog Style One 
+                        </a>
+                    </li>
+                    <li class="nav-item clickable">
+                        <a href="blog-2.html" class="nav-link">
+                            Blog Style Two 
+                        </a>
+                    </li>
+                    <li class="nav-item clickable">
+                        <a href="blog-details.html" class="nav-link">
+                            Blog Details 
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item clickable">
+                <a href="contact.html" class="nav-link">
+                    Contact
+                </a>
+            </li>
+        </ul>
+
+          <div class="other-side d-in-line">
+              <div class="menu-icon d-in-line">
+                  <a href="#" class="burger-menu menu-icon-two">
+                      <i class='flaticon-menu'></i>
+                  </a>
+              </div>	
+          </div>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<div class="side-nav-responsive nav-two-responsive">
+  <div class="container">
+      <div class="dot-menu">
+          <div class="circle-inner">
+              <div class="circle circle-one"></div>
+              <div class="circle circle-two"></div>
+              <div class="circle circle-three"></div>
+          </div>
+      </div>
+      
+      <div class="container">
+          <div class="side-nav-inner">
+              <div class="side-nav justify-content-center  align-items-center">
+
+                  <div class="side-item">
+                      <div class="responsive-menu-icon">
+                          <a href="#" class="burger-menu menu-icon-bg">
+                              <i class='flaticon-menu'></i>
+                          </a>
+                      </div>	
+                  </div>
+
+                  <div class="side-item">
+                      <div class="responsive-menu-contact">
+                          <a href="tel:+180012356789" class="menu-contact-btn">
+                              <i class="flaticon-telephone"></i>
+                              +1 800 123 56 789
+                          </a>
+                      </div>	
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+<!-- End Navbar Area -->

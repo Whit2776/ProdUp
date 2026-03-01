@@ -1,0 +1,332 @@
+<!DOCTYPE html> {%load static%}
+<html lang="en" dir="ltr" data-startbar="light" data-bs-theme="light">
+
+    
+<!-- Mirrored from mannatthemes.com/ TAS -bs5/default/pages-notifications.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Sep 2025 17:58:29 GMT -->
+    <head>
+        
+
+        <meta charset="utf-8" />
+        <title>Notifications |  TAS - Engineering Firm DashBoard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+        <!-- App css -->
+        <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    
+    <!-- Top Bar Start -->
+    <body>
+        {% include "dashboard/staff_dashboard/components/nav.html" %}
+
+
+        <div class="page-wrapper">
+
+            <!-- Page Content-->
+            <div class="page-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="page-title-box d-md-flex justify-content-md-between align-items-center">
+                                <h4 class="page-title">Notifications</h4>
+                                <div class="">
+                                    <ol class="breadcrumb mb-0">
+                                        <li class="breadcrumb-item"><a href="#"> TAS </a>
+                                        </li><!--end nav-item-->
+                                        <li class="breadcrumb-item"><a href="#">Pages</a>
+                                        </li><!--end nav-item-->
+                                        <li class="breadcrumb-item active">Notifications</li>
+                                    </ol>
+                                </div>                                
+                            </div><!--end page-title-box-->
+                        </div> 
+                    </div> 
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="card-body mb-3">
+                                <h5 class="text-body m-0 d-inline-block">Today</h5>
+                                <span class="text-pink bg-pink-subtle py-0 px-1 rounded fw-medium d-inline-block ms-1">{{todays.count}}</span>
+                            </div> 
+                            {% for n in todays %}
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <a href="#" class="">                                               
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-shrink-0">
+                                                        <img src="{%get_static_prefix%}dashboard/assets/images/users/avatar-10.jpg" alt="" class="thumb-lg rounded-circle">
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-2 text-truncate">
+                                                        <h6 class="my-1 fw-medium text-dark fs-14">{{n.title}}<small class="text-muted ps-2">{{n.updated|timesince}} ago</small></h6>
+                                                        <p class="text-muted mb-0 text-wrap">{{n.message}}</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>   
+                                        
+                                        <div class="col-md-2 text-end align-self-center mt-sm-2 mt-lg-0">
+                                            {% if n.type == 'approve-task'%}
+                                                {% if n.task.status == 'is_approved' %}
+                                                <button type="button" class="btn btn-primary btn-sm px-2">Approved</button>
+                                                {% elif n.task.status == 'completed' %}
+                                                <button id = 'task{{n.task.id}}' type="button" class="btn btn-primary btn-sm px-2 approve">Approve Task</button>
+                                                {% else%}
+                                                <button type="button" class="btn btn-primary btn-sm px-2">View</button>
+                                                {% endif %}
+                                            {% else %}
+                                            <button type="button" class="btn btn-primary btn-sm px-2 ">View</button>
+                                            {% endif %}
+                                            <button type="button" class="btn btn bg-secondary-subtle text-secondary btn-sm delete-btn"><i class="fas fa-trash"></i></button>
+                                        </div>                                              
+                                    </div>          
+                                </div>
+                            </div> 
+                            {% endfor %}
+                            
+                            {% if yesterdays.count > 0 %}
+                            <div class="card-body mb-3">
+                                <h5 class="text-muted m-0 d-inline-block">Yesterday</h5>
+                                <span class="text-pink bg-pink-subtle py-0 px-1 rounded fw-medium d-inline-block ms-1">{{yesterdays.count}}</span>
+                            </div> 
+                            {% for n in yesterdays %}
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <a href="#" class="">                                               
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-shrink-0">
+                                                        <img src="{%get_static_prefix%}dashboard/assets/images/users/avatar-10.jpg" alt="" class="thumb-lg rounded-circle">
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-2 text-truncate">
+                                                        <h6 class="my-1 fw-medium text-dark fs-14">{{n.title}}<small class="text-muted ps-2">{{n.updated|timesince}} ago</small></h6>
+                                                        <p class="text-muted mb-0 text-wrap">{{n.message}}</p>
+                                                    </div><!--end media-body-->
+                                                </div><!--end media-->
+                                            </a>
+                                        </div>   
+                                        <div class="col-md-2 text-end align-self-center mt-sm-2 mt-lg-0">
+                                            {% if n.type == 'approve-task' %}
+                                            {% if n.task.status == 'is_approved' %}
+                                            <button type="button" class="btn btn-primary btn-sm px-2">Approved</button>
+                                            {% elif n.task.status == 'in_progress' %}
+                                            <button type="button" class="btn btn-primary btn-sm px-2">View</button>
+                                            {% else %}
+                                            <button id = 'task{{n.task.id}}' type="button" class="btn btn-primary btn-sm px-2 approve">Approve Task</button>
+                                            {% endif %}
+                                            {% else %}
+                                            <button type="button" class="btn btn-primary btn-sm px-2 ">View</button>
+                                            {% endif %}
+                                            <button type="button" class="btn btn bg-secondary-subtle text-secondary btn-sm delete-btn"><i class="fas fa-trash"></i></button>
+                                        </div>                                                   
+                                    </div>          
+                                </div>
+                            </div> 
+                            {% endfor %} 
+                            {% endif %}    
+
+                            {% if other_days.count > 0 %}
+                            <div class="card-body mb-3">
+                                <h5 class="text-muted m-0 d-inline-block">{{yesterdays_back_date}}</h5>
+                                <span class="text-pink bg-pink-subtle py-0 px-1 rounded fw-medium d-inline-block ms-1">8</span>
+                            </div>   
+                            {% for n in other_days %}
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <a href="#" class="">                                               
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-shrink-0">
+                                                        <img src="{%get_static_prefix%}dashboard/assets/images/users/avatar-10.jpg" alt="" class="thumb-lg rounded-circle">
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-2 text-truncate">
+                                                        <h6 class="my-1 fw-medium text-dark fs-14">{{n.title}}<small class="text-muted ps-2">{{n.updated|timesince}} ago</small></h6>
+                                                        <p class="text-muted mb-0 text-wrap">{{n.message}}</p>
+                                                    </div><!--end media-body-->
+                                                </div><!--end media-->
+                                            </a>
+                                        </div>   
+                                        <div class="col-md-2 text-end align-self-center mt-sm-2 mt-lg-0">
+                                            {% if n.type == 'approve-task' %}
+                                            {% if n.task.status == 'is_approved' %}
+                                            <button type="button" class="btn btn-primary btn-sm px-2">Approved</button>
+                                            {% elif n.task.status == 'in_progress' %}
+                                            <button type="button" class="btn btn-primary btn-sm px-2">View</button>
+                                            {% else %}
+                                            <button id = 'task{{n.task.id}}' type="button" class="btn btn-primary btn-sm px-2 approve">Approve Task</button>
+                                            {% endif %}
+                                            {% else %}
+                                            <button type="button" class="btn btn-primary btn-sm px-2 ">View</button>
+                                            {% endif %}
+                                            <button type="button" class="btn btn bg-secondary-subtle text-secondary btn-sm delete-btn"><i class="fas fa-trash"></i></button>
+                                        </div>                                              
+                                    </div>          
+                                </div>
+                            </div> 
+                            {% endfor %} 
+                            {% endif %}                   
+                        </div>                                                        
+                    </div> 
+
+                              
+                    {% for n in notifications %}
+                    <div class="modal" id = 'task{{n.task.id}}'>
+                        <div class="modal-content">
+                            <form action="" class="approve-task-form">
+                                <h3>Approve Task</h3>
+                                {% csrf_token %}
+                                <input type="hidden" name='task_id' value={{n.task.id}}>
+                                <p>Approve {{n.task.title}}</p>
+                                <input type="text" class="type" placeholder='Type APPROVE or NOT APPROVE' name='answer'>
+                                <textarea name="remarks" id="" placeholder='Remarks'></textarea>
+                                <button type="submit">Send</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}         
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .modal{
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                visibility: hidden;
+                z-index: 1000000;
+                background: rgba(22, 22, 22, 0.62);
+                backdrop-filter: blur(2px);
+                opacity: 0;
+                transition: all 0.3s;
+                color: rgba(68, 184, 212, 1);
+            }
+
+            .active{
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .active .modal-content{
+                scale: 1;
+            }
+
+            .modal-content{
+                width: max(25%, 300px);
+                height: auto;
+                scale: 0;
+                transition: all 0.3s;
+                background: rgba(31, 31, 61, 0.53);
+                backdrop-filter: blur(5px);
+            }
+
+            .modal-content form{
+                display: flex;
+                flex-flow: column nowrap;
+                justify-content: center;
+                text-align: center;
+                gap: 0.5rem;
+                padding: 0.5rem;
+            }
+
+            .modal-content input,
+            .modal-content textarea{
+                padding: 0.5rem;
+                outline: none;
+                background: transparent;
+                transition: all 0.3s;
+                color: white;
+                font-family: algerian;
+                border-radius: 5px;
+                min-height: 1.5rem;
+            }
+
+            .modal input:focus{
+                box-shadow: 0px 0px 5px 1px rgba(0, 195, 255, 0.7);
+                outline: none;
+                border: none;
+            }
+
+            .modal-content button{
+                padding: 0.5rem;
+                border: none;
+                background: rgba(0, 38, 255, 1);
+                border-radius: 5px;
+            }
+        </style>
+        <!-- end page-wrapper -->
+
+        <!-- Javascript  -->  
+        <!-- vendor js -->
+        
+        <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+
+        <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+        <script src = '{% static "dashboard/assets/js/main.js" %}'></script>
+
+        
+        {% if employee.role.permissions.can_approve_tasks %}
+        <script>
+            alert('User can approve Tasks')
+            let approves = document.querySelectorAll('.approve')
+            let approve_modals = Array.from(document.querySelectorAll('.modal'))
+            let approve_forms = document.querySelectorAll('.approve-task-form')
+            console.log(approves)
+
+            approves.forEach(approve => {
+                approve.onclick = () => {
+                    m = approve_modals.find(m => m.id == approve.id)
+                    m.classList.add('active')
+                }
+            })
+
+            approve_forms.forEach(form => {
+                let url = '/api/approve-task'
+                form.addEventListener('submit', async e => {
+                    e.preventDefault()
+                    let formdata = new FormData(form)
+
+                    let res = await fetch(url, {method:'post', body:formdata})
+                    let data = await res.data
+
+                    if(data.Error){
+                        console.error(data.Error)
+                    }
+
+                    if (res.ok){
+                        location.href = `${location.href}`
+                    }
+                })
+            })
+
+            let close_modals = ( es ) => {
+                es.forEach(e => {
+                    e.classList.remove('active')
+                })
+            }
+
+            window.addEventListener('click', e=> {
+                if(e.target.classList.contains('modal')){e.target.classList.remove('active')}
+            })
+        </script>
+        {% endif %}
+    </body>
+    <!--end body-->
+
+<!-- Mirrored from mannatthemes.com/ TAS -bs5/default/pages-notifications.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Sep 2025 17:58:32 GMT -->
+</html>

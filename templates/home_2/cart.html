@@ -1,0 +1,597 @@
+<!DOCTYPE html> {%load static%} {% load static %}
+<html lang="zxx">
+    
+<!-- Mirrored from templates.hibootstrap.com/TAS/default/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 16 Sep 2025 23:01:20 GMT -->
+<head>
+        <!-- Required Meta Tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        
+        <!-- Bootstrap CSS --> 
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/bootstrap.min.css">
+        <!-- Flaticon CSS --> 
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/fonts/flaticon.css">
+        <!-- Boxicons CSS --> 
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/boxicons.min.css">
+        <!-- Owl Carousel Min CSS --> 
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/owl.theme.default.min.css">
+        <!-- Magnific Popup CSS --> 
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/magnific-popup.css">
+        <!-- Animate Min CSS -->
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/animate.min.css">
+        <!-- Meanmenu CSS -->
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/meanmenu.css">
+         <!-- Nice Select CSS -->
+         <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/nice-select.min.css">
+        <!-- Style CSS -->
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/style.css">
+        <!-- Responsive CSS -->
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/responsive.css">
+        <!-- Theme Dark CSS -->
+        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/theme-dark.css">
+    
+        <link rel="stylesheet" href="{% static 'home_2/assets/css/nav.css' %}">
+        <title>Tas-Engineering Firm</title>
+
+        <!-- Favicon -->
+        <link rel="icon" type="image/x.icon" href='{% static "images/tas-logo.jpg"%}'>
+    </head>
+    <body>
+        {% include 'home_2/components/preloader.html'%}
+        <!-- Start Navbar Area -->
+        {% include "home_2/components/nav.html" %}
+        <!-- End Navbar Area -->
+
+        <!-- Sidebar Modal -->
+        <div class="sidebar-modal">
+            <div class="sidebar-modal-inner">
+				<div class="sidebar-header">
+					<div class="sidebar-logo">
+						<img src="{% get_static_prefix %}home_2/assets/img/logo/logo2.png" class="sidebar-logo1" alt="Image">
+                        <img src="{% get_static_prefix %}home_2/assets/img/logo/logo1.png" class="sidebar-logo2" alt="Image">
+					</div>
+					
+					<span class="close-btn sidebar-modal-close-btn">
+						<i class="bx bx-x"></i>
+					</span>
+				</div>
+
+                <div class="sidebar-about">
+                    <div class="title">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
+                            incididunt ut tur incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="contact-us">
+                    <h2>Contact Us</h2>
+
+                    <ul>
+						<li>
+							<i class='bx bx-current-location'></i>
+							Address: 2659 Autostrad St, London, UK
+						</li>
+
+						<li>
+							<i class='bx bx-mail-send'></i>
+							<a href="https://templates.hibootstrap.com/cdn-cgi/l/email-protection#3c54595050537c4f4c4e5553125f5351"><span class="__cf_email__" data-cfemail="5e363b3232311e2d2e2c3731703d3133">[email&#160;protected]</span></a>
+							<a href="#">Skype: example</a>
+						</li>
+
+						<li>
+							<i class='bx bx-phone-call'></i>
+							<a href="tel:+215-123-4567"> +215 - 123 - 4567</a>
+							<a href="tel:+215-123-8587"> +215 - 123 - 8587</a>
+						</li>
+					</ul>
+				</div>
+				
+                <div class="sidebar-instagram-feed">
+                    <h2>Instagram</h2>
+
+                    <ul>
+                        <li>
+							<a href="#">
+								<img src="{% get_static_prefix %}home_2/assets/img/instagram/instagram1.jpg" alt="image">
+							</a>
+						</li>
+                        <li>
+							<a href="#">
+								<img src="{% get_static_prefix %}home_2/assets/img/instagram/instagram2.jpg" alt="image">
+							</a>
+						</li>
+                        <li>
+							<a href="#">
+								<img src="{% get_static_prefix %}home_2/assets/img/instagram/instagram3.jpg" alt="image">
+							</a>
+						</li>
+                        <li>
+							<a href="#">
+								<img src="{% get_static_prefix %}home_2/assets/img/instagram/instagram4.jpg" alt="image">
+							</a>
+						</li>
+                        <li>
+							<a href="#">
+								<img src="{% get_static_prefix %}home_2/assets/img/instagram/instagram5.jpg" alt="image">
+							</a>
+						</li>
+                        <li>
+							<a href="#">
+								<img src="{% get_static_prefix %}home_2/assets/img/instagram/instagram6.jpg" alt="image">
+							</a>
+						</li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-follow-us">
+					<h2>Sidebar Follow</h2>
+
+					<ul class="social-wrap">
+						<li>
+							<a href="#" target="_blank">
+								<i class="bx bxl-twitter"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#" target="_blank">
+								<i class="bx bxl-instagram"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#" target="_blank">
+								<i class="bx bxl-facebook"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#" target="_blank">
+								<i class="bx bxl-youtube"></i>
+							</a>
+						</li>
+					</ul>
+                </div>
+            </div>
+        </div>
+		<!-- End Sidebar Modal -->
+
+        <!-- Inner Banner -->
+        <div class="inner-banner inner-bg1">
+            <div class="container">
+                <div class="inner-title text-center">
+                    <h3>Cart</h3>
+                    <ul>
+                        <li>
+                            <i class="flaticon-fireplace"></i>
+                        </li>
+                        <li>
+                            <a href="index.html">Home /</a>
+                        </li>
+                        <li>Cart</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Inner Banner End -->
+
+        <!-- Start Cart Area -->
+		<section class="cart-wraps-area ptb-100">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 col-md-12">
+						<form>
+							<div class="cart-wraps">
+								<div class="cart-table table-responsive">
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th scope="col">Product</th>
+												<th scope="col">Name</th>
+												<th scope="col">Unit Price</th>
+												<th scope="col">Quantity</th>
+												<th scope="col">Total</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											<tr>
+												<td class="product-thumbnail">
+													<a href="#">
+														<img src="{% get_static_prefix %}home_2/assets/img/product/product-list1.png" alt="Image">
+													</a>
+												</td>
+
+												<td class="product-name">
+													<a href="#">Lucy lovely chair</a>
+                                                </td>
+                                                
+												<td class="product-price">
+													<span class="unit-amount">$50.00</span>
+												</td>
+
+												<td class="product-quantity">
+													<div class="input-counter">
+														<span class="minus-btn">
+															<i class='bx bx-minus'></i>
+														</span>
+														<input type="text" value="1">
+														<span class="plus-btn">
+															<i class='bx bx-plus'></i>
+														</span>
+													</div>
+												</td>
+
+												<td class="product-subtotal">
+													<span class="subtotal-amount">$50.00</span>
+
+													<a href="#" class="remove">
+														<i class='bx bx-trash'></i>
+													</a>
+												</td>
+											</tr>
+
+											<tr>
+												<td class="product-thumbnail">
+													<a href="#">
+														<img src="{% get_static_prefix %}home_2/assets/img/product/product-list2.png" alt="Image">
+													</a>
+												</td>
+
+												<td class="product-name">
+													<a href="#">Topu tall side table</a>
+												</td>
+
+												<td class="product-price">
+													<span class="unit-amount">$30.00</span>
+												</td>
+
+												<td class="product-quantity">
+													<div class="input-counter">
+														<span class="minus-btn">
+															<i class='bx bx-minus'></i>
+														</span>
+														<input type="text" value="1">
+														<span class="plus-btn">
+															<i class='bx bx-plus'></i>
+														</span>
+													</div>
+												</td>
+
+												<td class="product-subtotal">
+													<span class="subtotal-amount">$30.00</span>
+
+													<a href="#" class="remove">
+														<i class='bx bx-trash'></i>
+													</a>
+												</td>
+											</tr>
+
+											<tr>
+												<td class="product-thumbnail">
+													<a href="#">
+														<img src="{% get_static_prefix %}home_2/assets/img/product/product-list3.png" alt="Image">
+													</a>
+												</td>
+
+												<td class="product-name">
+													<a href="#">Wooden table lamp</a>
+												</td>
+
+												<td class="product-price">
+													<span class="unit-amount"> $75.00</span>
+												</td>
+
+												<td class="product-quantity">
+													<div class="input-counter">
+														<span class="minus-btn">
+															<i class='bx bx-minus'></i>
+														</span>
+														<input type="text" value="1">
+														<span class="plus-btn">
+															<i class='bx bx-plus'></i>
+														</span>
+													</div>
+												</td>
+
+												<td class="product-subtotal">
+													<span class="subtotal-amount">$75.00</span>
+
+													<a href="#" class="remove">
+														<i class='bx bx-trash'></i>
+													</a>
+												</td>
+											</tr>
+
+											<tr>
+												<td class="product-thumbnail">
+													<a href="#">
+														<img src="{% get_static_prefix %}home_2/assets/img/product/product-list4.png" alt="Image">
+													</a>
+												</td>
+
+												<td class="product-name">
+													<a href="#">Grey velvet chair</a>
+												</td>
+
+												<td class="product-price">
+													<span class="unit-amount">$50.00</span>
+												</td>
+
+												<td class="product-quantity">
+													<div class="input-counter">
+														<span class="minus-btn">
+															<i class='bx bx-minus'></i>
+														</span>
+														<input type="text" value="1">
+														<span class="plus-btn">
+															<i class='bx bx-plus'></i>
+														</span>
+													</div>
+												</td>
+
+												<td class="product-subtotal">
+													<span class="subtotal-amount">$50.00</span>
+
+													<a href="#" class="remove">
+														<i class='bx bx-trash'></i>
+													</a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+
+								<div class="cart-buttons">
+									<div class="row align-items-center">
+										<div class="col-lg-7 col-sm-7 col-md-7">
+											<div class="continue-shopping-box">
+												<a href="#" class="default-btn default-hot-toddy">
+													Continue Shopping
+												</a>
+											</div>
+										</div>
+
+										<div class="col-lg-5 col-sm-5 col-md-5 text-end">
+											<a href="#" class=" default-btn default-hot-toddy">
+												Update Cart
+											</a>
+										</div>
+									</div>
+								</div>
+                            </div>
+                            
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="cart-calc">
+										<div class="cart-wraps-form"> 
+											<h3>Calculate Shipping</h3>
+											<div class="row">
+												<div class="col-lg-6">
+													<div class="form-group">
+														<select>
+															<option value="">Credit Card Type</option>
+															<option value="">Another option</option>
+															<option value="">A option</option>
+														</select>	
+													</div>
+                                                </div>
+												<div class="form-group col-lg-6">
+													<input type="text" class="form-control" placeholder="Credit Card Number">
+												</div>
+												<div class="form-group col-12">
+													<input type="text" class="form-control" placeholder="Card Verification Number">
+												</div>
+											</div>
+											<div class="form-group">
+												<input type="text" class="form-control" placeholder="Coupon Code">
+											</div>
+											<a href="#" class="default-btn default-hot-toddy">
+												Apply Coupon
+											</a>
+										</div>
+									</div>
+                                </div>
+                                
+								<div class="col-lg-6">
+									<div class="cart-totals">
+										<h3>Cart Totals</h3>
+										<ul>
+											<li>Subtotal <span>$150.00</span></li>
+											<li>Shipping <span>$30.00</span></li>
+											<li>Coupon <span>$20.00</span></li>
+											<li>Total <span><b>$160.00</b></span></li>
+										</ul>
+										<a href="#" class="default-btn default-hot-toddy">
+											Proceed To Checkout
+										</a>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End Cart Area -->
+       {% include "home_2/components/footer.html" %}
+        <!--
+        <div class="footer-area footer-bg pt-100 pb-70">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="footer-widget footer-widget-color">
+                            <a href="index.html" class="footer-logo">
+                                <img src="{% get_static_prefix %}home_2/assets/img/logo/logo1.png" alt="Images">
+                            </a>
+                            <ul class="footer-contact-list">
+                                <li>
+                                    <span> Address:</span> 2659 Autostrad St, London, UK
+                                </li> 
+                                <li>
+                                    <span>Message:</span> <a href="https://templates.hibootstrap.com/cdn-cgi/l/email-protection#9ae9efeaeaf5e8eedae9eae8f3f5b4f9f5f7"></a> <a href="https://templates.hibootstrap.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c3b0b6b3b3acb1b783b0b3b1aaaceda0acae">[email&#160;protected]</a>
+                                </li> 
+                                <li>
+                                    <span>Phone:</span> <a href="tel:215-123-4567"> 215 - 123 - 4567</a>
+                                </li> 
+                                <li>
+                                    <span>Open:</span>  Mon - Fri / 9:00 AM - 6:00 PM
+                                </li>  
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 footer-plr">
+                        <div class="footer-widget footer-widget-color">
+                            <h3>OUR SERVICES</h3>
+                            <ul class="footer-list">
+                                <li>
+                                    <a href="services-1.html" target="_blank">
+                                        <i class='bx bx-plus'></i>
+                                        Interior Design
+                                    </a>
+                                </li> 
+                                <li>
+                                    <a href="services-1.html" target="_blank">
+                                        <i class='bx bx-plus'></i>
+                                        Architecture Modeling
+                                    </a>
+                                </li> 
+                                <li>
+                                    <a href="services-1.html" target="_blank">
+                                        <i class='bx bx-plus'></i>
+                                        Rendering Buildings
+                                    </a>
+                                </li> 
+                                <li>
+                                    <a href="services-1.html" target="_blank">
+                                        <i class='bx bx-plus'></i>
+                                        Landscape works
+                                    </a>
+                                </li> 
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-widget-color">
+                        <div class="footer-widget footer-widget-color pl-4">
+                            <h3>LATEST PROJECTS</h3>
+                            <ul class="footer-list">
+                                <li>
+                                    <a href="services-1.html" target="_blank">
+                                        Chemical Engineering Projects
+                                    </a>
+                                </li> 
+                                <li>
+                                    <a href="services-1.html" target="_blank">
+                                        Construction Engineering 
+                                    </a>
+                                </li> 
+                                <li>
+                                    <a href="services-1.html" target="_blank">
+                                        Interior Welding Engineering
+                                    </a>
+                                </li> 
+                                <li>
+                                    <a href="services-1.html" target="_blank">
+                                        Welding Engineering
+                                    </a>
+                                </li> 
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget footer-widget-color">
+                            <h3>RECENT NEWS</h3>
+                            <ul class="footer-news">
+                                <li>
+                                    <i class='bx bx-time-five'></i>
+                                    <div class="content">
+                                        <span>12 Jun 2024</span>
+                                        <a href="#">Visiting rabat bridge</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class='bx bx-time-five'></i>
+                                    <div class="content">
+                                        <span>30 April 2024</span>
+                                        <a href="#">Meet iceland’s rivers & hills</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        -->
+
+        <!-- Copy-right Area two End -->
+        {% comment %} <div class="copy-right-area-two">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-5">
+                        <div class="copy-right-icon-two">
+                            <ul class="social-link">
+                                <li>
+                                    <a href="#" target="_blank"><i class='bx bxl-facebook'></i></a>
+                                </li> 
+                                <li>
+                                    <a href="#" target="_blank"><i class='bx bxl-twitter'></i></a>
+                                </li> 
+                                <li>
+                                    <a href="#" target="_blank"><i class='bx bxl-instagram'></i></a>
+                                </li> 
+                                <li>
+                                    <a href="#" target="_blank"><i class='bx bxl-pinterest-alt'></i></a>
+                                </li> 
+                                <li>
+                                    <a href="#" target="_blank"><i class='bx bxl-youtube'></i></a>
+                                </li> 
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-7">
+                        <div class="copyright-text-two">
+                            <p>
+                                Copyright TAS. All Rights Reserved by 
+                                <a href="https://hibootstrap.com/" target="_blank">HiBootstrap</a> 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> {% endcomment %}
+        <!-- Copy-right Area two End -->
+
+
+        <!-- Jquery Min JS -->
+        <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="{% get_static_prefix %}home_2/assets/js/jquery.min.js"></script>
+       <!-- Bootstrap Bundle Min JS -->
+       <script src="{% get_static_prefix %}home_2/assets/js/bootstrap.bundle.min.js"></script>
+       <!-- Owl Carousel Min JS -->
+       <script src="{% get_static_prefix %}home_2/assets/js/owl.carousel.min.js"></script>
+       <script src="{% get_static_prefix %}home_2/assets/js/carousel-thumbs.js"></script>
+       <!-- Magnific Popup JS -->
+       <script src="{% get_static_prefix %}home_2/assets/js/jquery.magnific-popup.min.js"></script>
+       <!-- Wow Min JS -->
+       <script src="{% get_static_prefix %}home_2/assets/js/wow.min.js"></script>
+       <!-- Meanmenu JS -->
+       <script src="{% get_static_prefix %}home_2/assets/js/meanmenu.js"></script>
+       <!-- Nice Select Min JS -->
+       <script src="{% get_static_prefix %}home_2/assets/js/jquery.nice-select.min.js"></script>
+       <!-- Ajaxchimp Min JS -->
+       <script src="{% get_static_prefix %}home_2/assets/js/jquery.ajaxchimp.min.js"></script>
+       <!-- Form Validator Min JS -->
+       <script src="{% get_static_prefix %}home_2/assets/js/form-validator.min.js"></script>
+       <!-- Contact Form JS -->
+       <script src="{% get_static_prefix %}home_2/assets/js/contact-form-script.js"></script>
+       
+        <script src="{%get_static_prefix%}home_2/assets/js/nav.js?44"></script>
+       <script src="{% get_static_prefix %}home_2/assets/js/custom.js"></script>
+    </body>
+
+<!-- Mirrored from templates.hibootstrap.com/TAS/default/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 16 Sep 2025 23:01:20 GMT -->
+</html>
