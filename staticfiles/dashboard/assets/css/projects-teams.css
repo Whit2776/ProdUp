@@ -1,0 +1,278 @@
+.add-team {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  z-index: 100;
+}
+
+.add-team-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #007aff, #00e0ff);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.add-team-button:hover {
+  transform: scale(1.05);
+}
+
+.add-team-button .add {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: white;
+  position: relative;
+  transition: all 0.5s;
+}
+
+.add-team-button .add::before,
+.add-team-button .add::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 2px;
+  background: white;
+  transition: 0.3s;
+}
+
+.add-team-button .add::after {
+  transform: rotate(90deg);
+}
+
+.pop-up-wrapper {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.items {
+  list-style: none;
+  position: absolute;
+  display: flex;
+  flex-flow: column nowrap;
+  transform: scale(0);
+  left: -70px;
+  top: -60px;
+  transition: all 0.5s;
+} 
+
+.item {
+  position: relative;
+  transition: all 0.5s;
+}
+
+.item .description{
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  background-color: black;
+  color: rgba(255, 255, 255, 0.8);
+  border-radius: 3px;
+  min-width: 2rem;
+  min-height: 0.75rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+  padding: 0.15rem;
+}
+
+
+.item svg {
+  width: 30px;
+  height: 30px;
+  fill: #000;
+  background: white;
+  border-radius: 50%;
+  padding: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s;
+}
+
+
+.item svg:hover {
+  transform: scale(1.1);
+  background: #f0f0f0;
+  cursor: pointer;
+}
+
+.item:hover .description{
+  display: block;
+  opacity: 1;
+  animation: des 0.3s forwards
+}
+
+@keyframes des {
+  0%{right: 0%;} 
+  80%{right: 110%}
+  100%{right: 105%}
+}
+
+.pop-up-wrapper.pop-up-wrapper.active .items{
+  transform: scale(1);
+}
+
+/* Radial positions for each item (6 items, 60° apart) */
+.pop-up-wrapper.active .item:nth-child(1) {
+  transform: translate(60px);
+}
+.pop-up-wrapper.active .item:nth-child(2) {
+  transform: translate(30px, -10px);
+}
+.pop-up-wrapper.active .item:nth-child(3) {
+  transform: translate(0px 15px);
+}
+.pop-up-wrapper.active .item:nth-child(4) {
+  transform: translate(0px -15px);
+}
+.pop-up-wrapper.active .item:nth-child(5) {
+  transform: translate(30px, 10px);
+}
+.pop-up-wrapper.active .item:nth-child(6) {
+  transform: translate(60px);
+}
+
+/* Button turns into an "X" when active */
+.pop-up-wrapper.active ~ .add-team-button .add {
+  transform: rotate(405deg);
+}
+
+/* Modal background overlay */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Show modal when active */
+.modal.active {
+  display: flex;
+}
+
+/* Modal content box */
+.modal-content {
+  background: #fff;
+  width: 400px;
+  max-width: 90%;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: slideIn 0.3s ease;
+}
+
+/* Animation */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Close button (X) */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  color: #888;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
+/* Form elements */
+.modal-content h2 {
+  margin-bottom: 15px;
+  text-align: center;
+  color: #222;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #333;
+}
+
+input,
+select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+input:focus,
+select:focus {
+  border-color: #007bff;
+}
+
+/* Multiple select styling */
+select[multiple] {
+  height: 100px;
+}
+
+/* Submit button */
+.submit-btn {
+  width: 100%;
+  background-color: #007bff;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Add Team Button */
+.open-modal-btn {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 18px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+  transition: 0.2s;
+}
+
+.open-modal-btn:hover {
+  background-color: #0056b3;
+}

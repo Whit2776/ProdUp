@@ -1,0 +1,256 @@
+body{
+  font-size: clamp(0.5rem, 1.5vw, 1.5rem)
+}
+
+.welcome-screen-wrapper{
+  height: clamp(50vh, 50vw, 100vh);
+  background-color: black;
+  color: white;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+}
+
+.welcome-screen-wrapper #contact-us{
+  margin: min(5rem, 8%) 0rem 0rem min(5rem, 8%);
+  display: flex;
+  flex-flow: column nowrap;
+  gap: min(5rem, 10vw);
+}
+
+#get-started{
+  display: flex;
+  gap: clamp(0.5rem, 1.5vw, 2rem);
+  align-items: center;
+}
+
+#get-started #get-started-link{
+  white-space: nowrap;
+  padding: min(1rem, 8%);
+  background-color: blue;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0px 0px 2px white inset;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+
+#get-started .contact{
+  gap: 0.25rem;
+  display: flex;
+  align-items: center;
+}
+
+#get-started .contact img{
+  background-color: white;
+  border-radius: 50%;
+  padding: min(0.5rem, 50%);
+  align-self: center;
+  width: clamp(2rem, 3vw, 5rem);
+  height: auto;
+}
+
+#get-started .contact div{
+  flex-flow: column nowrap;
+  align-self: center;
+}
+
+#get-started .contact div p:last-child{
+  font-weight: bold;
+}
+
+#some-services{
+  align-self: flex-end;
+  background-color: gray;
+  color: black;
+  display: block;
+  max-width: 100%;
+}
+
+#some-services ol{
+  display: flex;
+  flex-flow: row nowrap;
+  list-style-type: none;
+}
+
+#some-services ol li{
+  padding: min(1rem, 8%);
+}
+
+#our-services{
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+#our-services #heading{
+  text-align: center;
+}
+
+#services-cards{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  gap: min(1rem, 1.5vw);
+  margin: min(2rem, 10.5vw)
+}
+
+.service-card{
+  width: clamp(300px, 30vw, 600px);
+  display: flex;
+  flex-flow: column nowrap;
+  gap: min(1rem, 1.5vw);
+  border: 1px solid rgba(38, 37, 37, 0.479);
+  box-shadow: 0 0 5px 2px  rgba(0, 0, 0, 0.504);
+}
+
+.service-card .service-description{
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 0 1rem 1rem;
+}
+
+.service-card .view-service{
+  background-color: black;
+  white-space: nowrap;
+  color: rgb(224, 223, 223);
+  font-weight: bold;
+  text-decoration: none;
+  padding: min(5rem, 8%);
+  align-self: flex-start;
+}
+
+#services-cards img{
+  width: 100%;
+  height: auto;
+}
+
+.latest-projects-wrapper{
+  display: flex;
+  flex-flow: row nowrap;
+  height: clamp(50vh, 50vw, 100vh);
+  color: white;
+  margin: 1rem 0;
+}
+
+.latest-project-section{
+  width: 50%;
+}
+#latest-project-section-1{
+  display: flex;
+}
+
+#latest-project-section-1-message{
+  align-self: self-end;
+  background-color: black;
+  color: white;
+  padding: 2rem;
+  line-height: 1.5rem;
+}
+
+#latest-project-section-1-message a {
+  display: flex;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+
+#latest-project-section-1-message img{
+  border-radius: 50%;
+  width: 25px;
+  height: auto;
+  margin-left: 1rem;
+}
+
+#latest-project-section-2{
+  background-color: rgb(245, 243, 236);
+  padding: min(1rem, 10%);
+  color: black;
+}
+
+#latest-project-section-2-wrapper{
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  height: 100%;
+}
+
+#latest-project-section-2-nav{
+  background-color: gray;
+}
+
+#latest-project-section-2-nav ol{
+  display: flex;
+  font-weight: bold;
+  color: black;
+  justify-content: space-evenly;
+  list-style-type: none;  
+}
+
+#latest-project-section-2-nav ol li{
+  padding: min(1rem, 10%)
+}
+
+#latest-project-section-2-stats{
+  display: flex;
+  justify-content: space-between;
+}
+
+#latest-project-section-2-stats div:last-child div{
+  display: flex;
+}
+
+#three-images{
+  display: flex;
+  flex-flow: row nowrap;
+  background-color: gray;
+  min-height: 30vh;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#three-images img{
+  width: clamp(30px, 7vw, 100px);
+  height: auto;
+}
+
+#frequently-asked-questions{
+  display: flex;
+  /* justify-content: space-evenly; */
+  align-items: center;
+  background-color: gold;
+  min-height: 30vh;
+  margin: 1rem 0;
+}
+
+#frequently-asked-questions .question-wrapper:nth-child(2){
+  background-color: blue;
+}
+
+.question-wrapper{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  height: 30vh;
+}
+
+.question{
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.question img{
+  width: clamp(30px, 7vw, 100px);
+}
+
+.question .contact p:last-child{
+  font-weight: bolder;
+}
+
+@media (max-width: 500px){
+  #some-services{
+    width: 100%;
+  }
+}

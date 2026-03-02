@@ -1231,7 +1231,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let res = await fetch(url, {method:'POST', body: formdata})
     let res_json = await res.json()
 
-    console.log(res_json)
+    if(res_json.success){
+      location.href = '/emails/check-email'
+      alert("You will be sent an email to verify your account by setting your password")
+    }
   })
 </script>
 </body>

@@ -118,7 +118,7 @@ def create_company(request):
   
   with transaction.atomic():
     company_serializer = CompanySerializer(data = request.data)
-    if not company_serializer.is_valid:
+    if not company_serializer.is_valid():
       return Response({'success': False, 'message': 'Invalid data', 'errors': company_serializer.errors}, status=status.HTTP_406_NOT_ACCEPTABLE)
     
     company = company_serializer.save()
@@ -164,7 +164,7 @@ def create_main_admin(request, link, token):
     admin_email_link = Email_Link.objects.create(email = admin.email)
     
     set_up = request.build_absolute_uri(reverse('set-password', args = [admin.link, admin_email_link.token]))
-    send_brevo_email(7, admin.email, admin.name, {'company_name':company.name, 'user_name':admin.name, 'set_up':set_up})
+    send_brevo_email(7, admin.email, admin.name, {'company_name':company.name, 'user_name':admin.name, 'set_up':set_up, 'emp_id':admin.emp_id})
   
   return Response({'success':True, 'message':'Successfully created Admin Account'})
 
