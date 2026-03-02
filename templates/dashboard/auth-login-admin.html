@@ -149,18 +149,19 @@ body{
     <p>Restricted system-level authentication</p>
   </div>
 
-  <form>
+  <form method='POST'>
+    {% csrf_token %}
     <div class="field">
       <label class="label">Admin ID</label>
       <div class="input-wrapper">
-        <input type="text" placeholder="ADM-001">
+        <input type="text" name='emp_id' placeholder="ADM-001">
       </div>
     </div>
 
     <div class="field">
       <label class="label">Password</label>
       <div class="input-wrapper password" style="position:relative;">
-        <input type="password" id="adminPass" placeholder="••••••••">
+        <input type="password" id="adminPass" name='password' placeholder="••••••••">
         <button type="button" class="toggle-btn" id="togglePass">
           <i data-lucide="eye"></i>
         </button>
