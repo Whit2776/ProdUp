@@ -16,7 +16,7 @@ class EmployeeAuthMiddleware:
       # Fetch member from DB if active
       employee = Employee.objects.filter(emp_id=emp_id).first()
       if employee:
-        request.comapny = employee.company
+        request.company = employee.company
         request.employee = employee
     # Continue processing the request
     print('Middleware Activated')

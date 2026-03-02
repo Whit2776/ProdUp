@@ -425,8 +425,10 @@ def projects_create_teams(request):
 
 
 @employee_login_required
-def create_clients(request):  
+def create_clients(request): 
+  employee = request.employee 
   company = request.company
+  print(company, employee)
   if request.method == 'POST':
     r = request.POST
     rf = request.FILES
