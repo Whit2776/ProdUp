@@ -76,36 +76,18 @@ def roles_create_role(request):
   if request.method == 'POST':
     r = request.POST
 
-    def boolify(key):
-      return True if r.get(key) == "on" else False
+    role_type = r.get('type') if r.get('type') in ['Admin', 'Staff'] else False
+    if not role_type:
+      return HttpResponse('Role Type can only be Admin or Staff')
     
-    def set_perms():
-      permissions, created_perms = Permission.objects.get_or_create(
-        can_approve_payments = boolify('can_approve_payments'), 
-        can_approve_tasks = boolify('can_approve_tasks'), 
-        can_lead_team = boolify('can_lead_team'), 
-        can_supervise = boolify('can_supervise'), 
-        can_view_finances = boolify('can_view_finances'),
-        can_assign_tasks = boolify('can_assign_tasks'),
-        can_edit_profile = boolify('can_edit_profile'),
-        )
-      return permissions,created
-
-    
-    role, created = Role.objects.get_or_create(company = company, name = r.get('name'), position = r.get('position'), base_rate = r.get('base_rate'))
-
+    role = Role.objects.get(company = company, type = role_type ,name = r.get('name'), position = r.get('position'), base_rate = r.get('base_rate'))
     if role:
-      permissions, created_perms = set_perms()
-      role.department = Department.objects.get(id = r.get('department'))
-      role.permissions = permissions if not created else created_perms
-      role.save()
-    elif created:
-      permissions, created_perms = set_perms()
-      created.description = r.get('description')
-      created.department = Department.objects.get(id = r.get('department'))
-      created.permissions = permissions if not created else created_perms
-      role.save()
-
+      return HttpResponse('Role already created')
+    role = Role.objects.create(company = company, type = role_type ,name = r.get('name'), position = r.get('position'), base_rate = r.get('base_rate'))
+    permissions = Permission.objects.create()
+    role.permissions = permissions
+    role.save(update_fields=['permissions'])
+    
     return redirect('roles-create-role')
   context = {'company':company, 'departments':departments}
   return render_dashboard(request, 'dashboard/roles-create-role.html', context)  
@@ -1028,7 +1010,7 @@ def authentication_login(request):
     request.session['emp_id'] = employee.emp_id
     request.session['login_context'] = employee.role.name
     
-    return redirect('dashboard')
+    return redirect('projects_overview')
   return render(request, 'dashboard/auth-login-admin.html')
 
 def authentication_register(request):
