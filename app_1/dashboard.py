@@ -1012,6 +1012,23 @@ def pages_gallery(request):
   return render_dashboard(request, 'dashboard/pages-gallery.html', context)    
 
 def authentication_login(request):
+  if request.method == 'POST':
+    r = request.POST
+    emp_id = r.get('emp_id')
+    password = r.get('password')
+    print('POST')
+    
+    employee = Employee.objects.filter(emp_id = emp_id).first()
+    if not employee:
+      return HttpResponse('Employee Not Found')
+    
+    if not check_password(password, employee.password):
+      return HttpResponse('Incorrect login credentials')
+    
+    request.session['emp_id'] = employee.emp_id
+    request.session['login_context'] = employee.role.name
+    
+    return redirect('dashboard')
   return render(request, 'dashboard/auth-login-admin.html')
 
 def authentication_register(request):
@@ -1095,7 +1112,7 @@ def authentication_staff_login(request):
     try:
       e = Employee.objects.get(emp_id = r.get('emp_id'))
 
-      request.session['emp_id'] = e.emp_id
+      request.session['login'] = {e.emp_id}
 
       # if check_password(r.get('password'), e.password):
       #   request.session.flush()
