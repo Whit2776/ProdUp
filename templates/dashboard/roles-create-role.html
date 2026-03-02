@@ -130,6 +130,11 @@
               <form id="roleForm" method='post'>
                 {% csrf_token %}
                 <h2>Create Role</h2>
+                <label>Type</label>
+                <select name="type" class="select-form">
+                  <option value="Admin">Admin</option>
+                  <option value="Staff">Staff</option>
+                </select>
 
                 <label>Name</label>
                 <input type="text" required placeholder="Manager, Supervisor, Employee" name = 'name'>
@@ -153,37 +158,6 @@
 
                 <label>Description</label>
                 <textarea required name='description'></textarea>
-
-                <label for="">Permissions</label> <small>Select permissions for this Role</small>
-                <div class="permission-container">
-                  <h5>Can Approve Payment</h5>
-                  <input class='check-box' type="checkbox" name="can_approve_payments" id="">
-                </div>
-                <div class="permission-container">
-                  <h5>Can Approve Tasks</h5>
-                  <input class='check-box' type="checkbox" name="can_approve_tasks" id="">
-                </div>
-                <div class="permission-container">
-                  <h5>Can Assign Tasks</h5>
-                  <input class='check-box' type="checkbox" name="can_assign_tasks" id="">
-                </div>
-                <div class="permission-container">
-                  <h5>Can View Finances</h5>
-                  <input class='check-box' type="checkbox" name="can_view_finances" id="">
-                </div>
-                <div class="permission-container">
-                  <h5>Can Lead Team</h5>
-                  <input class='check-box' type="checkbox" name="can_lead_team" id="">
-                </div>
-                <div class="permission-container">
-                  <h5>Can Supervise</h5>
-                  <input class='check-box' type="checkbox" name="can_supervise" id="">
-                </div>
-                
-                <div class="permission-container">
-                  <h5>Can Edit Profile</h5>
-                  <input class='check-box' type="checkbox" name="can_edit_profile" id="">
-                </div>
 
                 <button type="submit">Submit</button>
               </form>
