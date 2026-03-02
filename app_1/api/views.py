@@ -214,7 +214,7 @@ def admin_login(request):
 
 @api_view(['GET'])
 def log_out(request):
-  request.session.flush()
+  request.session['emp_id'] = ''
   return Response({'':''})
 
 @api_view(['POST'])
