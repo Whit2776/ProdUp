@@ -18,6 +18,15 @@ def admin_login_required(view_func):
     return view_func(request, *args, **kwargs)
   return wrapper
 
+def login_context_required(required_context):
+    def decorator(view_func):
+        def wrapper(request, *args, **kwargs):
+            if request.session.get('login_context') != required_context:
+                return redirect(f'{required_context}_login')
+            return view_func(request, *args, **kwargs)
+        return wrapper
+    return decorator
+
 def employee_login_required(view_func):
   def wrapper(request, *args, **kwargs):
     emp_id = request.session.get('emp_id')
