@@ -178,6 +178,10 @@ class Employee(models.Model):
   updated_at = models.DateTimeField(auto_now=True)
   is_online = models.BooleanField(null = True)
   link = models.CharField(max_length = 100, null = True, blank = True)
+  
+  def first_three(self, value):
+    value = (value or "").strip()
+    return (value[:3] + "xxx")[:3]
     
   def save(self, *args, **kwargs):
     if not self.user_name:
@@ -196,7 +200,7 @@ class Employee(models.Model):
         except:
           initials = 'CO'
         rand = get_random_string(length=4, allowed_chars='0123456789')
-        self.emp_id = f"{prefix}-{initials}-{rand}"
+        self.emp_id = f"{prefix}-{initials}-{self.first_three(self, self.company.name)}-{rand}"
     
     if not self.name:
       if self.last_name and self.first_name:
