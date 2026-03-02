@@ -94,7 +94,6 @@ class Role(models.Model):
   company = models.ForeignKey(Company, on_delete = models.CASCADE, related_name='company_roles')
   type = models.CharField(max_length = 40, null=True)
   department = models.ForeignKey(Department, on_delete = models.PROTECT, related_name='department_roles', null = True)
-  name = models.CharField(max_length=200)
   position = models.CharField(null =True,max_length = 3000, help_text = 'Position of said employees based on department/company status. Eg. Executive Officer, Department Head, Master, Technician, Helper')
   base_rate = models.DecimalField(null=True, max_digits=12, decimal_places=2, help_text = 'Base Rate for the specified role per task')
   description = models.TextField(null=True,default = 'Description of the said role')
