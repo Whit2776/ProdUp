@@ -40,6 +40,7 @@ urlpatterns = [
     path('dashboard/departments/', dashboard.departments, name = 'departments'),
     path('dashboard/departments/create-department/', dashboard.departments_create_department, name = 'departments-create-department'),
     path('dashboard/departments/department/<int:pk>/', dashboard.departments_department, name = 'departments-department'),
+    path('dashboard/departments/manage-department/', dashboard.departments_manage_department, name = 'departments-manage-department'),
 
     path('dashboard/roles/', dashboard.roles, name = 'roles'),
     path('dashboard/roles/create-role/', dashboard.roles_create_role, name = 'roles-create-role'),

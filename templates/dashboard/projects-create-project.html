@@ -392,22 +392,7 @@
             try{draft = JSON.parse(json_draft)} catch{console.log('hello')}
             console.log(draft)
             if (draft != ''){
-              if (confirm('Do you want to load your data?')){
-                let savables = document.querySelectorAll('.calc')
-                savables.forEach(s => {
-                  let in_value = draft[`${s.name}`]
-
-                  if (s.type != "file") {s.value = in_value || "";};
-
-                })
-                //preIm.style.display = 'flex'
-                //preIm.style.width = '100%'
-                //preIm.style.height = '100%'
-
-                console.log('Data Loaded')
-              } else{
-                localStorage.setItem('json_draft', '')
-              }
+              // Do something to alert the user that there are saved data
             } 
           }
         </script>

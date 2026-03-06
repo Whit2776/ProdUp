@@ -1,3 +1,4 @@
 {
-  "python.defaultInterpreterPath": ".\\myVenv\\Scripts\\python.exe"
+  "python.defaultInterpreterPath": ".\\myVenv\\Scripts\\python.exe",
+  "C_Cpp.default.compilerPath": ""
 }

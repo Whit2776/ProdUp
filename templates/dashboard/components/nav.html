@@ -434,7 +434,7 @@
                                     <a href="{% url 'departments' %}" class="nav-link ">Departments</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link ">Manage Departments</a>
+                                    <a href="{% url 'departments-manage-department' %}" class="nav-link ">Manage Departments</a>
                                 </li>
                                 {% comment %} <li class="nav-item">
                                     <a href="{% url 'projects_teams' %}" class="nav-link ">Teams</a>
@@ -552,7 +552,12 @@
                                 </li>
                                 <li class="nav-item">
                                     <a href="{% url 'teams_employees' %}" class="nav-link ">Teams</a>
-                                </li>{% comment %}
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'employment-types-create' %}" class="nav-link ">Create Employment Type</a>
+                                </li>
+                                
+                                {% comment %}
                                 <li class="nav-item">
                                     <a href="{% url 'projects_files' %}" class="nav-link ">Files</a>
                                 </li>

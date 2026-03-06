@@ -3,7 +3,7 @@ from .models import *
 from chat.models import *
 from django.conf import settings
 from django.core.paginator import Paginator
-from .decorators import employee_login_required
+from .decorators import employee_login_required, login_context_required
 from .utils import render_dashboard
 from django.contrib.auth.hashers import make_password, check_password
 import secrets
@@ -58,7 +58,13 @@ def departments_department(request, pk):
   company = request.company
   department = Department.objects.get(id = pk)
   context = {'company':company}
-  return render_dashboard(request, 'dashboard/departments-department.html', context)  
+  return render_dashboard(request, 'dashboard/departments-department.html', context)
+
+@login_context_required('Admin')
+@employee_login_required
+def departments_manage_department(request):
+  context = {}
+  return render_dashboard(request, 'dashboard/departments-manage-department.html', context)
 
 
 @employee_login_required
@@ -75,18 +81,22 @@ def roles_create_role(request):
 
   if request.method == 'POST':
     r = request.POST
+    # for key, value in r.items():
+    #   print(key, value)
+    # return HttpResponse(f'{r.items()}')
 
     role_type = r.get('type') if r.get('type') in ['Admin', 'Staff'] else False
     if not role_type:
       return HttpResponse('Role Type can only be Admin or Staff')
+    department = departments.filter(id = r.get('department')).first()
+    if not department:
+      return HttpResponse('There is no department set')
     
-    role = Role.objects.get(company = company, type = role_type ,name = r.get('name'), position = r.get('position'), base_rate = r.get('base_rate'))
+    role = Role.objects.filter(department = department, company = company, type = role_type , position = r.get('position'), base_rate = r.get('base_rate')).first()
     if role:
       return HttpResponse('Role already created')
-    role = Role.objects.create(company = company, type = role_type ,name = r.get('name'), position = r.get('position'), base_rate = r.get('base_rate'))
     permissions = Permission.objects.create()
-    role.permissions = permissions
-    role.save(update_fields=['permissions'])
+    role = Role.objects.create(department = department, company = company, type = role_type , position = r.get('position'), base_rate = r.get('base_rate'), permissions = permissions)
     
     return redirect('roles-create-role')
   context = {'company':company, 'departments':departments}
