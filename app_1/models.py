@@ -92,7 +92,7 @@ class Permission(models.Model):
 class Role(models.Model):
   EMPLOYEE_ROLES = [('admin', 'Admin'), ('manager', 'Manager'), ('supervisor', 'Supervisor'), ('team leader', 'Team Leader'), ('employee', 'Employee')] # And any other Custom Roles
   company = models.ForeignKey(Company, on_delete = models.CASCADE, related_name='company_roles')
-  # type = models.CharField(max_length = 40, null=True)
+  type = models.CharField(max_length = 40, null=True) # Can only be either a staff or admin
   department = models.ForeignKey(Department, on_delete = models.PROTECT, related_name='department_roles', null = True)
   position = models.CharField(null =True,max_length = 3000, help_text = 'Position of said employees based on department/company status. Eg. Executive Officer, Department Head, Master, Technician, Helper')
   base_rate = models.DecimalField(null=True, max_digits=12, decimal_places=2, help_text = 'Base Rate for the specified role per task')
