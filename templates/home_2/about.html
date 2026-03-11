@@ -1,350 +1,39 @@
-<!DOCTYPE html> {%load static%} {% load static %}
+<!DOCTYPE html>
 {% load static %}
 <html lang="en">
-    
-<!-- Mirrored from templates.hibootstrap.com/TAS/default/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 16 Sep 2025 23:01:12 GMT -->
 <head>
-        <!-- Required Meta Tags -->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-        
-        <!-- Bootstrap CSS --> 
-        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/bootstrap.min.css">
-        <!-- Flaticon CSS --> 
-        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/fonts/flaticon.css">
-        <!-- Boxicons CSS --> 
-        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/boxicons.min.css">
-        <!-- Owl Carousel Min CSS --> 
-        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/owl.carousel.min.css">
-        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/owl.theme.default.min.css">
-        <!-- Magnific Popup CSS --> 
-        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/magnific-popup.css">
-        <!-- Animate Min CSS -->
-        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/animate.min.css">
-        <!-- Meanmenu CSS -->
-        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/meanmenu.css">
-         <!-- Nice Select CSS -->
-         <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/nice-select.min.css">
-        <!-- Style CSS -->
-        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/style.css">
-        <!-- Responsive CSS -->
-        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/responsive.css">
-        <!-- Theme Dark CSS -->
-        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/theme-dark.css">
-        <!-- Theme Dark CSS -->
-        <link rel="stylesheet" href="{% get_static_prefix %}home_2/assets/css/theme-dark.css">
-
-        <link rel="stylesheet" href="{% static 'home_2/assets/css/nav.css' %}">
-
-        <title>Tas-Engineering Firm</title>
-
-        <!-- Favicon -->
-        <link rel="icon" type="image/x.icon" href='{% static "images/tas-logo.jpg"%}'>
-    </head>
-    <body>
-        {% include 'home_2/components/preloader.html'%}
-        <!-- Nav -->
-        {% include "home_2/components/nav.html" %}
-        <!-- End Nav -->
-
-        <!-- Inner Banner -->
-        <div class="inner-banner inner-bg1" style='background-image : url("https://images.pexels.com/photos/4069291/pexels-photo-4069291.jpeg");'>
-            <div class="container">
-                <div class="inner-title text-center">
-                    <h3>About Us</h3>
-                    <ul>
-                        <li>
-                            <i class="flaticon-fireplace"></i>
-                        </li>
-                        <li>
-                            <a href="index.html">Home /</a>
-                        </li>
-                        <li>About Us</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- Inner Banner End -->
-
-        <!-- About Area Two -->
-        <div class="about-area-two pt-100 pb-70">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="about-content-two">
-                            <div class="section-title">
-                                <span class="sp-after">About Us</span>
-                                <h2>
-                                  Your Partners in Engineering Soutions
-                                </h2>
-                                <p>
-                                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam harum tenetur quidem 
-                                </p>
-                            </div>
-                            
-                            <a href="#" class="default-btn">
-                                Get a Quote
-                                <i class="flaticon-right-arrow-1"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="about-img-2">
-                            <img src="{% static 'back_ground_images/4d02028e50438beafedc9297c01bcab3 1_1.jpg'%}" alt="Images">
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="about-counter-area">
-                            <div class="row">
-                                <div class="col-lg-6 col-sm-6 col-md-3">
-                                    <div class="about-counter-two">
-                                        <h3>2,750</h3>
-                                        <span>Employees & Staffs</span>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-sm-6 col-md-3">
-                                    <div class="about-counter-two">
-                                        <h3>4,987</h3>
-                                        <span>Project Completed</span>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-sm-6 col-md-3">
-                                    <div class="about-counter-two">
-                                        <h3>3,789</h3>
-                                        <span>Partners Worldwide</span>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-sm-6 col-md-3">
-                                    <div class="about-counter-two">
-                                        <h3>670M</h3>
-                                        <span>Monthly Revenue</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="about-play">
-                                <a href="https://www.youtube.com/watch?v=1hLBCOlptq8" class="about-play-btn popup-btn">
-                                    <i class='bx bx-play'></i>
-                                    <span>_Play Video</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- About Area Two End -->
-
-        <!-- About Widget Area -->
-        <div class="about-widget-area pt-100 pb-70">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="about-widget-card">
-                            <h3>Our Mission</h3>
-                            <p>
-                            Our mission is to provide solid 
-                            engineering solutions to our 
-                            customers across all engineering 
-                            and maintenance operations, 
-                            respecting the values of the 
-                            environment.
-                            </p>
-                            <div class="number">01</div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="about-widget-card">
-                            <h3>Our Vision</h3>
-                            <p> Our vision is to be a leading 
-                            engineering/technical service 
-                            company renowned for our 
-                            solid technical expertise in our 
-                            field of work.</p>
-                            <div class="number">02</div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-sm-6 offset-lg-0 offset-sm-3">
-                        <div class="about-widget-card">
-                            <h3>Our Values</h3>
-                            <p>
-                             At TAS Engineering Solutions, our core values are the foundation of everything we do. They shape our culture, guide our decisions, and define how we deliver value to clients and communities.
-                             </p>
-                             <p>
-                             From integrity and excellence to sustainability and teamwork, these principles drive our commitment to quality service and long-term impact in Ghana's engineering space.
-                             </p>
-                            <div class="number">03</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- About Widget Area End -->
-
-       <!--
-       <div class="process-area pt-100 pb-70">
-            <div class="container">
-                <div class="section-title text-center">
-                    <span class="sp-before">Our Work Process</span>
-                    <h2>How Does TAS Work</h2>
-                    <p>
-                      At TAS Engineering Solutions, we believe in building more than just structures we build 
-                      lasting partnerships. Whether you're a client, 
-                      contractor, or collaborator, we’re committed to 
-                      delivering excellence, innovation, and integrity in 
-                      every project.
-                      Join us as we shape a better, stronger future.
-                      Let’s engineer progress together
-                    </p>
-                </div>
-                <div class="row pt-45">
-                    <div class="col-lg-4 col-sm-6 col-md-4">
-                        <div class="process-card">
-                            <i class="flaticon-ideas"></i>
-                            <h3>Conceptual</h3>
-                            <p>
-                              Careful Analytics
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-sm-6 col-md-4">
-                        <div class="process-card">
-                            <i class="flaticon-sketch"></i>
-                            <h3>Schematic</h3>
-                            <p>
-                              Engagement in proper Planning
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-sm-6 col-md-4 offset-lg-0 offset-md-0 offset-sm-3">
-                        <div class="process-card">
-                            <i class="flaticon-deep-learning"></i>
-                            <h3>Development</h3>
-                            <p>
-                              Proceding to fully realize your goals.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        --> {% include 'home_2/components/work_process.html' %}
-
-        <!-- Team Area -->
-        <div class="team-area team-bg pt-100 pb-70">
-            <div class="container">
-                <div class="section-title-two text-center">
-                    <span class="sp-before">Creative Team</span>
-                    <h2>Our Motivated Team</h2>
-                </div>
-                <div class="row pt-45">
-                    <div class="col-lg-4 col-sm-6">
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Team Area End -->
-
-        <!-- Skill Area -->
-        <div class="skill-area pb-70">
-            <div class="container-fluid">
-                <div class="container-max-2">
-                    <div class="row">
-                        <div class="col-lg-7">
-                            <div class="skill-content">
-                                <div class="section-title-two">
-                                    <span class="sp-after">Skillset</span>
-                                    <h2>Our Skillset & Experience</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut tur incidunt quaerat voluptatem.</p>
-                                </div>
-
-                                <div class="progressbar-area">
-                                    <div class="single-progressbar">
-                                        <h3>Interior Design</h3>
-                                        <div class="progressbar-count">
-                                            <div class="progressbar-number pn-1">56%</div>
-                                            <div class="progressbar-circle pc-1"></div>
-                                        </div>
-                                    </div>
-    
-                                    <div class="single-progressbar">
-                                        <h3>Architecture Develop</h3>
-                                        <div class="progressbar-count">
-                                            <div class="progressbar-number pn-2">70%</div>
-                                            <div class="progressbar-circle pc-2"></div>
-                                        </div>
-                                    </div>
-    
-                                    <div class="single-progressbar">
-                                        <h3>INTERIOR SKETCH</h3>
-                                        <div class="progressbar-count">
-                                            <div class="progressbar-number pn-3">96%</div>
-                                            <div class="progressbar-circle pc-3"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="single-progressbar">
-                                        <h3>3D MODELING</h3>
-                                        <div class="progressbar-count">
-                                            <div class="progressbar-number pn-4">80%</div>
-                                            <div class="progressbar-circle pc-4"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-5">
-                            <div class="skill-img">
-                                <img src="{% get_static_prefix %}home_2/assets/img/skill-img/skill-img1.jpg" alt="Images">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Skill Area End -->
-
-        <script defer src='{% static "home_2/assets/js/contact.js" %}'></script> {% include 'home_2/components/contact.html'%}
-
-        {% include "home_2/components/footer.html" %}
-
-
-        <!-- Jquery Min JS -->
-        <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="{% get_static_prefix %}home_2/assets/js/jquery.min.js"></script>
-        <!-- Bootstrap Bundle Min JS -->
-        <script src="{% get_static_prefix %}home_2/assets/js/bootstrap.bundle.min.js"></script>
-        <!-- Owl Carousel Min JS -->
-        <script src="{% get_static_prefix %}home_2/assets/js/owl.carousel.min.js"></script>
-        <script src="{% get_static_prefix %}home_2/assets/js/carousel-thumbs.js"></script>
-        <!-- Magnific Popup JS -->
-        <script src="{% get_static_prefix %}home_2/assets/js/jquery.magnific-popup.min.js"></script>
-        <!-- Wow Min JS -->
-        <script src="{% get_static_prefix %}home_2/assets/js/wow.min.js"></script>
-        <!-- Meanmenu JS -->
-        <script src="{% get_static_prefix %}home_2/assets/js/meanmenu.js"></script>
-        <!-- Nice Select Min JS -->
-        <script src="{% get_static_prefix %}home_2/assets/js/jquery.nice-select.min.js"></script>
-        <!-- Ajaxchimp Min JS -->
-        <script src="{% get_static_prefix %}home_2/assets/js/jquery.ajaxchimp.min.js"></script>
-        <!-- Form Validator Min JS -->
-        <script src="{% get_static_prefix %}home_2/assets/js/form-validator.min.js"></script>
-        <!-- Contact Form JS -->
-        <script src="{% get_static_prefix %}home_2/assets/js/contact-form-script.js"></script>
-        
-        <script src="{%get_static_prefix%}home_2/assets/js/nav.js?44"></script>
-        <script src="{% get_static_prefix %}home_2/assets/js/custom.js"></script>
-        
-    </body>
-
-<!-- Mirrored from templates.hibootstrap.com/TAS/default/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 16 Sep 2025 23:01:12 GMT -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAS Engineering | Method</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'home_2/assets/css/tas_pages.css' %}">
+</head>
+<body>
+  <div class="tas-page">
+    {% include 'home_2/components/tas_nav.html' %}
+    <main class="tas-main">
+      <section class="tas-hero js-reveal" style="--hero-bg: url('{% static 'images/bg/img_3.jpg' %}')">
+        <p class="tas-kicker">Execution Method</p>
+        <h1 class="tas-title">How TAS Works</h1>
+        <p class="tas-sub">Our delivery model keeps technical decisions, sequencing, and field execution aligned from day one.</p>
+      </section>
+      <div class="tas-row">
+        <article class="tas-card js-reveal">
+          <h3>01 Conceptual</h3>
+          <p>Operational diagnostics, scope boundaries, and site constraints mapped before execution starts.</p>
+        </article>
+        <article class="tas-card js-reveal">
+          <h3>02 Schematic Planning</h3>
+          <p>Method statements, risk controls, and manpower/equipment sequencing prepared for the field team.</p>
+        </article>
+      </div>
+      <article class="tas-card js-reveal">
+        <h3>03 Field Development</h3>
+        <p>Execution with QA hold-points, progress transparency, and clean handover closeout.</p>
+      </article>
+    </main>
+    {% include 'home_2/components/tas_footer.html' %}
+  </div>
+  <script src="{% static 'home_2/assets/js/tas_pages.js' %}"></script>
+</body>
 </html>

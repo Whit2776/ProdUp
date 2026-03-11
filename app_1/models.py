@@ -92,15 +92,15 @@ class Permission(models.Model):
 class Role(models.Model):
   EMPLOYEE_ROLES = [('admin', 'Admin'), ('manager', 'Manager'), ('supervisor', 'Supervisor'), ('team leader', 'Team Leader'), ('employee', 'Employee')] # And any other Custom Roles
   company = models.ForeignKey(Company, on_delete = models.CASCADE, related_name='company_roles')
-  type = models.CharField(max_length = 40, null=True)
+  # type = models.CharField(max_length = 40, null=True)
   department = models.ForeignKey(Department, on_delete = models.PROTECT, related_name='department_roles', null = True)
   position = models.CharField(null =True,max_length = 3000, help_text = 'Position of said employees based on department/company status. Eg. Executive Officer, Department Head, Master, Technician, Helper')
   base_rate = models.DecimalField(null=True, max_digits=12, decimal_places=2, help_text = 'Base Rate for the specified role per task')
   description = models.TextField(null=True,default = 'Description of the said role')
   permissions = models.ForeignKey(Permission, on_delete = models.SET_NULL, null =True, blank = True)
 
-  def __str__(self):
-    return f'{self.name} - {self.position}'
+  # def __str__(self):
+  #   return f'{self.name} - {self.position}'
 
 class Employment_Type(models.Model):
   EMPLOYMENT_TYPES = [('full time', 'Full Time'), ('part time', 'Part Time'), ('contract', 'Contract'), ('intern', 'Intern')]
@@ -229,8 +229,8 @@ class Employee(models.Model):
 
 
   
-  #def __str__(self):
-    #return f'{self.id} - {self.emp_id} - {self.name} - {self.status} - {self.role.name} - {self.role.position}' #- {self.company} - {self.department}'
+  def __str__(self):
+    return f'{self.emp_id} - {self.company.name} - {self.role.position}' #- {self.company} - {self.department}'
 
 class Email_Link(models.Model):
   email = models.EmailField()

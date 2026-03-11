@@ -1,0 +1,12 @@
+{% load static %}
+<header class="tas-nav-wrap">
+  <a class="tas-brand" href="{% url 'home' %}">TAS ENGINEERING</a>
+  <nav class="tas-nav">
+    <a href="{% url 'home' %}" class="{% if request.path == '/' %}is-active{% endif %}">Home</a>
+    <a href="{% url 'about' %}" class="{% if '/about/' in request.path %}is-active{% endif %}">Method</a>
+    <a href="{% url 'services_1' %}" class="{% if '/our-services-1/' in request.path %}is-active{% endif %}">Services</a>
+    <a href="{% url 'portfolio' %}" class="{% if '/our-portfolio/' in request.path %}is-active{% endif %}">Projects</a>
+    <a href="{% url 'contact' %}" class="{% if '/contact-us/' in request.path %}is-active{% endif %}">Contact</a>
+  </nav>
+  <a class="tas-cta" href="{% url 'contact' %}">Request Quote</a>
+</header>
