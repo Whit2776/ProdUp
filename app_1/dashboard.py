@@ -1018,7 +1018,7 @@ def authentication_login(request):
       return HttpResponse('Incorrect login credentials')
     
     request.session['emp_id'] = employee.emp_id
-    request.session['login_context'] = employee.role.name
+    request.session['login_context'] = employee.role.position
     
     return redirect('projects_overview')
   return render(request, 'dashboard/auth-login-admin.html')
