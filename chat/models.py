@@ -29,7 +29,7 @@ class Mes(models.Model):
   sender = models.ForeignKey(Employee, related_name = 'sent_messages', on_delete=models.PROTECT)
   receiver = models.ForeignKey(Employee, related_name = 'received_messages', on_delete=models.PROTECT)
   message = models.TextField(null = True, blank = True)
-  state = models.CharField(default = 'not delivered')
+  state = models.CharField(default = 'not delivered', max_length=200)
   type = models.CharField(max_length = 300, null = True, default = 'normal')
   
   #If message type = reply
@@ -40,7 +40,7 @@ class Mes(models.Model):
 
 class File(models.Model):
   company = models.ForeignKey(Company, on_delete = models.CASCADE, null=True, related_name = 'files')
-  name = models.CharField(blank = True, null = True)
+  name = models.CharField(blank = True, null = True, max_length=3000)
   path = models.FileField( upload_to='Files')
   ext = models.CharField(max_length=50, null = True)
   type = models.CharField(max_length=50, null = True)
