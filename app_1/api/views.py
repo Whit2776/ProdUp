@@ -153,7 +153,7 @@ def create_main_admin(request, link, token):
       department = Department.objects.create(company = company, name = 'Admin', description = 'Department of people who are administraors')
     
     permissions = Permission.objects.create(can_use_admin_system = True)
-    role = Role.objects.create(name = 'Admin', company = company, department = department, permissions = permissions)
+    role = Role.objects.create(type = 'Admin', position='Admin', company = company, department = department, permissions = permissions)
     
     admin = Employee.objects.create(company = company, department =department, role = role, **admin_serializer.validated_data)
     print('Validated Data: ', admin_serializer.validated_data)
