@@ -199,7 +199,7 @@ class Employee(models.Model):
         except:
           initials = 'CO'
         rand = get_random_string(length=4, allowed_chars='0123456789')
-        self.emp_id = f"{prefix}-{initials}-{self.first_three(self, self.company.name)}-{rand}"
+        self.emp_id = f"{prefix}-{initials}-{self.first_three(self.company.name)}-{rand}"
     
     if not self.name:
       if self.last_name and self.first_name:
