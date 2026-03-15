@@ -181,11 +181,14 @@
     <script>
       const permissions_containers = Array.from(document.querySelectorAll('.permissions-container'))
       const openPermissionsModalButtons = Array.from(document.querySelectorAll('.openPermissionsModal'))
+      let role_id;
       const openPermissionsModal = (event) => {
         const target = event.target
-        let role_id = target.getAttribute('data-id')
-        let permissions_container = permissions_containers.find(p => p.getAttribute('data-id') === role_id)
+        let role_id2 = target.getAttribute('data-id')
+        let permissions_container = permissions_containers.find(p => p.getAttribute('data-id') === role_id2)
+        role_id = role_id2
         permissions_container.classList.add('active')
+
       }
 
       openPermissionsModalButtons.forEach(button => button.addEventListener('click', openPermissionsModal))
@@ -255,8 +258,8 @@
       permission_form.addEventListener('submit', async e => {
         e.preventDefault()
         
-        // Use permission_form instead of undefined 'form'
         const formdata = new FormData(permission_form)
+        formdata.append("role_id", role_id)
         
         try {
           const res = await fetch(url, { method: 'POST', body: formdata })

@@ -452,4 +452,23 @@ def get_or_create_notification(task, user, title, message, type):
 @api_view(['POST'])
 def edit_role_permissions(request):
   r = request.data
-  return Response({'data': r})
+  company = request.company
+  role_id = r.get('role_id')
+  role = Role.objects.filter(company = company, id = role_id).select_related('permissions').first()
+  print()
+  if not role:
+    return Response({'success': False, 'message': 'Role not found'}, status=status.HTTP_404_NOT_FOUND)
+  permission = role.permissions
+  selected_permissions = request.POST.getlist("permissions")
+
+  # reset all permissions
+  for field in permission._meta.fields:
+    if field.get_internal_type() == "BooleanField":
+      setattr(permission, field.name, False)
+
+  # set selected permissions
+  for perm in selected_permissions:
+    setattr(permission, perm, True)
+
+  permission.save()
+  return Response({'success': True, 'message': 'Successful update'})
