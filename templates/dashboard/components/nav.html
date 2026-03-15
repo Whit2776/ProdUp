@@ -449,39 +449,60 @@
                         </div>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#sidebarProjects" data-bs-toggle="collapse" role="button"
-                            aria-expanded="false" aria-controls="sidebarProjects"> 
-                            <i class="iconoir-asana menu-icon"></i>                                       
-                            <span>Projects</span>
-                        </a>
-                        <div class="collapse " id="sidebarProjects">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a href="{% url 'projects' %}" class="nav-link ">Projects</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'projects_board' %}" class="nav-link ">Board</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'projects_teams' %}" class="nav-link ">Teams</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'projects_create_teams' %}" class="nav-link ">Create Teams</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'create-projects' %}" class="nav-link ">Create Project</a>
-                                </li>
-                            </ul><!--end nav-->
-                        </div>
-                    </li> 
+                    <li class="nav-item"> 
+                        <a class="nav-link" href="#sidebarProjects" data-bs-toggle="collapse" role="button" 
+                            aria-expanded="false" aria-controls="sidebarProjects">  
+                            <i class="iconoir-asana menu-icon"></i>                                        
+                            <span>Projects</span> 
+                        </a> 
+                        <div class="collapse " id="sidebarProjects"> 
+                            <ul class="nav flex-column"> 
+                                <li class="nav-item"> 
+                                    <a href="{% url 'projects' %}" class="nav-link ">Projects</a> 
+                                </li> 
+                                <li class="nav-item"> 
+                                    <a href="{% url 'projects_board' %}" class="nav-link ">Board</a> 
+                                </li> 
+                                <li class="nav-item"> 
+                                    <a href="{% url 'projects_teams' %}" class="nav-link ">Teams</a> 
+                                </li> 
+                                <li class="nav-item"> 
+                                    <a href="{% url 'projects_create_teams' %}" class="nav-link ">Create Teams</a> 
+                                </li> 
+                                <li class="nav-item"> 
+                                    <a href="{% url 'create-projects' %}" class="nav-link ">Create Project</a> 
+                                </li> 
+                            </ul><!--end nav--> 
+                        </div> 
+                    </li>  
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#sidebarAnalytics" data-bs-toggle="collapse" role="button"
-                            aria-expanded="false" aria-controls="sidebarAnalytics"> 
-                            <i class="iconoir-reports menu-icon"></i>                                       
-                            <span>Analytics</span>
-                        </a>
+                    <li class="nav-item"> 
+                        <a class="nav-link" href="#sidebarJobApplications" data-bs-toggle="collapse" role="button" 
+                            aria-expanded="false" aria-controls="sidebarJobApplications">  
+                            <i class="iconoir-suitcase menu-icon"></i>  
+                            <span>Job Applications</span> 
+                        </a> 
+                        <div class="collapse " id="sidebarJobApplications"> 
+                            <ul class="nav flex-column"> 
+                                <li class="nav-item"> 
+                                    <a href="{% url 'job-application-all-applicants' %}" class="nav-link ">All Vacancies (Applicants)</a> 
+                                </li> 
+                                <li class="nav-item"> 
+                                    <a href="{% url 'job-application-create-vacancy' %}" class="nav-link ">Create Vacancy</a> 
+                                </li> 
+                                <li class="nav-item"> 
+                                    <a href="{% url 'job_application:vacancy_list' %}" class="nav-link " target="_blank" rel="noopener">Public Vacancies</a> 
+                                </li> 
+                            </ul><!--end nav--> 
+                        </div> 
+                    </li>  
+ 
+                    <li class="nav-item"> 
+                        <a class="nav-link" href="#sidebarAnalytics" data-bs-toggle="collapse" role="button" 
+                            aria-expanded="false" aria-controls="sidebarAnalytics">  
+                            <i class="iconoir-reports menu-icon"></i>                                        
+                            <span>Analytics</span> 
+                        </a> 
                         <div class="collapse " id="sidebarAnalytics">
                             <ul class="nav flex-column">
                                 <li class="nav-item">

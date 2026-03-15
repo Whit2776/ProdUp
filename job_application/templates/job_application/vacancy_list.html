@@ -18,9 +18,13 @@
             <div class="vacancy-meta">
               <div class="vacancy-title">{{ vacancy.title }}</div>
               <div class="vacancy-subtitle">
+                <span class="pill pill-soft">{{ vacancy.role.position }}</span>
                 <span class="pill">{{ vacancy.location }}</span>
                 <span class="pill">{{ vacancy.salary_range }}</span>
               </div>
+              {% if vacancy.description %}
+                <div class="vacancy-snippet">{{ vacancy.description|truncatechars:160 }}</div>
+              {% endif %}
             </div>
             <div class="vacancy-actions">
               <a class="btn" href="{% url 'job_application:vacancy_detail' vacancy.pk %}">Apply</a>

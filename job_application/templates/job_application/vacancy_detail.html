@@ -8,6 +8,7 @@
       <div class="kicker">Vacancy</div>
       <h1 class="page-title">{{ vacancy.title }}</h1>
       <div class="vacancy-badges">
+        <span class="pill pill-soft">{{ vacancy.role.position }}</span>
         <span class="pill">{{ vacancy.location }}</span>
         <span class="pill">{{ vacancy.salary_range }}</span>
       </div>
@@ -38,6 +39,14 @@
               {{ field }}
               {% if field.help_text %}
                 <div class="help">{{ field.help_text }}</div>
+              {% endif %}
+              {% if field.name == "resume" %}
+                <div class="upload-hint" id="resumeHint" aria-live="polite"></div>
+              {% endif %}
+              {% if field.name == "image" %}
+                <div class="upload-preview" id="imagePreview" aria-live="polite">
+                  <div class="upload-preview-empty">No file selected yet.</div>
+                </div>
               {% endif %}
               {% if field.errors %}
                 <div class="error">{{ field.errors }}</div>

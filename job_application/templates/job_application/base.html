@@ -5,9 +5,31 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% block title %}Job Application{% endblock %}</title>
+    <meta name="color-scheme" content="light dark" />
+    <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet" />
+
+    {# Match the existing TAS dashboard theme baseline #}
+    <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    <script>
+      // Apply theme before first paint to avoid a flash.
+      (function () {
+        try {
+          var key = "ja_theme";
+          var saved = localStorage.getItem(key);
+          var theme = saved === "light" || saved === "dark"
+            ? saved
+            : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+          document.documentElement.dataset.theme = theme;
+        } catch (e) {}
+      })();
+    </script>
+
     <link rel="stylesheet" href="{% static 'job_application/css/job_application.css' %}" />
     {% block extra_head %}{% endblock %}
   </head>
@@ -20,6 +42,9 @@
         </a>
         <nav class="nav">
           <a class="nav-link" href="{% url 'job_application:vacancy_list' %}">Vacancies</a>
+          <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+            Theme
+          </button>
         </nav>
       </div>
     </header>
@@ -34,6 +59,7 @@
       </div>
     </footer>
 
+    <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'job_application/js/job_application.js' %}"></script>
     {% block extra_js %}{% endblock %}
   </body>

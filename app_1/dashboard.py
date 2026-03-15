@@ -304,6 +304,7 @@ def projects_teams(request):
   company = request.company
   projects = Project.objects.filter(company =company)
   teams = Team.objects.filter(company = company)
+  employee = request.employee
   for team in teams:
     if not team.availability:
       # try:
@@ -323,7 +324,6 @@ def projects_teams(request):
   es = Employee.objects.filter(
       company=company,
       assigned_team__isnull=True,
-      assigned_teams__isnull=True
   ).distinct()
 
   # Potential leaders
@@ -331,9 +331,7 @@ def projects_teams(request):
 
   # Regular employees
   re = es.exclude(role__permissions__can_lead_team=False)
-
   
-
   context = {'company':company, 'projects':projects, 'teams':teams, 'leaders':rl, 'employees':re}
   return render_dashboard(request, 'dashboard/projects-teams.html', context)    
 
