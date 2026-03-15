@@ -447,3 +447,9 @@ def get_or_create_notification(task, user, title, message, type):
   except Exception as e:
     print('😎😎 Error, ', e)
     raise e
+  
+
+@api_view(['POST'])
+def edit_role_permissions(request):
+  r = request.data
+  return Response({'data': r})

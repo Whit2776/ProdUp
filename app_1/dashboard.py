@@ -70,7 +70,7 @@ def departments_manage_department(request):
 @employee_login_required
 def roles(request):  
   company = request.company
-  roles = Role.objects.filter(company = company)
+  roles = Role.objects.filter(company = company).select_related('permissions').order_by('-permissions__permission_count')
   context = {'company':company, 'roles':roles}
   return render_dashboard(request, 'dashboard/roles.html', context)
 

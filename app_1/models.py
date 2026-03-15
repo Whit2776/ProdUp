@@ -74,7 +74,9 @@ class Permission(models.Model):
   can_edit_tasks = models.BooleanField(default=False)
   can_edit_projects = models.BooleanField(default=False)
   can_join_team = models.BooleanField(default=False)
+  can_create_projects = models.BooleanField(default = False)
   
+  permission_count = models.IntegerField(default=0)
   def save(self, *args, **kwargs):
     if self.can_use_admin_system:
       self.can_approve_payments = True
@@ -86,6 +88,21 @@ class Permission(models.Model):
       self.can_view_finances = True
       self.can_edit_tasks = True
       self.can_edit_projects = True
+      self.can_create_projects = True
+      
+    self.permission_count = sum([
+      self.can_use_admin_system,
+      self.can_lead_team,
+      self.can_supervise,
+      self.can_approve_tasks,
+      self.can_approve_payments,
+      self.can_view_finances,
+      self.can_assign_tasks,
+      self.can_edit_profile,
+      self.can_edit_tasks,
+      self.can_edit_projects,
+      self.can_join_team
+    ])
 
     super().save(*args, **kwargs)
   

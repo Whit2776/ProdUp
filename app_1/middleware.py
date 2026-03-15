@@ -8,6 +8,7 @@ class EmployeeAuthMiddleware:
     # Default: user is not logged in
     request.employee = None
     request.company = None
+    request.role = None
 
     # Get member_id from session
     emp_id = request.session.get('emp_id')
@@ -18,6 +19,7 @@ class EmployeeAuthMiddleware:
       if employee:
         request.company = employee.company
         request.employee = employee
+        request.role = employee.role
     # Continue processing the request
     print('Middleware Activated')
     print(request.session.items())

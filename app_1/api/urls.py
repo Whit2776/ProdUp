@@ -15,4 +15,5 @@ urlpatterns = [
   path('approve-task', views.approve_task),
   path('create-main-admin/<str:link>/<str:token>', views.create_main_admin),
   path('set-password/<str:link>', views.set_password),
+  path('edit-role-permissions', views.edit_role_permissions)
 ]

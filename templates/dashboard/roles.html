@@ -39,6 +39,7 @@
                     <th>Edit</th>
                     <th>Delete</th>
                     <th>View</th>
+                    <th>Permissions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -52,6 +53,7 @@
                     <td>Edit</td>
                     <td>Delete</td>
                     <td>View</td>
+                    <td><button class='openPermissionsModal' data-id="{{role.id}}">Permissions</button></td>
                   </tr>
                   {% endfor %}
                 </tbody>
@@ -61,6 +63,217 @@
         </div>
       </div>
     </div>
+
+      {% for role in roles %}
+      
+        <div data-id="{{role.id}}" class="permissions-container modal">
+          <form class="permissions-carousel">
+            {% csrf_token %}
+            <div class="permission-classes">
+
+              <!-- Administrative Permissions -->
+              <div class="permission-class">
+                <h2>Administrative Permissions</h2>
+                <div class="permissions">
+
+                  <label>
+                    <input type="checkbox" name="permissions" value="can_use_admin_system"
+                    {% if role.permissions.can_use_admin_system %}checked{% endif %}>
+                    Use Admin System
+                  </label>
+
+                  <label>
+                    <input type="checkbox" name="permissions" value="can_edit_profile"
+                    {% if role.permissions.can_edit_profile %}checked{% endif %}>
+                    Edit Profile
+                  </label>
+
+                </div>
+              </div>
+
+              <!-- Leadership Permissions -->
+              <div class="permission-class">
+                <h2>Leadership Permissions</h2>
+                <div class="permissions">
+
+                  <label>
+                    <input type="checkbox" name="permissions" value="can_lead_team"
+                    {% if role.permissions.can_lead_team %}checked{% endif %}>
+                    Lead Team
+                  </label>
+
+                  <label>
+                    <input type="checkbox" name="permissions" value="can_supervise"
+                    {% if role.permissions.can_supervise %}checked{% endif %}>
+                    Supervise
+                  </label>
+
+                </div>
+              </div>
+
+              <!-- Task Management Permissions -->
+              <div class="permission-class">
+                <h2>Task Management Permissions</h2>
+                <div class="permissions">
+
+                  <label>
+                    <input type="checkbox" name="permissions" value="can_assign_tasks"
+                    {% if role.permissions.can_assign_tasks %}checked{% endif %}>
+                    Assign Tasks
+                  </label>
+
+                  <label>
+                    <input type="checkbox" name="permissions" value="can_edit_tasks"
+                    {% if role.permissions.can_edit_tasks %}checked{% endif %}>
+                    Edit Tasks
+                  </label>
+
+                  <label>
+                    <input type="checkbox" name="permissions" value="can_approve_tasks"
+                    {% if role.permissions.can_approve_tasks %}checked{% endif %}>
+                    Approve Tasks
+                  </label>
+
+                </div>
+              </div>
+
+              <!-- Project Management Permissions -->
+              <div class="permission-class">
+                <h2>Project Management Permissions</h2>
+                <div class="permissions">
+
+                  <label>
+                    <input type="checkbox" name="permissions" value="can_edit_projects"
+                    {% if role.permissions.can_edit_projects %}checked{% endif %}>
+                    Edit Projects
+                  </label>
+
+                </div>
+              </div>
+
+              <!-- Financial Permissions -->
+              <div class="permission-class">
+                <h2>Financial Permissions</h2>
+                <div class="permissions">
+
+                  <label>
+                    <input type="checkbox" name="permissions" value="can_approve_payments"
+                    {% if role.permissions.can_approve_payments %}checked{% endif %}>
+                    Approve Payments
+                  </label>
+
+                  <label>
+                    <input type="checkbox" name="permissions" value="can_view_finances"
+                    {% if role.permissions.can_view_finances %}checked{% endif %}>
+                    View Finances
+                  </label>
+
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      {% endfor %}
+    </div>
+      
+
+    
+    <script>
+      const permissions_containers = Array.from(document.querySelectorAll('.permissions-container'))
+      const openPermissionsModalButtons = Array.from(document.querySelectorAll('.openPermissionsModal'))
+      const openPermissionsModal = (event) => {
+        const target = event.target
+        let role_id = target.getAttribute('data-id')
+        let permissions_container = permissions_containers.find(p => p.getAttribute('data-id') === role_id)
+        permissions_container.classList.add('active')
+      }
+
+      openPermissionsModalButtons.forEach(button => button.addEventListener('click', openPermissionsModal))
+
+      document.addEventListener('click', e => {
+        if(e.target.classList.contains('modal')){
+          e.target.classList.remove('active')
+        }
+      })
+    </script>
+    <style>
+      .hidden {
+        display: none;
+      }
+      .permissions-container{
+        position: fixed;
+        top: -100%;
+        opacity: 0.4;
+        width: 100%;
+        height: 100%;
+        background: #00000045;
+        display: flex;
+        z-index: 5000;
+        justify-content: center;
+        transition: all 0.3s linear;
+      }
+
+      .permissions-container.active{
+        top: 0;
+        opacity: 1;
+      }
+
+      .permissions-carousel{
+        margin-top: 3%;
+        overflow: hidden;
+        height: 50%;
+        flex-grow: 1;
+        max-width: max(50%, 250px);
+      }
+
+      .permission-classes{
+        overflow: auto;
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 0.5rem;
+        width: 100%;
+        height: 100%;
+        scroll-snap-type: x mandatory;
+      }
+
+      .permission-class{
+        width: 100%;
+        height: 100%;
+        flex: 0 0 100%;
+        background: #fff;
+        scroll-snap-align: start;
+        border-radius: 0.25rem;
+      }
+
+    </style>
+    <script>
+      const permission_form = document.querySelector('.permissions-carousel')
+      const permission_inputs = document.querySelectorAll('[name = "permissions"]')
+      console.log(permission_inputs)
+      const url = '/api/edit-role-permissions'
+
+      permission_form.addEventListener('submit', async e => {
+        e.preventDefault()
+        
+        // Use permission_form instead of undefined 'form'
+        const formdata = new FormData(permission_form)
+        
+        try {
+          const res = await fetch(url, { method: 'POST', body: formdata })
+          const res_json = await res.json()
+          console.log('Server response:', res_json)
+        } catch (error) {
+          console.error('Error submitting form:', error)
+        }
+      })
+
+      permission_inputs.forEach(input => {
+        input.addEventListener('change', () => {
+          permission_form.requestSubmit()
+        })
+      })
+
+    </script>
 
     <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
