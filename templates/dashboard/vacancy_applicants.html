@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr" data-startbar="light" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <title>Vacancy Applicants | TAS Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+    <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    <style>
+      .applicant-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 14px;
+      }
+      .applicant-card {
+        grid-column: span 4;
+        border: 1px solid rgba(0,0,0,0.08);
+        border-radius: 14px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+      }
+      body.dark .applicant-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.12); }
+      .applicant-media {
+        aspect-ratio: 16 / 10;
+        background: rgba(0,0,0,0.04);
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+      }
+      .applicant-media img, .applicant-media video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .applicant-body { padding: 14px; }
+      .applicant-name { font-weight: 700; margin: 0 0 6px; }
+      .applicant-meta { color: #6c757d; font-size: 13px; margin: 0; }
+      body.dark .applicant-meta { color: rgba(255,255,255,0.65); }
+      @media (max-width: 1100px) { .applicant-card { grid-column: span 6; } }
+      @media (max-width: 680px) { .applicant-card { grid-column: span 12; } }
+    </style>
+  </head>
+
+  <body>
+    {% include "dashboard/components/nav.html" %}
+
+    <div class="page-wrapper">
+      <div class="page-content">
+        <div class="container-fluid">
+          <!-- Context expected:
+               - vacancy: Vacancy
+               - applicants: queryset of Applicant
+               - view_mode: "cards" or "table"
+          -->
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="page-title-box d-md-flex justify-content-md-between align-items-center">
+                <div>
+                  <h4 class="page-title mb-0">Applicants</h4>
+                  <div class="text-muted">{{ vacancy.title }} · {{ vacancy.role.position }}</div>
+                </div>
+                <div class="">
+                  <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{% url 'projects_overview' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'job-application-all-applicants' %}">Job Applications</a></li>
+                    <li class="breadcrumb-item active">Applicants</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <h4 class="card-title mb-0">Applicants for this vacancy</h4>
+                      <p class="text-muted mb-0">{{ applicants|length }} total</p>
+                    </div>
+                    <div class="col-auto d-flex gap-2 flex-wrap">
+                      <a class="btn btn-outline-secondary btn-sm" href="{% url 'job-application-all-applicants' %}">Back</a>
+                      <a class="btn btn-outline-primary btn-sm {% if view_mode == 'cards' %}active{% endif %}" href="?view=cards">Cards</a>
+                      <a class="btn btn-outline-primary btn-sm {% if view_mode == 'table' %}active{% endif %}" href="?view=table">Data table</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  {% if view_mode == 'table' %}
+                    <div class="table-responsive">
+                      <table class="table table-striped table-bordered align-middle mb-0" id="applicantsTable">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="width:70px;">#</th>
+                            <th>Applicant</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Employment Type</th>
+                            <th>Role</th>
+                            <th>Start Date</th>
+                            <th>Submitted</th>
+                            <th style="width:110px;">Resume</th>
+                            <th style="width:110px;">Media</th>
+                            <th style="width:110px;">Details</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for applicant in applicants %}
+                            <tr>
+                              <td>{{ forloop.counter }}</td>
+                              <td class="fw-semibold">{{ applicant.name }}</td>
+                              <td>{{ applicant.email }}</td>
+                              <td>{{ applicant.phone }}</td>
+                              <td>{{ applicant.employment_type.type }}</td>
+                              <td>{{ vacancy.role.position }}</td>
+                              <td>{{ applicant.possible_start_date|date:"Y-m-d" }}</td>
+                              <td>{{ applicant.submitted_at|date:"Y-m-d H:i" }}</td>
+                              <td>
+                                <a class="btn btn-sm btn-outline-secondary" href="{{ applicant.resume.url }}" target="_blank" rel="noopener">Download</a>
+                              </td>
+                              <td>
+                                <a class="btn btn-sm btn-outline-secondary" href="{{ applicant.image.url }}" target="_blank" rel="noopener">Open</a>
+                              </td>
+                              <td>
+                                <a class="btn btn-sm btn-outline-primary" href="{% url 'job-application-applicant-detail' applicant.id %}">View</a>
+                              </td>
+                            </tr>
+                          {% empty %}
+                            <tr>
+                              <td colspan="11" class="text-center text-muted py-4">No applicants yet.</td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  {% else %}
+                    <div class="applicant-grid">
+                      {% for applicant in applicants %}
+                        <div class="applicant-card">
+                          <div class="applicant-media">
+                            {% with url=applicant.image.url %}
+                              {% if url|lower|slice:"-4:" == ".mp4" %}
+                                <video src="{{ url }}" muted playsinline controls></video>
+                              {% else %}
+                                <img src="{{ url }}" alt="{{ applicant.name }}">
+                              {% endif %}
+                            {% endwith %}
+                          </div>
+                          <div class="applicant-body">
+                            <h5 class="applicant-name">{{ applicant.name }}</h5>
+                            <p class="applicant-meta mb-1"><span class="fw-semibold">Employment:</span> {{ applicant.employment_type.type }}</p>
+                            <p class="applicant-meta mb-1"><span class="fw-semibold">Role:</span> {{ vacancy.role.position }}</p>
+                            <p class="applicant-meta mb-3"><span class="fw-semibold">Start:</span> {{ applicant.possible_start_date|date:"Y-m-d" }}</p>
+
+                            <div class="d-flex gap-2 flex-wrap">
+                              <a class="btn btn-sm btn-primary" href="{% url 'job-application-applicant-detail' applicant.id %}">View details</a>
+                              <a class="btn btn-sm btn-outline-secondary" href="{{ applicant.resume.url }}" target="_blank" rel="noopener">Resume (PDF)</a>
+                            </div>
+                          </div>
+                        </div>
+                      {% empty %}
+                        <div class="col-12">
+                          <div class="text-center text-muted py-4">No applicants yet.</div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+
+    <!-- DataTables -->
+    <script src="{% static 'dashboard/assets/js/jquery.js' %}"></script>
+    <script src="{% static 'dashboard/assets/js/dataTables.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/js/jsButtonsHTML5.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/js/jsButtons.print.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/js/pdfmake.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/js/vsffonts.js' %}"></script>
+    <script src="{% static 'dashboard/assets/js/szip.min.js' %}"></script>
+
+    <script>
+      $(document).ready(function() {
+        if ($('#applicantsTable').length) {
+          $('#applicantsTable').DataTable({
+            responsive: true,
+            dom: 'Bfrtip',
+            buttons: ['csv', 'excel', 'pdf', 'print'],
+            pageLength: 10,
+            autowidth: false,
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
+

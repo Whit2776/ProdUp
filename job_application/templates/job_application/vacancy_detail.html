@@ -1,0 +1,57 @@
+{% extends "job_application/base.html" %}
+
+{% block title %}{{ vacancy.title }}{% endblock %}
+
+{% block content %}
+  <section class="vacancy-header">
+    <div class="vacancy-header-card">
+      <div class="kicker">Vacancy</div>
+      <h1 class="page-title">{{ vacancy.title }}</h1>
+      <div class="vacancy-badges">
+        <span class="pill">{{ vacancy.location }}</span>
+        <span class="pill">{{ vacancy.salary_range }}</span>
+      </div>
+      {% if vacancy.description %}
+        <div class="vacancy-description">{{ vacancy.description|linebreaksbr }}</div>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="form-section">
+    <div class="form-card">
+      <h2 class="section-title">Apply Now</h2>
+      <p class="muted">All fields are required unless stated otherwise.</p>
+
+      <form method="post" enctype="multipart/form-data" class="form">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+          <div class="alert alert-error">
+            {{ form.non_field_errors }}
+          </div>
+        {% endif %}
+
+        <div class="form-grid">
+          {% for field in form %}
+            <div class="field {% if field.errors %}has-error{% endif %}">
+              <label class="label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field }}
+              {% if field.help_text %}
+                <div class="help">{{ field.help_text }}</div>
+              {% endif %}
+              {% if field.errors %}
+                <div class="error">{{ field.errors }}</div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Submit Application</button>
+          <a class="btn btn-ghost" href="{% url 'job_application:vacancy_list' %}">Back to vacancies</a>
+        </div>
+      </form>
+    </div>
+  </section>
+{% endblock %}
+

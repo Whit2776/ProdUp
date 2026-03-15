@@ -1,0 +1,39 @@
+{% extends "job_application/base.html" %}
+
+{% block title %}Vacancies{% endblock %}
+
+{% block content %}
+  <section class="hero">
+    <div class="hero-card">
+      <h1 class="hero-title">Open Roles</h1>
+      <p class="hero-subtitle">Choose a vacancy and submit your application.</p>
+    </div>
+  </section>
+
+  <section class="grid">
+    {% if vacancies %}
+      <div class="vacancy-grid">
+        {% for vacancy in vacancies %}
+          <article class="vacancy-card">
+            <div class="vacancy-meta">
+              <div class="vacancy-title">{{ vacancy.title }}</div>
+              <div class="vacancy-subtitle">
+                <span class="pill">{{ vacancy.location }}</span>
+                <span class="pill">{{ vacancy.salary_range }}</span>
+              </div>
+            </div>
+            <div class="vacancy-actions">
+              <a class="btn" href="{% url 'job_application:vacancy_detail' vacancy.pk %}">Apply</a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty">
+        <h2>No active vacancies</h2>
+        <p class="muted">Please check back later.</p>
+      </div>
+    {% endif %}
+  </section>
+{% endblock %}
+

@@ -1,0 +1,17 @@
+{% extends "job_application/base.html" %}
+
+{% block title %}Submitted{% endblock %}
+
+{% block content %}
+  <section class="success">
+    <div class="success-card">
+      <div class="success-mark">Submitted</div>
+      <h1 class="page-title">Application received</h1>
+      <p class="muted">Thanks for applying for <strong>{{ vacancy.title }}</strong>. We will review your submission.</p>
+      <div class="form-actions">
+        <a class="btn btn-primary" href="{% url 'job_application:vacancy_list' %}">View other vacancies</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

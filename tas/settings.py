@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'rest_framework',
     'chat',
+    'job_application',
 ]
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'

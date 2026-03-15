@@ -14,6 +14,8 @@ from django.http import HttpResponse
 from django.db import transaction
 from app_1.views import get_ext_name, get_type
 from datetime import timedelta
+from django.db.models import Count
+from job_application.models import Applicant, Vacancy
 
 def custom_404(request, exception):
   return render(request, 'dashboard/auth-404.html')
@@ -1296,3 +1298,137 @@ def create_main_admin(request, link, token):
   if not email_link: return HttpResponse('404')
   
   return render(request, 'dashboard/create_main_admin.html')
+
+
+@employee_login_required
+def job_application_create_vacancy(request):
+  company = request.company
+  roles = Role.objects.filter(company=company).order_by("position")
+
+  context = {"company": company, "roles": roles}
+
+  if request.method == "POST":
+    r = request.POST
+
+    role = roles.filter(id=r.get("role")).first()
+    if not role:
+      context["error"] = "Please select a valid role."
+      return render_dashboard(request, "dashboard/create_vacancy.html", context)
+
+    title = (r.get("title") or "").strip()
+    location = (r.get("location") or "").strip()
+    salary_range = (r.get("salary_range") or "").strip()
+    description = (r.get("description") or "").strip()
+    is_active = bool(r.get("is_active"))
+
+    if not title or not location or not salary_range:
+      context["error"] = "Title, location, and salary range are required."
+      return render_dashboard(request, "dashboard/create_vacancy.html", context)
+
+    # Build dynamic fields from the UI builder inputs.
+    keys = r.getlist("application_key")
+    labels = r.getlist("application_label")
+    types = r.getlist("application_type")
+    requireds = r.getlist("application_required")
+    choices_raw = r.getlist("application_choices")
+    help_texts = r.getlist("application_help_text")
+    placeholders = r.getlist("application_placeholder")
+
+    max_len = max(
+      len(keys),
+      len(labels),
+      len(types),
+      len(requireds),
+      len(choices_raw),
+      len(help_texts),
+      len(placeholders),
+    )
+
+    application_fields = []
+    for i in range(max_len):
+      key = (keys[i] if i < len(keys) else "").strip()
+      if not key:
+        continue
+
+      field_type = (types[i] if i < len(types) else "text").strip().lower() or "text"
+      required_flag = (requireds[i] if i < len(requireds) else "0").strip() == "1"
+
+      spec = {
+        "key": key,
+        "label": (labels[i] if i < len(labels) else key).strip() or key,
+        "type": field_type,
+        "required": required_flag,
+        "help_text": (help_texts[i] if i < len(help_texts) else "").strip(),
+        "placeholder": (placeholders[i] if i < len(placeholders) else "").strip(),
+      }
+
+      if field_type in ["select", "radio"]:
+        raw = (choices_raw[i] if i < len(choices_raw) else "").strip()
+        if raw:
+          spec["choices"] = [c.strip() for c in raw.split(",") if c.strip()]
+
+      application_fields.append(spec)
+
+    vacancy = Vacancy.objects.create(
+      role=role,
+      title=title,
+      location=location,
+      salary_range=salary_range,
+      description=description,
+      is_active=is_active,
+      application_fields=application_fields,
+    )
+
+    return redirect("job-application-vacancy-applicants", vacancy.id)
+
+  return render_dashboard(request, "dashboard/create_vacancy.html", context)
+
+
+@employee_login_required
+def job_application_all_applicants(request):
+  company = request.company
+  vacancies = (
+    Vacancy.objects.filter(role__company=company)
+    .select_related("role")
+    .annotate(applicant_count=Count("applicants"))
+    .order_by("-created_at")
+  )
+
+  context = {"company": company, "vacancies": vacancies}
+  return render_dashboard(request, "dashboard/all_applicants.html", context)
+
+
+@employee_login_required
+def job_application_vacancy_applicants(request, pk):
+  company = request.company
+  vacancy = Vacancy.objects.select_related("role").filter(id=pk, role__company=company).first()
+  if not vacancy:
+    return redirect("auth-404")
+
+  view_mode = request.GET.get("view", "cards").lower()
+  if view_mode not in ["cards", "table"]:
+    view_mode = "cards"
+
+  applicants = (
+    Applicant.objects.filter(vacancy=vacancy)
+    .select_related("employment_type")
+    .order_by("-submitted_at")
+  )
+
+  context = {"company": company, "vacancy": vacancy, "applicants": applicants, "view_mode": view_mode}
+  return render_dashboard(request, "dashboard/vacancy_applicants.html", context)
+
+
+@employee_login_required
+def job_application_applicant_detail(request, pk):
+  company = request.company
+  applicant = (
+    Applicant.objects.select_related("vacancy", "vacancy__role", "employment_type")
+    .filter(id=pk, vacancy__role__company=company)
+    .first()
+  )
+  if not applicant:
+    return redirect("auth-404")
+
+  context = {"company": company, "applicant": applicant, "vacancy": applicant.vacancy}
+  return render_dashboard(request, "dashboard/applicant_detail.html", context)

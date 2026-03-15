@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr" data-startbar="light" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <title>Applicant Details | TAS Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="{% static 'images/tas-logo.jpg'%}">
+
+    <link href="{%get_static_prefix%}dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{%get_static_prefix%}dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    {% include "dashboard/components/nav.html" %}
+
+    <div class="page-wrapper">
+      <div class="page-content">
+        <div class="container-fluid">
+          <!-- Context expected:
+               - applicant: Applicant (select_related vacancy, vacancy.role, employment_type)
+               - vacancy: Vacancy
+          -->
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="page-title-box d-md-flex justify-content-md-between align-items-center">
+                <div>
+                  <h4 class="page-title mb-0">Applicant Details</h4>
+                  <div class="text-muted">{{ vacancy.title }} · {{ vacancy.role.position }}</div>
+                </div>
+                <div class="">
+                  <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{% url 'projects_overview' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'job-application-all-applicants' %}">Job Applications</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'job-application-vacancy-applicants' vacancy.id %}?view=cards">Applicants</a></li>
+                    <li class="breadcrumb-item active">Details</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-xl-8">
+              <div class="card">
+                <div class="card-header">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <h4 class="card-title mb-0">{{ applicant.name }}</h4>
+                      <p class="text-muted mb-0">Submitted {{ applicant.submitted_at|date:"Y-m-d H:i" }}</p>
+                    </div>
+                    <div class="col-auto">
+                      <a class="btn btn-outline-secondary btn-sm" href="{% url 'job-application-vacancy-applicants' vacancy.id %}?view=cards">Back</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <div class="fw-semibold">Email</div>
+                      <div class="text-muted">{{ applicant.email }}</div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="fw-semibold">Phone</div>
+                      <div class="text-muted">{{ applicant.phone }}</div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="fw-semibold">Employment Type</div>
+                      <div class="text-muted">{{ applicant.employment_type.type }}</div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="fw-semibold">Possible Start Date</div>
+                      <div class="text-muted">{{ applicant.possible_start_date|date:"Y-m-d" }}</div>
+                    </div>
+                  </div>
+
+                  <hr class="my-4">
+
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <div class="fw-semibold mb-2">Resume (PDF)</div>
+                      <a class="btn btn-outline-primary btn-sm" href="{{ applicant.resume.url }}" target="_blank" rel="noopener">
+                        Download resume
+                      </a>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="fw-semibold mb-2">Media (JPEG/PNG/MP4)</div>
+                      <a class="btn btn-outline-primary btn-sm" href="{{ applicant.image.url }}" target="_blank" rel="noopener">
+                        Open media
+                      </a>
+                    </div>
+                  </div>
+
+                  <hr class="my-4">
+
+                  <div>
+                    <h5 class="mb-2">Extra Answers</h5>
+                    <p class="text-muted mb-3">Dynamic fields submitted from <code>Vacancy.application_fields</code>.</p>
+
+                    <div class="table-responsive">
+                      <table class="table table-sm table-striped table-bordered align-middle mb-0">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="width: 260px;">Key</th>
+                            <th>Value</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for key, value in applicant.extra_answers.items %}
+                            <tr>
+                              <td class="fw-semibold">{{ key }}</td>
+                              <td>
+                                {% if value is True %}
+                                  Yes
+                                {% elif value is False %}
+                                  No
+                                {% else %}
+                                  {{ value }}
+                                {% endif %}
+                              </td>
+                            </tr>
+                          {% empty %}
+                            <tr>
+                              <td colspan="2" class="text-center text-muted py-3">No extra answers.</td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-xl-4">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title mb-0">Vacancy</h4>
+                </div>
+                <div class="card-body">
+                  <div class="fw-semibold">{{ vacancy.title }}</div>
+                  <div class="text-muted">{{ vacancy.role.position }}</div>
+                  <div class="mt-2 text-muted">{{ vacancy.location }} · {{ vacancy.salary_range }}</div>
+                  {% if vacancy.description %}
+                    <hr class="my-3">
+                    <div class="text-muted" style="white-space: pre-wrap;">{{ vacancy.description }}</div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+  </body>
+</html>
+

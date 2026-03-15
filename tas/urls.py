@@ -46,6 +46,12 @@ urlpatterns = [
     path('dashboard/roles/create-role/', dashboard.roles_create_role, name = 'roles-create-role'),
     path('dashboard/roles/role/<int:pk>/', dashboard.roles_role, name = 'roles-role'),
 
+    # Job application dashboard
+    path('dashboard/job-application/create-vacancy/', dashboard.job_application_create_vacancy, name='job-application-create-vacancy'),
+    path('dashboard/job-application/applicants/', dashboard.job_application_all_applicants, name='job-application-all-applicants'),
+    path('dashboard/job-application/vacancy/<int:pk>/applicants/', dashboard.job_application_vacancy_applicants, name='job-application-vacancy-applicants'),
+    path('dashboard/job-application/applicant/<int:pk>/', dashboard.job_application_applicant_detail, name='job-application-applicant-detail'),
+
     path('dashboard/employment-types/', dashboard.employment_types, name = 'employment-types'),
     path('dashboard/employment-types/<int:pk>/', dashboard.employment_type, name = 'employment-type'),
     path('dashboard/employment-types/create/', dashboard.employment_types_create, name = 'employment-types-create'),
@@ -208,6 +214,8 @@ urlpatterns = [
     path('chat-api/', include('chat.api.urls')),
     #CHAT LINKS
     path('chat/', include('chat.urls')),
+    # Job application (public)
+    path('job-application/', include('job_application.urls')),
 ]
 
 urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
