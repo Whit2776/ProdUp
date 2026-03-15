@@ -130,7 +130,6 @@ def employment_types_create(request):
   if request.method == 'POST':
     r = request.POST
     e_ty , created= Employment_Type.objects.get_or_create(company = company, type = r.get('type'), factor = Decimal(r.get('factor')))
-    print(f'😁😁{e_ty.type} e_type Created' ) if not created else print(f'😁😁{created.type} e_type gotten')
     return redirect('employment-types-create')
   context = {'company':company}
   return render_dashboard(request, 'dashboard/employment-types-create.html', context)
