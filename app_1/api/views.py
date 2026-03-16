@@ -451,24 +451,48 @@ def get_or_create_notification(task, user, title, message, type):
 
 @api_view(['POST'])
 def edit_role_permissions(request):
-  r = request.data
-  company = request.company
-  role_id = r.get('role_id')
-  role = Role.objects.filter(company = company, id = role_id).select_related('permissions').first()
-  print()
+  company = getattr(request, "company", None)
+  if not company:
+    return Response({'success': False, 'message': 'Not authenticated'}, status=status.HTTP_401_UNAUTHORIZED)
+
+  role_id = request.data.get('role_id') or request.POST.get('role_id')
+  if not role_id:
+    return Response({'success': False, 'message': 'role_id is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+  role = Role.objects.filter(company=company, id=role_id).select_related('permissions').first()
   if not role:
     return Response({'success': False, 'message': 'Role not found'}, status=status.HTTP_404_NOT_FOUND)
+
   permission = role.permissions
+  if not permission:
+    permission = Permission.objects.create()
+    role.permissions = permission
+    role.save(update_fields=["permissions"])
+
   selected_permissions = request.POST.getlist("permissions")
+  if not selected_permissions:
+    selected_permissions = request.data.get("permissions") or []
+  if isinstance(selected_permissions, str):
+    selected_permissions = [selected_permissions]
 
-  # reset all permissions
-  for field in permission._meta.fields:
-    if field.get_internal_type() == "BooleanField":
-      setattr(permission, field.name, False)
+  allowed_fields = {
+    field.name
+    for field in permission._meta.fields
+    if field.get_internal_type() == "BooleanField"
+  }
 
-  # set selected permissions
-  for perm in selected_permissions:
-    setattr(permission, perm, True)
+  unknown = [p for p in selected_permissions if p not in allowed_fields]
+  if unknown:
+    return Response(
+      {'success': False, 'message': f'Unknown permissions: {", ".join(sorted(set(unknown)))}'},
+      status=status.HTTP_400_BAD_REQUEST,
+    )
+
+  for field_name in allowed_fields:
+    setattr(permission, field_name, False)
+
+  for field_name in selected_permissions:
+    setattr(permission, field_name, True)
 
   permission.save()
   return Response({'success': True, 'message': 'Successful update'})

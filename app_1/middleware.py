@@ -21,7 +21,6 @@ class EmployeeAuthMiddleware:
         request.employee = employee
         request.role = employee.role
     # Continue processing the request
-    print('Middleware Activated')
-    print(request.session.items())
+    
     response = self.get_response(request)
     return response

@@ -67,8 +67,13 @@
       {% for role in roles %}
       
         <div data-id="{{role.id}}" class="permissions-container modal">
-          <form class="permissions-carousel">
+          <form
+            class="permissions-form"
+            data-role-id="{{role.id}}"
+            data-url="{% url 'api-edit-role-permissions' %}"
+          >
             {% csrf_token %}
+            <input type="hidden" name="role_id" value="{{role.id}}">
             <div class="permission-classes">
 
               <!-- Administrative Permissions -->
@@ -111,6 +116,20 @@
                 </div>
               </div>
 
+              <!-- Team Permissions -->
+              <div class="permission-class">
+                <h2>Team Permissions</h2>
+                <div class="permissions">
+
+                  <label>
+                    <input type="checkbox" name="permissions" value="can_join_team"
+                    {% if role.permissions.can_join_team %}checked{% endif %}>
+                    Join Team
+                  </label>
+
+                </div>
+              </div>
+
               <!-- Task Management Permissions -->
               <div class="permission-class">
                 <h2>Task Management Permissions</h2>
@@ -148,6 +167,12 @@
                     Edit Projects
                   </label>
 
+                  <label>
+                    <input type="checkbox" name="permissions" value="can_create_projects"
+                    {% if role.permissions.can_create_projects %}checked{% endif %}>
+                    Create Projects
+                  </label>
+
                 </div>
               </div>
 
@@ -171,6 +196,9 @@
                 </div>
               </div>
             </div>
+            <div class="permissions-footer">
+              <span class="save-status" aria-live="polite"></span>
+            </div>
           </form>
         </div>
       {% endfor %}
@@ -179,25 +207,78 @@
 
     
     <script>
-      const permissions_containers = Array.from(document.querySelectorAll('.permissions-container'))
-      const openPermissionsModalButtons = Array.from(document.querySelectorAll('.openPermissionsModal'))
-      let role_id;
-      const openPermissionsModal = (event) => {
-        const target = event.target
-        let role_id2 = target.getAttribute('data-id')
-        let permissions_container = permissions_containers.find(p => p.getAttribute('data-id') === role_id2)
-        role_id = role_id2
-        permissions_container.classList.add('active')
+      (() => {
+        const permissionsContainers = Array.from(document.querySelectorAll('.permissions-container'))
+        const openPermissionsModalButtons = Array.from(document.querySelectorAll('.openPermissionsModal'))
+        const permissionForms = Array.from(document.querySelectorAll('.permissions-form'))
+        const pendingSaves = new WeakMap()
 
-      }
-
-      openPermissionsModalButtons.forEach(button => button.addEventListener('click', openPermissionsModal))
-
-      document.addEventListener('click', e => {
-        if(e.target.classList.contains('modal')){
-          e.target.classList.remove('active')
+        const openPermissionsModal = (event) => {
+          const roleId = event.currentTarget.getAttribute('data-id')
+          const permissionsContainer = permissionsContainers.find(p => p.getAttribute('data-id') === roleId)
+          if (!permissionsContainer) return
+          permissionsContainer.classList.add('active')
         }
-      })
+
+        openPermissionsModalButtons.forEach(button => button.addEventListener('click', openPermissionsModal))
+
+        document.addEventListener('click', e => {
+          if (e.target.classList.contains('modal')) {
+            e.target.classList.remove('active')
+          }
+        })
+
+        const setSaveStatus = (form, message, kind) => {
+          const el = form.querySelector('.save-status')
+          if (!el) return
+          el.textContent = message || ''
+          el.dataset.kind = kind || ''
+        }
+
+        const savePermissions = async (form) => {
+          const url = form.dataset.url
+          if (!url) {
+            setSaveStatus(form, 'Missing API URL', 'error')
+            return
+          }
+
+          const prev = pendingSaves.get(form)
+          if (prev) prev.abort()
+          const controller = new AbortController()
+          pendingSaves.set(form, controller)
+
+          setSaveStatus(form, 'Saving...', 'saving')
+          try {
+            const res = await fetch(url, {
+              method: 'POST',
+              body: new FormData(form),
+              credentials: 'same-origin',
+              signal: controller.signal,
+            })
+            const data = await res.json().catch(() => null)
+            if (!res.ok || !data || data.success !== true) {
+              setSaveStatus(form, data?.message || `Failed (${res.status})`, 'error')
+              return
+            }
+
+            setSaveStatus(form, 'Saved', 'success')
+            setTimeout(() => {
+              const el = form.querySelector('.save-status')
+              if (el && el.textContent === 'Saved') setSaveStatus(form, '', '')
+            }, 1500)
+          } catch (err) {
+            if (err && err.name === 'AbortError') return
+            console.error('Error submitting permissions:', err)
+            setSaveStatus(form, 'Network error', 'error')
+          }
+        }
+
+        permissionForms.forEach(form => {
+          form.addEventListener('change', e => {
+            if (e.target && e.target.name === 'permissions') savePermissions(form)
+          })
+        })
+      })()
     </script>
     <style>
       .hidden {
@@ -221,12 +302,14 @@
         opacity: 1;
       }
 
-      .permissions-carousel{
+      .permissions-form{
         margin-top: 3%;
         overflow: hidden;
         height: 50%;
         flex-grow: 1;
         max-width: max(50%, 250px);
+        display: flex;
+        flex-direction: column;
       }
 
       .permission-classes{
@@ -248,35 +331,23 @@
         border-radius: 0.25rem;
       }
 
+      .permissions-footer{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: 0.5rem;
+      }
+
+      .save-status{
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+
+      .save-status[data-kind="saving"]{ color: #0d6efd; }
+      .save-status[data-kind="success"]{ color: #198754; }
+      .save-status[data-kind="error"]{ color: #dc3545; }
+
     </style>
-    <script>
-      const permission_form = document.querySelector('.permissions-carousel')
-      const permission_inputs = document.querySelectorAll('[name = "permissions"]')
-      console.log(permission_inputs)
-      const url = '/api/edit-role-permissions'
-
-      permission_form.addEventListener('submit', async e => {
-        e.preventDefault()
-        
-        const formdata = new FormData(permission_form)
-        formdata.append("role_id", role_id)
-        
-        try {
-          const res = await fetch(url, { method: 'POST', body: formdata })
-          const res_json = await res.json()
-          console.log('Server response:', res_json)
-        } catch (error) {
-          console.error('Error submitting form:', error)
-        }
-      })
-
-      permission_inputs.forEach(input => {
-        input.addEventListener('change', () => {
-          permission_form.requestSubmit()
-        })
-      })
-
-    </script>
 
     <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
