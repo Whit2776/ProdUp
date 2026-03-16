@@ -36,12 +36,18 @@
   <body>
     <header class="site-header">
       <div class="container header-inner">
-        <a class="brand" href="{% url 'job_application:vacancy_list' %}">
+        {% if company %}
+          <a class="brand" href="{% url 'job_application:company_vacancies' company.company_uuid %}">
+        {% else %}
+          <a class="brand" href="#">
+        {% endif %}
           <span class="brand-mark">JA</span>
           <span class="brand-text">Job Applications</span>
         </a>
         <nav class="nav">
-          <a class="nav-link" href="{% url 'job_application:vacancy_list' %}">Vacancies</a>
+          {% if company %}
+            <a class="nav-link" href="{% url 'job_application:company_vacancies' company.company_uuid %}">Vacancies</a>
+          {% endif %}
           <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
             Theme
           </button>

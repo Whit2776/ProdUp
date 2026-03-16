@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('app_1', '0066_permission_permission_count'),
+        ('app_1', '0049_delete_file'),
     ]
 
     operations = [

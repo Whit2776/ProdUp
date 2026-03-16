@@ -38,6 +38,7 @@ class Company(models.Model):
   address = models.CharField(max_length= 1000, null = True)
   email = models.EmailField()
   phone_number = models.CharField(max_length= 20, null =True)
+  company_uuid = models.UUIDField(default=uuid4, unique=True, editable=False)
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
   link = models.CharField(max_length=60, null = True)

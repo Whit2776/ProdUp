@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app_1', '0066_permission_permission_count'),
+        ('app_1', '0049_delete_file'),
         ('job_application', '0001_initial'),
     ]
 

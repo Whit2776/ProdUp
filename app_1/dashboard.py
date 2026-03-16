@@ -1368,6 +1368,7 @@ def job_application_create_vacancy(request):
       application_fields.append(spec)
 
     vacancy = Vacancy.objects.create(
+      company=company,
       role=role,
       title=title,
       location=location,
@@ -1386,7 +1387,7 @@ def job_application_create_vacancy(request):
 def job_application_all_applicants(request):
   company = request.company
   vacancies = (
-    Vacancy.objects.filter(role__company=company)
+    Vacancy.objects.filter(company=company)
     .select_related("role")
     .annotate(applicant_count=Count("applicants"))
     .order_by("-created_at")
@@ -1399,7 +1400,7 @@ def job_application_all_applicants(request):
 @employee_login_required
 def job_application_vacancy_applicants(request, pk):
   company = request.company
-  vacancy = Vacancy.objects.select_related("role").filter(id=pk, role__company=company).first()
+  vacancy = Vacancy.objects.select_related("role").filter(id=pk, company=company).first()
   if not vacancy:
     return redirect("auth-404")
 
@@ -1422,7 +1423,7 @@ def job_application_applicant_detail(request, pk):
   company = request.company
   applicant = (
     Applicant.objects.select_related("vacancy", "vacancy__role", "employment_type")
-    .filter(id=pk, vacancy__role__company=company)
+    .filter(id=pk, vacancy__company=company)
     .first()
   )
   if not applicant:

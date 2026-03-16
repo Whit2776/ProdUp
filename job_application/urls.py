@@ -6,8 +6,20 @@ from . import views
 app_name = "job_application"
 
 urlpatterns = [
-    path("", views.vacancy_list, name="vacancy_list"),
-    path("vacancies/<int:pk>/", views.vacancy_detail, name="vacancy_detail"),
-    path("vacancies/<int:pk>/submitted/", views.application_submitted, name="application_submitted"),
+    path(
+        "job-applications/<uuid:company_uuid>/",
+        views.company_vacancies,
+        name="company_vacancies",
+    ),
+    path(
+        "job-applications/<uuid:company_uuid>/vacancies/<int:pk>/",
+        views.company_vacancy_detail,
+        name="company_vacancy_detail",
+    ),
+    path(
+        "job-applications/<uuid:company_uuid>/vacancies/<int:pk>/submitted/",
+        views.company_application_submitted,
+        name="company_application_submitted",
+    ),
 ]
 

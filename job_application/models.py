@@ -4,7 +4,11 @@ from app_1.models import Employment_Type, Role, Company
 
 
 class Vacancy(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
+    company = models.ForeignKey(
+        Company,
+        on_delete=models.CASCADE,
+        related_name="vacancies",
+    )
     role = models.ForeignKey(Role, on_delete=models.PROTECT, related_name="vacancies")
     title = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
@@ -23,6 +27,13 @@ class Vacancy(models.Model):
 
     def __str__(self) -> str:
         return f"{self.title} ({self.location})"
+
+    def save(self, *args, **kwargs):
+        if self.role_id and not self.company_id:
+            self.company = self.role.company
+        if self.role_id and self.company_id and self.role.company_id != self.company_id:
+            raise ValueError("Vacancy.company must match Vacancy.role.company")
+        return super().save(*args, **kwargs)
 
 
 class Applicant(models.Model):

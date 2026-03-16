@@ -57,7 +57,7 @@
 
         <div class="form-actions">
           <button class="btn btn-primary" type="submit">Submit Application</button>
-          <a class="btn btn-ghost" href="{% url 'job_application:vacancy_list' %}">Back to vacancies</a>
+          <a class="btn btn-ghost" href="{% url 'job_application:company_vacancies' company.company_uuid %}">Back to vacancies</a>
         </div>
       </form>
     </div>

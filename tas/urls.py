@@ -214,8 +214,8 @@ urlpatterns = [
     path('chat-api/', include('chat.api.urls')),
     #CHAT LINKS
     path('chat/', include('chat.urls')),
-    # Job application (public)
-    path('job-application/', include('job_application.urls')),
+    # Job application (public, company-scoped)
+    path('', include('job_application.urls')),
 ]
 
 urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

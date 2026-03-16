@@ -44,7 +44,7 @@ class ApplicantForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.vacancy = vacancy
 
-        company = getattr(vacancy.role, "company", None)
+        company = getattr(vacancy, "company", None) or getattr(vacancy.role, "company", None)
         if company is not None:
             self.fields["employment_type"].queryset = Employment_Type.objects.filter(company=company).order_by("type")
 

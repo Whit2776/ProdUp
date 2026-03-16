@@ -491,7 +491,7 @@
                                     <a href="{% url 'job-application-create-vacancy' %}" class="nav-link ">Create Vacancy</a> 
                                 </li> 
                                 <li class="nav-item"> 
-                                    <a href="{% url 'job_application:vacancy_list' %}" class="nav-link " target="_blank" rel="noopener">Public Vacancies</a> 
+                                    <a href="{% url 'job_application:company_vacancies' company.company_uuid %}" class="nav-link " target="_blank" rel="noopener">Public Vacancies</a> 
                                 </li> 
                             </ul><!--end nav--> 
                         </div> 

@@ -1,0 +1,47 @@
+{% extends "job_application/base.html" %}
+
+{% block title %}Vacancies | {{ company.name }}{% endblock %}
+
+{% block content %}
+  <section class="vacancy-header">
+    <div class="vacancy-header-card">
+      <div class="kicker">Company</div>
+      <h1 class="page-title">{{ company.name }}</h1>
+      <p class="muted mb-0">Open vacancies</p>
+    </div>
+  </section>
+
+  <section class="vacancy-list">
+    <div class="row g-3">
+      {% for vacancy in vacancies %}
+        <div class="col-12 col-md-6 col-xl-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title mb-2">{{ vacancy.title }}</h5>
+              <div class="d-flex flex-wrap gap-2 mb-3">
+                <span class="badge bg-soft-primary text-primary">{{ vacancy.role.position }}</span>
+                <span class="badge bg-soft-secondary text-secondary">{{ vacancy.location }}</span>
+                <span class="badge bg-soft-success text-success">{{ vacancy.salary_range }}</span>
+              </div>
+              {% if vacancy.description %}
+                <p class="text-muted mb-3">{{ vacancy.description|truncatechars:160 }}</p>
+              {% else %}
+                <p class="text-muted mb-3">No description provided.</p>
+              {% endif %}
+              <a class="btn btn-primary btn-sm" href="{% url 'job_application:company_vacancy_detail' company.company_uuid vacancy.id %}">
+                Apply
+              </a>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-12">
+          <div class="text-center text-muted py-4">
+            No open vacancies are available right now.
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}
+
