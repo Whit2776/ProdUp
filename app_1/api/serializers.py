@@ -15,7 +15,7 @@ class FileSerializer(ModelSerializer):
 class EmployeeSerializer(ModelSerializer):
   class Meta:
     model = Employee
-    fields = '__all__'
+    exclude = ['employment_type', 'department', 'role']
     # exclude = ['company', 'user_name', 'department']
 
 
