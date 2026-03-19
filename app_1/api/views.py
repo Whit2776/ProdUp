@@ -222,63 +222,31 @@ def create_employee(request):
   r = request.POST
   f = request.FILES
   company = Company.objects.get(id = request.session.get('company_id'))
-  
-  e = Employee.objects.create(
-    # --- Personal Details ---
-    first_name = r.get('first_name'),
-    last_name = r.get('last_name'),
-    other_names = r.get('other_names'),
-    gender = r.get('gender'),
-    date_of_birth = r.get('date_of_birth'),
+  with transaction.atomic():
+    employee_serializer = EmployeeSerializer(data = request.data)
+    if not employee_serializer.is_valid():
+      return Response({"message":"Invalid data", "errors": employee_serializer.errors}, status=status.HTTP_406_NOT_ACCEPTABLE)
+    
+    department = get_object_or_404(Department, id = int(r.get('department')))
+    role = get_object_or_404(Role, id = int(r.get('role')))
+    employment_type = get_object_or_404(Employment_Type, id = int(r.get('employment_type')))
+    
+    if not (department and role and employment_type):
+      return Response({'message':'Invalid Data, Role, Departmentor Employment Type Not specified'}, status=status.HTTP_406_NOT_ACCEPTABLE)
+    employee_email = employee_serializer.validated_data['email']
+    employee_name = employee_serializer.validated_data['name']
+    
+    employee = employee_serializer.save(department = department, role = role, employment_type = employment_type)
+    wallet = Wallet.objects.create(owner_employee = employee)
+    email_link = Email_Link.objects.create(email = employee_email)
 
-    location = r.get('location'),
-    house_code = r.get('house_code'),
-    marital_status = r.get('marital_status'),
-
-    # --- Father Details ---
-    father_first_name = r.get('father_first_name'),
-    father_last_name = r.get('father_last_name'),
-    father_date_of_birth = r.get('father_date_of_birth'),
-    father_location = r.get('father_location'),
-    father_marital_status = r.get('father_marital_status'),
-    father_living_status = r.get('father_living_status'),
-
-    # --- Mother Details ---
-    mother_first_name = r.get('mother_first_name'),
-    mother_last_name = r.get('mother_last_name'),
-    mother_date_of_birth = r.get('mother_date_of_birth'),
-    mother_location = r.get('mother_location'),
-    mother_marital_status = r.get('mother_marital_status'),
-    mother_living_status = r.get('mother_living_status'),
-
-    # --- Contacts ---
-    email = r.get('email'),
-    phone_number = r.get('phone_number'),
-
-    # --- Company Details ---
-    company = company,
-    department = get_object_or_404(Department, id = int(r.get('department'))),
-    role = get_object_or_404(Role, id = int(r.get('role'))),
-    employment_type = get_object_or_404(Employment_Type, id = int(r.get('employment_type'))),
-  )
+    set_up_link = request.build_absolute_uri(reverse("set-password", args =[employee.link, email_link.token]))
+    content = (
+      f"<h1>Congratulations</h1> {employee_name},\n You have been selected as an employee of {company.name}. Your <strong>Employee Id</strong> is {employee.emp_id} \nKindly use the link below to set your pass word and access your dashboard. \n {set_up_link}"
+    )
+    send_brevo_email(8, employee_email, employee_name, {'subject':"Set Password", 'company_name':company.name, 'content': content} )
   
-  pic = f.get('picture')
-  
-  if pic:
-    e.picture = pic
-    print(pic)
-    e.save()
-  
-  wallet = Wallet.objects.create(owner_employee = e)
-  
-  uid = urlsafe_base64_encode(force_bytes(e.id))
-  token = uuid.uuid4()
-  
-  set_up_link = f'http://127.0.0.1:8000/set-password/{uid}/{token}/{e.link}'
-  
-  send_email(e, 'RAn', {'user':e, 'company_name': 'TAS', 'set_up_link': set_up_link}, 'emails/email_2_password_generation.html')
-  serializer = EmployeeSerializer(e).data
-  return Response({'employee': serializer})
+  return Response({'employee': employee_serializer.validated_data})
 
 @api_view(['POST'])
 def create_team(request):
