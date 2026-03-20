@@ -247,7 +247,7 @@
               </span>
             </div>
 
-            <input type="file" class = 'hidden add-display-picture-input' id ='picture' name='picture' accept='image/*' >
+            <input type="file" class = 'hidden add-display-picture-input' value="dashboard/assets/images/anon-display.jpg" id ='picture' name='picture' accept='image/*' >
             <!-- Personal Details -->
             <h4>Personal Details</h4>
             <div class="row g-3">
@@ -448,8 +448,23 @@
   <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
 
   <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+  <script>
+    const form = document.querySelector('.add-employee-form');
 
-  <script src="{% static 'dashboard/assets/js/add-employee.js' %}"></script>
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      const url = '/api/create-employee';
+      const formdata = new FormData(form);
+      const res = await fetch(url, { method: 'POST', body: formdata });
+      const data = await res.json();
+      
+      if (res.ok) {
+        form.reset();
+      }
+    });
+
+  </script>
   <script>
     let add = document.querySelector('.add-display-picture')
     let add_in = document.querySelector('.add-display-picture-input')

@@ -3,7 +3,7 @@ from .models import *
 from chat.models import *
 from django.conf import settings
 from django.core.paginator import Paginator
-from .decorators import employee_login_required, login_context_required
+from .decorators import admin_login_required, employee_login_required
 from .utils import render_dashboard
 from django.contrib.auth.hashers import make_password, check_password
 import secrets
@@ -22,27 +22,27 @@ def custom_404(request, exception):
 def custom_500(request):
   return render(request, 'dashboard/auth-500.html')
 
-@employee_login_required
+@admin_login_required
 def home(request):
   employee = request.employee
   company = employee.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/index.html', context)
 
-@employee_login_required
+@admin_login_required
 def sales_index(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/sales-index.html', context)  
 
-@employee_login_required
+@admin_login_required
 def departments(request):  
   company = request.company
   departments = Department.objects.filter(company = company)
   context = {'company':company, 'departments':departments}
   return render_dashboard(request, 'dashboard/departments.html', context)
 
-@employee_login_required
+@admin_login_required
 def departments_create_department(request):  
   company = request.company
 
@@ -55,28 +55,27 @@ def departments_create_department(request):
   return render_dashboard(request, 'dashboard/departments-create-department.html', context)  
 
 
-@employee_login_required
+@admin_login_required
 def departments_department(request, pk):  
   company = request.company
   department = Department.objects.get(id = pk)
   context = {'company':company}
   return render_dashboard(request, 'dashboard/departments-department.html', context)
 
-@login_context_required('Admin')
-@employee_login_required
+@admin_login_required
 def departments_manage_department(request):
   context = {}
   return render_dashboard(request, 'dashboard/departments-manage-department.html', context)
 
 
-@employee_login_required
+@admin_login_required
 def roles(request):  
   company = request.company
   roles = Role.objects.filter(company = company).select_related('permissions').order_by('-permissions__permission_count')
   context = {'company':company, 'roles':roles}
   return render_dashboard(request, 'dashboard/roles.html', context)
 
-@employee_login_required
+@admin_login_required
 def roles_create_role(request):  
   company = request.company
   departments = Department.objects.filter(company = company)
@@ -104,28 +103,28 @@ def roles_create_role(request):
   context = {'company':company, 'departments':departments}
   return render_dashboard(request, 'dashboard/roles-create-role.html', context)  
 
-@employee_login_required
+@admin_login_required
 def roles_role(request, pk):  
   company = request.company
   department = Department.objects.get(id = pk)
   context = {'company':company}
   return render_dashboard(request, 'dashboard/roles-role.html', context)  
 
-@employee_login_required
+@admin_login_required
 def employment_types(request):  
   company = request.company
   employment_types = Employment_Type.objects.get(company = company)
   context = {'company':company, 'employment_types':employment_types}
   return render_dashboard(request, 'dashboard/employment-types.html', context)
 
-@employee_login_required
+@admin_login_required
 def employment_type(request, pk):  
   company = request.company
   employment_type = Employment_Type.objects.get(id = pk)
   context = {'company':company, 'employment_type':employment_type}
   return render_dashboard(request, 'dashboard/employment-type.html', context)
 
-@employee_login_required
+@admin_login_required
 def employment_types_create(request):  
   company = request.company
 
@@ -136,38 +135,38 @@ def employment_types_create(request):
   context = {'company':company}
   return render_dashboard(request, 'dashboard/employment-types-create.html', context)
 
-@employee_login_required
+@admin_login_required
 def ecommerce_products(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ecommerce-products.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ecommerce_customers(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ecommerce-customers.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ecommerce_customer_details(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ecommerce-customer-details.html', context)    
 
 
-@employee_login_required
+@admin_login_required
 def ecommerce_orders(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ecommerce-orders.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ecommerce_order_details(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ecommerce-order-details.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ecommerce_refunds(request):  
   company = request.company
   context = {'company':company}
@@ -184,7 +183,7 @@ def get_progress_tasks(company, project):
 
     return project_tasks, project.progress
 
-@employee_login_required
+@admin_login_required
 def projects_overview(request):
   employee = request.employee
   company = request.company
@@ -214,7 +213,7 @@ def projects_overview(request):
 #   p.picture = f'Project-Logos/{file}'
 #   p.save()
   
-@employee_login_required
+@admin_login_required
 def projects(request):  
   company = request.company
   projects = Project.objects.filter(company = company)
@@ -233,7 +232,7 @@ def projects(request):
   context = {'company':company, 'projects':projects}
   return render_dashboard(request, 'dashboard/projects-projects.html', context)  
 
-@employee_login_required
+@admin_login_required
 def project(request,pk):  
   company = request.company
   project = Project.objects.get(company = company, id =pk)
@@ -293,13 +292,13 @@ def project(request,pk):
   context = {'company':company, 'project':project, 'teams':teams, 'tasks':tasks, 'folder':folder }
   return render_dashboard(request, 'dashboard/project.html', context)   
 
-@employee_login_required
+@admin_login_required
 def projects_board(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/projects-board.html', context)    
 
-@employee_login_required
+@admin_login_required
 def projects_teams(request):  
   company = request.company
   projects = Project.objects.filter(company =company)
@@ -335,14 +334,14 @@ def projects_teams(request):
   context = {'company':company, 'projects':projects, 'teams':teams, 'leaders':rl, 'employees':re}
   return render_dashboard(request, 'dashboard/projects-teams.html', context)    
 
-@employee_login_required
+@admin_login_required
 def projects_files(request):  
   company = request.company
   folders = Folder.objects.filter(company = company)
   context = {'company':company, 'folders':folders}
   return render_dashboard(request, 'dashboard/projects-files.html', context)    
 
-@employee_login_required
+@admin_login_required
 def create_projects(request):  
   company = request.company
   teams = Team.objects.filter(assigned_project__isnull = True, company = company)
@@ -408,14 +407,14 @@ def create_projects(request):
   return render_dashboard(request, 'dashboard/projects-create-project.html', context)    
 
 
-@employee_login_required
+@admin_login_required
 def projects_create_teams(request):  
   company = request.company
   context = {'company':company, }
   return render_dashboard(request, 'dashboard/projects-create-team.html', context)   
 
 
-@employee_login_required
+@admin_login_required
 def create_clients(request): 
   employee = request.employee 
   company = request.company
@@ -442,14 +441,14 @@ def create_clients(request):
 
   return render_dashboard(request, 'dashboard/clients-create.html', context)   
 
-@employee_login_required
+@admin_login_required
 def clients(request):  
   company = request.company
   clients = Client.objects.filter(company = company)
   context = {'company':company, 'clients':clients}
   return render_dashboard(request, 'dashboard/clients.html', context)   
 
-@employee_login_required
+@admin_login_required
 def client(request, pk):  
   company = request.company
   client = Client.objects.get(company=company, id = pk)
@@ -457,44 +456,44 @@ def client(request, pk):
   context = {'company':company, 'client':client, 'projects':projects}
   return render_dashboard(request, 'dashboard/client.html', context) 
 
-@employee_login_required
+@admin_login_required
 def analytics_customers(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/analytics-customers.html', context)    
 
-@employee_login_required
+@admin_login_required
 def analytics_reports(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/analytics-reports.html', context)    
 
-@employee_login_required
+@admin_login_required
 def apps_chat(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/apps-chat.html', context)    
 
-@employee_login_required
+@admin_login_required
 def apps_contact_list(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/apps-contact-list.html', context)    
 
-@employee_login_required
+@admin_login_required
 def apps_calender(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/apps-calendar.html', context)    
 
-@employee_login_required
+@admin_login_required
 def apps_invoice(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/apps-invoice.html', context)    
 
 
-@employee_login_required
+@admin_login_required
 def list_employees(request):  
   company = request.company
   employees = Employee.objects.filter(company = company.id)
@@ -502,7 +501,7 @@ def list_employees(request):
   return render_dashboard(request, 'dashboard/employees-list.html', context)
   
 
-@employee_login_required
+@admin_login_required
 def teams_employees(request):  
   company = request.company
   context = {'company':company}
@@ -519,80 +518,18 @@ def teams_employees(request):
 #     # Return the upload path
 #     return os.path.join('Employee_Pictures', new_filename)
 
-@employee_login_required
+@admin_login_required
 def add_employees(request):
   company = request.company
-  roles = Role.objects.filter(company = company)
+  roles = Role.objects.filter(company = company)#.select_related("departments", "employment_types", "roles")
   departments = Department.objects.filter(company = company)
   emp_types = Employment_Type.objects.filter(company = company)
-
-  
-
-  # if request.method == 'POST':
-  #   r = request.POST
-  #   f = request.FILES
-    
-  #   alphabet = string.ascii_letters + string.digits + string.punctuation
-  #   raw_password = ''.join(secrets.choice(alphabet) for i in range(12))
-
-  #   hashed_password = make_password(raw_password)
-    
-  #   e = Employee.objects.create(
-  #     # --- Personal Details ---
-  #     first_name = r.get('first_name'),
-  #     last_name = r.get('last_name'),
-  #     other_names = r.get('other_names'),
-  #     gender = r.get('gender'),
-  #     date_of_birth = r.get('date_of_birth'),
-
-  #     location = r.get('location'),
-  #     house_code = r.get('house_code'),
-  #     marital_status = r.get('marital_status'),
-
-  #     # --- Father Details ---
-  #     father_first_name = r.get('father_first_name'),
-  #     father_last_name = r.get('father_last_name'),
-  #     father_date_of_birth = r.get('father_date_of_birth'),
-  #     father_location = r.get('father_location'),
-  #     father_marital_status = r.get('father_marital_status'),
-  #     father_living_status = r.get('father_living_status'),
-
-  #     # --- Mother Details ---
-  #     mother_first_name = r.get('mother_first_name'),
-  #     mother_last_name = r.get('mother_last_name'),
-  #     mother_date_of_birth = r.get('mother_date_of_birth'),
-  #     mother_location = r.get('mother_location'),
-  #     mother_marital_status = r.get('mother_marital_status'),
-  #     mother_living_status = r.get('mother_living_status'),
-
-  #     # --- Contacts ---
-  #     email = r.get('email'),
-  #     phone_number = r.get('phone_number'),
-
-  #     # --- Company Details ---
-  #     company = company,
-  #     department = Department.objects.get_or_404(id = int(r.get('department'))),
-  #     role = Role.objects.get_or_404(id = int(r.get('role'))),
-  #     employment_type = Employment_Type.objects.get_or_404(id = int(r.get('employment_type'))),
-
-  #     # --- Passwords ---
-  #     password = hashed_password,
-  #     raw_password = raw_password
-  #   )
-
-  #   if f.get('picture'):
-  #     e.picture = rename_employee_picture(e, f.get('picture'))
-  #     e.save()
-
-  # else:
-  #   pass
-
 
   context = {'company':company, 'roles':roles, 'departments':departments, 'emp_types':emp_types}
   return render_dashboard(request, 'dashboard/employees-add.html', context)    
 
 
-@employee_login_required
+@admin_login_required
 def manage_employees(request):  
   company = request.company
   employees = Employee.objects.filter(company = company)
@@ -603,7 +540,7 @@ def manage_employees(request):
   context = {'company':company, 'employees':employees, 'act_emp':act_emp, 'inact_emp':inact_emp, 'leave_emp':leave_emp}
   return render_dashboard(request, 'dashboard/employees-manage.html', context)    
 
-@employee_login_required
+@admin_login_required
 def employee(request, pk):  
   company = request.company
   employee = Employee.objects.get(id = pk, company = company)
@@ -617,386 +554,386 @@ def employee(request, pk):
   context = {'company':company, 'projects':projects,}
   return render_dashboard(request, 'dashboard/employee.html', context)  
 
-@employee_login_required
+@admin_login_required
 def ui_alerts(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-alerts.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_avatar(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-avatar.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_buttons(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-buttons.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_badges(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-badges.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_cards(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-cards.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_carousels(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-carousels.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_dropdowns(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-dropdowns.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_grids(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-grids.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_images(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-images.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_list(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-list.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_modals(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-modals.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_navs(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-navs.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_navbar(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-navbar.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_offcanvas(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-offcanvas.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_paginations(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-paginations.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_popover_tooltips(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-popover-tooltips.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_progress(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-progress.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_spinners(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-spinners.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_tabs_accordions(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-tabs-accordions.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_typography(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-typography.html', context)    
 
-@employee_login_required
+@admin_login_required
 def ui_videos(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/ui-videos.html', context)    
 
-@employee_login_required
+@admin_login_required
 def advanced_animation(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/advanced-animation.html', context)    
 
-@employee_login_required
+@admin_login_required
 def advanced_clip_board(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/advanced-clipboard.html', context)    
 
-@employee_login_required
+@admin_login_required
 def advanced_dragula(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/advanced-dragula.html', context)    
 
-@employee_login_required
+@admin_login_required
 def advanced_file_manager(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/advanced-files.html', context)    
 
-@employee_login_required
+@admin_login_required
 def advanced_highlight(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/advanced-highlight.html', context)    
 
-@employee_login_required
+@admin_login_required
 def advanced_range_slider(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/advanced-rangeslider.html', context)    
 
-@employee_login_required
+@admin_login_required
 def advanced_ratings(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/advanced-ratings.html', context)    
 
-@employee_login_required
+@admin_login_required
 def advanced_ribbons(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/advanced-ribbons.html', context)    
 
-@employee_login_required
+@admin_login_required
 def advanced_sweet_alerts(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/advanced-sweetalerts.html', context)    
 
-@employee_login_required
+@admin_login_required
 def advanced_toasts(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/advanced-toasts.html', context)    
 
-@employee_login_required
+@admin_login_required
 def forms_basic_elements(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/forms-basic-elements.html', context)    
 
-@employee_login_required
+@admin_login_required
 def forms_advance_elements(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/forms-advance-elements.html', context)    
 
-@employee_login_required
+@admin_login_required
 def forms_validation(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/forms-validation.html', context)    
 
-@employee_login_required
+@admin_login_required
 def forms_wizard(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/forms-wizard.html', context)    
 
-@employee_login_required
+@admin_login_required
 def forms_editors(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/forms-editors.html', context)    
 
-@employee_login_required
+@admin_login_required
 def forms_file_upload(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/forms-file-upload.html', context)    
 
-@employee_login_required
+@admin_login_required
 def forms_image_crop(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/forms-img-crop.html', context)    
 
-@employee_login_required
+@admin_login_required
 def charts_apex(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/charts-apex.html', context)    
 
-@employee_login_required
+@admin_login_required
 def charts_justgage(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/charts-justgage.html', context)    
 
-@employee_login_required
+@admin_login_required
 def charts_chatjs(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/charts-chatjs.html', context)    
 
-@employee_login_required
+@admin_login_required
 def charts_toast(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/charts-toast.html', context)    
 
-@employee_login_required
+@admin_login_required
 def tables_basic(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/tables-basic.html', context)    
 
-@employee_login_required
+@admin_login_required
 def tables_datatables(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/tables-datatables.html', context)    
 
-@employee_login_required
+@admin_login_required
 def tables_editable(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/tables-editable.html', context)    
 
-@employee_login_required
+@admin_login_required
 def icons_font_awesome(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/icons-fontawesome.html', context)    
 
-@employee_login_required
+@admin_login_required
 def icons_line_awesome(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/icons-lineawesome.html', context)    
 
-@employee_login_required
+@admin_login_required
 def icons_icofont(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/icons-icofont.html', context)    
 
-@employee_login_required
+@admin_login_required
 def icons_iconoir(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/icons-iconoir.html', context)    
 
-@employee_login_required
+@admin_login_required
 def maps_google_maps(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/maps-google-maps.html', context)    
 
-@employee_login_required
+@admin_login_required
 def maps_leaflet_maps(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/maps-leaflet-maps.html', context)    
 
-@employee_login_required
+@admin_login_required
 def maps_vector_maps(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/maps-vector-maps.html', context)    
 
-@employee_login_required
+@admin_login_required
 def email_templates_basic_action_email(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/email-templates-basic-action-email.html', context)    
 
-@employee_login_required
+@admin_login_required
 def email_templates_alert_email(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/email-templates-alert-email.html', context)    
 
-@employee_login_required
+@admin_login_required
 def email_templates_billing_email(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/email-templates-billing-email.html', context)    
 
-@employee_login_required
+@admin_login_required
 def pages_profile(request, emp_id):  
   company = request.company
   employee = request.employee
   context = {'company':company}
   return render_dashboard(request, 'dashboard/pages-profile.html', context)
 
-@employee_login_required
+@admin_login_required
 def pages_notifications(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/pages-notifications.html', context)    
 
-@employee_login_required
+@admin_login_required
 def pages_timeline(request):
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/pages-timeline.html', context)    
 
-@employee_login_required
+@admin_login_required
 def pages_treeview(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/pages-treeview.html', context)    
 
-@employee_login_required
+@admin_login_required
 def pages_starter_page(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/pages-starter.html', context)    
 
-@employee_login_required
+@admin_login_required
 def pages_pricing(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/pages-pricing.html', context)    
 
-@employee_login_required
+@admin_login_required
 def pages_blogs(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/pages-blogs.html', context)    
 
-@employee_login_required
+@admin_login_required
 def pages_faqs(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/pages-faqs.html', context)    
 
-@employee_login_required
+@admin_login_required
 def pages_gallery(request):  
   company = request.company
   context = {'company':company}
@@ -1005,7 +942,7 @@ def pages_gallery(request):
 def authentication_login(request):
   if request.method == 'POST':
     r = request.POST
-    emp_id = r.get('emp_id')
+    emp_id = r.get('adm_id')
     password = r.get('password')
     print('POST')
     
@@ -1016,8 +953,7 @@ def authentication_login(request):
     if not check_password(password, employee.password):
       return HttpResponse('Incorrect login credentials')
     
-    request.session['emp_id'] = employee.emp_id
-    request.session['login_context'] = employee.role.position
+    request.session['adm_id'] = employee.emp_id
     
     return redirect('projects_overview')
   return render(request, 'dashboard/auth-login-admin.html')
@@ -1025,19 +961,19 @@ def authentication_login(request):
 def authentication_register(request):
   return render(request, 'dashboard/auth-register.html')
 
-@employee_login_required
+@admin_login_required
 def authentication_recover_pw(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/auth-recover-pw.html', context)    
 
-@employee_login_required
+@admin_login_required
 def authentication_lock_screen(request):  
   company = request.company
   context = {'company':company}
   return render_dashboard(request, 'dashboard/auth-lock-screen.html', context)    
 
-@employee_login_required
+@admin_login_required
 def authentication_maintenance(request):  
   company = request.company
   context = {'company':company}
@@ -1052,7 +988,7 @@ def authentication_403(request):
 def authentication_500(request):
   return render(request, 'dashboard/auth-500.html')
 
-@employee_login_required
+@admin_login_required
 def folders(request):
   company = request.company
   folders = Folder.objects.filter(company = company)
@@ -1061,7 +997,7 @@ def folders(request):
 
   return render_dashboard(request, 'dashboard/folders.html', context)
 
-@employee_login_required
+@admin_login_required
 def create_folders(request):
   company = request.company
   folders = Folder.objects.filter(company = company)
@@ -1087,7 +1023,7 @@ def create_folders(request):
 
   return render_dashboard(request, 'dashboard/folders-create.html', context)
 
-@employee_login_required
+@admin_login_required
 def folder(request, slug):
   company = request.company
   folder = Folder.objects.get(company = company, slug = slug)
@@ -1120,7 +1056,7 @@ def authentication_staff_login(request):
       return HttpResponse(f'Incorrect Credentials, {e}')
   return render(request, 'dashboard/auth-login.html')
 
-@employee_login_required
+@admin_login_required
 def staff_change_password(request):
   emp = request.employee
   
@@ -1251,7 +1187,7 @@ def staff_project(request,pk):
 
       if titles[i].strip() == "":
         continue 
-
+#Use bulk create to create tasks
       task = Task.objects.create(
         company = company,
         project = project,
@@ -1298,7 +1234,7 @@ def create_main_admin(request, link, token):
   return render(request, 'dashboard/create_main_admin.html')
 
 
-@employee_login_required
+@admin_login_required
 def job_application_create_vacancy(request):
   company = request.company
   roles = Role.objects.filter(company=company).order_by("position")
@@ -1383,7 +1319,7 @@ def job_application_create_vacancy(request):
   return render_dashboard(request, "dashboard/create_vacancy.html", context)
 
 
-@employee_login_required
+@admin_login_required
 def job_application_all_applicants(request):
   company = request.company
   vacancies = (
@@ -1397,7 +1333,7 @@ def job_application_all_applicants(request):
   return render_dashboard(request, "dashboard/all_applicants.html", context)
 
 
-@employee_login_required
+@admin_login_required
 def job_application_vacancy_applicants(request, pk):
   company = request.company
   vacancy = Vacancy.objects.select_related("role").filter(id=pk, company=company).first()
@@ -1418,7 +1354,7 @@ def job_application_vacancy_applicants(request, pk):
   return render_dashboard(request, "dashboard/vacancy_applicants.html", context)
 
 
-@employee_login_required
+@admin_login_required
 def job_application_applicant_detail(request, pk):
   company = request.company
   applicant = (

@@ -161,7 +161,7 @@ class Employee(models.Model):
   name = models.CharField(max_length = 2000, null = True, blank =True)
   gender = models.CharField(max_length=100, null =True, blank = True)
   date_of_birth = models.DateField(null=True, blank =True)
-  picture = models.ImageField(upload_to='Employee_Pictures', null =True, blank = True)
+  picture = models.ImageField(upload_to='Employee_Pictures', null =True, blank = True, default="/media/Files/a.webp")
   location = models.TextField( blank =True, default='', null=True)
   house_code = models.TextField( blank =True, default='', null=True)
   marital_status = models.CharField(default='',max_length=2000, blank = True, null=True)

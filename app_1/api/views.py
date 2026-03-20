@@ -181,10 +181,15 @@ def set_password(request, link):
   if not (p1 == p2):
     return Response({'success':False, 'message': 'Passwords do not match'})
   employee.set_employee_password(p1)
+  role = employee.role
+  if role.permissions.can_use_admin_system:
+    request.session['adm_id'] = employee.emp_id
+    request.session.cycle_key()
+    return Response({'success': True, 'message':'Password set successfully', 'redirect_url': "/dashboard"})
   request.session['emp_id'] = employee.emp_id
   request.session.cycle_key()
 
-  return Response({'success': True, 'message':'Passwords set successfully'})
+  return Response({'success': True, 'message':'Password set successfully', 'redirect_url':"/dashboard/staff/staff-dashboard"})
 
 @api_view(['GET'])
 def get_employees(request):
@@ -214,14 +219,18 @@ def admin_login(request):
 
 @api_view(['GET'])
 def log_out(request):
-  request.session['emp_id'] = ''
+  del request.session['emp_id']
+  del request.session['adm_id']
   return Response({'':''})
 
 @api_view(['POST'])
 def create_employee(request):
   r = request.POST
   f = request.FILES
-  company = Company.objects.get(id = request.session.get('company_id'))
+  company = request.company
+  if not company:
+    return Response({'message': "Company not found"}, status=status.HTTP_404_NOT_FOUND)
+  
   with transaction.atomic():
     employee_serializer = EmployeeSerializer(data = request.data)
     if not employee_serializer.is_valid():
@@ -234,19 +243,19 @@ def create_employee(request):
     if not (department and role and employment_type):
       return Response({'message':'Invalid Data, Role, Departmentor Employment Type Not specified'}, status=status.HTTP_406_NOT_ACCEPTABLE)
     employee_email = employee_serializer.validated_data['email']
-    employee_name = employee_serializer.validated_data['name']
+    employee_name = employee_serializer.validated_data['last_name'] + employee_serializer.validated_data['first_name']
     
-    employee = employee_serializer.save(department = department, role = role, employment_type = employment_type)
+    employee = employee_serializer.save(company=company, department = department, role = role, employment_type = employment_type)
     wallet = Wallet.objects.create(owner_employee = employee)
     email_link = Email_Link.objects.create(email = employee_email)
 
-    set_up_link = request.build_absolute_uri(reverse("set-password", args =[employee.link, email_link.token]))
+    set_up_link = request.build_absolute_uri(reverse("set-staff-password", args =[employee.link, email_link.token]))
     content = (
       f"<h1>Congratulations</h1> {employee_name},\n You have been selected as an employee of {company.name}. Your <strong>Employee Id</strong> is {employee.emp_id} \nKindly use the link below to set your pass word and access your dashboard. \n {set_up_link}"
     )
     send_brevo_email(8, employee_email, employee_name, {'subject':"Set Password", 'company_name':company.name, 'content': content} )
   
-  return Response({'employee': employee_serializer.validated_data})
+  return Response({'employee': employee_serializer.data})
 
 @api_view(['POST'])
 def create_team(request):

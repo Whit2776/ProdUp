@@ -6,7 +6,7 @@ def admin_login_required(view_func):
     adm = request.session.get('adm_id')
 
     if not adm :
-      return redirect('auth-login')
+      return redirect('auth-staff-login')
     
     company = Company.objects.get(company_employees__emp_id = adm)
     employee = Employee.objects.get(emp_id = adm)

@@ -11,7 +11,7 @@ class EmployeeAuthMiddleware:
     request.role = None
 
     # Get member_id from session
-    emp_id = request.session.get('emp_id')
+    emp_id = request.session.get('adm_id') or request.session.get('emp_id')
 
     if emp_id:
       # Fetch member from DB if active
@@ -20,6 +20,7 @@ class EmployeeAuthMiddleware:
         request.company = employee.company
         request.employee = employee
         request.role = employee.role
+      print(request.session.get('adm_id'))
     # Continue processing the request
     
     response = self.get_response(request)

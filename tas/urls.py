@@ -207,7 +207,7 @@ urlpatterns = [
     
     path('emails/check-email', emails.check_email, name='check-email'),
 
-
+    path('set-staff-password/<str:link>/<str:token>/', dashboard.set_password, name ="set-staff-password"),
 
     #API LINKS
     path('api/', include('app_1.api.urls')),
