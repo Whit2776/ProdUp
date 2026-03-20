@@ -1,10 +1,11 @@
 from django.db import models
-from datetime import date
-from decimal import Decimal, ROUND_HALF_UP
 from django.utils import timezone
 from django.utils.crypto import get_random_string
-from uuid import uuid4
 from django.contrib.auth.hashers import make_password
+
+from datetime import date
+from decimal import Decimal, ROUND_HALF_UP
+from uuid import uuid4
 # Create your models here.
 
 class User(models.Model): #User that can login in to our app to purchase things

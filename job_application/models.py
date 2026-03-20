@@ -1,6 +1,6 @@
 from django.db import models
 
-from app_1.models import Employment_Type, Role, Company
+from app_1.models import Employment_Type, Role, Company, Employee
 
 
 class Vacancy(models.Model):
@@ -58,3 +58,11 @@ class Applicant(models.Model):
 
     def __str__(self) -> str:
         return f"{self.name} - {self.vacancy.title}"
+
+
+class Meeting(models.Model):
+  employees = models.ManyToManyField(Employee)
+  applicants = models.ManyToManyField(Applicant)
+  
+  scheduled_for = models.DateTimeField()
+  created = models.DateTimeField(auto_now_add=True)
