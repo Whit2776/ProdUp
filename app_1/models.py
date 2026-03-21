@@ -363,8 +363,21 @@ class Project(models.Model):
     return f'{self.id} - {self.title} - {self.client} - {self.status}'
   #Will populate files for this document, the invoice, reciepts, quotaions, cheques
 
+class Event(models.Model):
+  title = models.CharField(max_length = 300)
+  description = models.TextField()
+  scheduled_for = models.DateTimeField()
+  created = models.DateTimeField(auto_now_add=True)
+  EVENT_TYPE_CHOICES = [
+        ('meeting', 'Meeting'),
+        ('task', 'Task'),
+    ]
+  event_type = models.CharField(max_length=20, choices=EVENT_TYPE_CHOICES)
+
+  employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
 class Task(models.Model):
   company = models.ForeignKey(Company, on_delete = models.PROTECT, related_name = 'company')
+  event = models.OneToOneField(Event, on_delete=models.CASCADE)
 
   project = models.ForeignKey(Project, on_delete = models.PROTECT, related_name='assigned_tasks')
   assigned_to = models.ForeignKey(Employee, on_delete = models.PROTECT, null = True, related_name = 'tasks')
