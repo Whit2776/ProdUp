@@ -377,7 +377,7 @@ class Event(models.Model):
   employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
 class Task(models.Model):
   company = models.ForeignKey(Company, on_delete = models.PROTECT, related_name = 'company')
-  event = models.OneToOneField(Event, on_delete=models.CASCADE)
+  event = models.OneToOneField(Event, on_delete=models.CASCADE, null = True)
 
   project = models.ForeignKey(Project, on_delete = models.PROTECT, related_name='assigned_tasks')
   assigned_to = models.ForeignKey(Employee, on_delete = models.PROTECT, null = True, related_name = 'tasks')

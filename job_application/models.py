@@ -1,7 +1,9 @@
 from django.db import models
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
+
 
 from app_1.models import Employment_Type, Role, Company, Employee
-
 
 class Vacancy(models.Model):
     company = models.ForeignKey(
@@ -61,9 +63,12 @@ class Applicant(models.Model):
 
 
 class Meeting(models.Model):
-  employee = models.ForeignKey(Employee, on_delete = models.PROTECT, related_name = 'meetings')
-  applicant = models.ForeignKey(Applicant, on_delete = models.PROTECT, related_name = 'meetings')
-  title = models.CharField(max_length = 300, null = True)
-  scheduled_for = models.DateTimeField()
-  created = models.DateTimeField(auto_now_add=True)
-  event = models.OneToOneField("app_1.Event", on_delete=models.CASCADE)
+    title = models.CharField(max_length=255, null=True)
+    scheduled_for = models.DateTimeField(null=True)
+    event = models.OneToOneField("app_1.Event", on_delete=models.CASCADE, null =True)
+    
+class MeetingParticipant(models.Model):
+    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, related_name="participants")
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    participant = GenericForeignKey('content_type', 'object_id')
