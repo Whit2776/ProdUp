@@ -66,3 +66,4 @@ class Meeting(models.Model):
   title = models.CharField(max_length = 300, null = True)
   scheduled_for = models.DateTimeField()
   created = models.DateTimeField(auto_now_add=True)
+  event = models.OneToOneField("app_1.Event", on_delete=models.CASCADE)
