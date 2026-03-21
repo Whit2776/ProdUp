@@ -52,4 +52,18 @@ const get_notification = async () => {
 
 }
 
-setInterval(get_notification, 4000)
+// setInterval(get_notification, 4000)
+
+const post_data = async (url, formdata) => {
+  try{
+    let res = await fetch(url, {method: "POST", body: formdata})
+    let res_json = await res.json()
+    if (!res.ok){
+      console.error(res_json.message)
+    }
+    console.log(res_json)
+    return res_json
+  } catch (e) {
+    console.error("Error, ", e)
+  }
+}
