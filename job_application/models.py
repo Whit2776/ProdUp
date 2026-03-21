@@ -61,8 +61,8 @@ class Applicant(models.Model):
 
 
 class Meeting(models.Model):
-  employees = models.ManyToManyField(Employee)
-  applicants = models.ManyToManyField(Applicant)
-  
+  employee = models.ForeignKey(Employee, on_delete = models.PROTECT, related_name = 'meetings')
+  applicant = models.ForeignKey(Applicant, on_delete = models.PROTECT, related_name = 'meetings')
+  title = models.CharField(max_length = 300, null = True)
   scheduled_for = models.DateTimeField()
   created = models.DateTimeField(auto_now_add=True)
