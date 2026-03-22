@@ -147,7 +147,6 @@ class Employee(models.Model):
 
   first_login = models.BooleanField(default = True)
 
-
   company = models.ForeignKey(Company, on_delete = models.CASCADE, related_name='company_employees', null =True)
   department = models.ForeignKey(Department, on_delete = models.CASCADE, related_name='department_employees', null =True)
   role = models.ForeignKey(Role, on_delete = models.CASCADE, null = True, blank = True, related_name = 'employees')
@@ -162,7 +161,7 @@ class Employee(models.Model):
   name = models.CharField(max_length = 2000, null = True, blank =True)
   gender = models.CharField(max_length=100, null =True, blank = True)
   date_of_birth = models.DateField(null=True, blank =True)
-  picture = models.ImageField(upload_to='Employee_Pictures', null =True, blank = True, default="/media/Files/a.webp")
+  picture = models.ImageField(upload_to='Employee_Pictures', null =True, blank = True, default="/Files/a.webp")
   location = models.TextField( blank =True, default='', null=True)
   house_code = models.TextField( blank =True, default='', null=True)
   marital_status = models.CharField(default='',max_length=2000, blank = True, null=True)
