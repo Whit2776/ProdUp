@@ -3,7 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 
 
-from app_1.models import Employment_Type, Role, Company, Employee
+from app_1.models import Employment_Type, Role, Company, Employee, Event
 
 class Vacancy(models.Model):
     company = models.ForeignKey(
@@ -65,10 +65,25 @@ class Applicant(models.Model):
 class Meeting(models.Model):
     title = models.CharField(max_length=255, null=True)
     scheduled_for = models.DateTimeField(null=True)
+    created_by = models.ForeignKey(Employee, on_delete=models.PROTECT, null =True)
     event = models.OneToOneField("app_1.Event", on_delete=models.CASCADE, null =True)
+    created = models.DateTimeField(auto_now_add=True, null =True)
+    
+    def create_event(self):
+        description = f"{self.title} scheduled for {self.scheduled_for.date()} at {self.scheduled_for.time()}"
+        
+        self.event = Event.objects.create(description=description, title = self.title, scheduled_for = self.scheduled_for, event_type='Meeting')
+        
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
     
 class MeetingParticipant(models.Model):
     meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, related_name="participants")
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     participant = GenericForeignKey('content_type', 'object_id')
+    ROLE_CHOICES = [
+        ("host", "Host"),
+        ("participant", "Participant"),
+    ]
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default="participant")

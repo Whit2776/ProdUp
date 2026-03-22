@@ -4,4 +4,4 @@ from job_application.models import *
 class MeetingSerializer(ModelSerializer):
   class Meta:
     model = Meeting
-    exclude = ["employee"]
+    exclude = ["created_by"]

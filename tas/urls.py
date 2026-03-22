@@ -3,8 +3,8 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 from app_1 import views, dashboard
-from app_1 import api, emails
-
+from app_1 import emails
+import job_application
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name = 'home'),
@@ -212,6 +212,7 @@ urlpatterns = [
     #API LINKS
     path('api/', include('app_1.api.urls')),
     path('chat-api/', include('chat.api.urls')),
+    path('job-application-api/', include('job_application.api.urls')),
     #CHAT LINKS
     path('chat/', include('chat.urls')),
     # Job application (public, company-scoped)

@@ -278,13 +278,7 @@
 
 <div class="startbar d-print-none">
     <div class="brand">
-        <a href="index.html" class="logo">
-            <span>
-                <img src="{% static 'images/tas-logo.jpg'%}" alt="" width='50px' height='50px'>  
-            </span>
-            <span class="">
-            </span>
-        </a>
+        
     </div>
     
     <div class="startbar-menu" >
@@ -327,7 +321,7 @@
 
                                                 
                     <li class="nav-item">
-                        <a class="nav-link" href="#sidebarEcommerce" data-bs-toggle="collapse" role="button"
+                        {% comment %} <a class="nav-link" href="#sidebarEcommerce" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarEcommerce"> 
                             <i class="iconoir-cart-alt menu-icon"></i>                                        
                             <span>Ecommerce</span>
@@ -360,7 +354,7 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>
+                    </li> {% endcomment %}
 
                     <li class="nav-item">
                         <a class="nav-link" href="#sidebarClients" data-bs-toggle="collapse" role="button"
@@ -530,26 +524,26 @@
                         </a>
                     </li> 
 
-                    <li class="nav-item">
+                    {% comment %} <li class="nav-item">
                         <a class="nav-link" href="{% url 'apps_contact_list' %}">
                             <i class="iconoir-community menu-icon"></i> 
                             <span>Contact List</span>
                         </a>
-                    </li> 
+                    </li>  {% endcomment %}
 
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'apps_calender' %}">
                             <i class="iconoir-calendar menu-icon"></i> 
                             <span>Calendar</span>
                         </a>
-                    </li>  
+                    </li>
 
-                    <li class="nav-item">
+                    {% comment %} <li class="nav-item">
                         <a class="nav-link" href="{% url 'apps_invoice' %}">
                             <i class="iconoir-paste-clipboard menu-icon"></i> 
                             <span>Invoice</span>
                         </a>
-                    </li>
+                    </li> {% endcomment %}
 
                     <li class="nav-item">
                         <a class="nav-link" href="#sidebarEmployees" data-bs-toggle="collapse" role="button"
@@ -589,7 +583,7 @@
                         </div>
                     </li> 
                 
-                    <li class="menu-label mt-2">
+                    {% comment %} <li class="menu-label mt-2">
                         <small class="label-border">
                             <div class="border_left hidden-xs"></div>
                             <div class="border_right"></div>
@@ -931,7 +925,7 @@
                             </ul>
                         </div>
                     </li>
-                </ul>
+                </ul> 
                 <div class="update-msg text-center"> 
                     <div class="d-flex justify-content-center align-items-center thumb-lg update-icon-box  rounded-circle mx-auto">
                         <img src="{%get_static_prefix%}dashboard/assets/images/extra/party.gif" alt="" class="d-inline-block me-1" height="30">
@@ -940,6 +934,7 @@
                     <p class="mb-3 text-muted"> TAS  is a high quality web applications.</p>
                     <a href="javascript: void(0);" class="btn bg-black text-white shadow-sm rounded-pill">Upgrade your plan</a>
                 </div>
+                {% endcomment %}
             </div>
         </div>
     </div>

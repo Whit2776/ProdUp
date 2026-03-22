@@ -42,6 +42,23 @@
             </div>
           </div>
 
+          <div class="col-12 col-xl-4">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title mb-0">Vacancy</h4>
+                </div>
+                <div class="card-body">
+                  <div class="fw-semibold">{{ vacancy.title }}</div>
+                  <div class="text-muted">{{ vacancy.role.position }}</div>
+                  <div class="mt-2 text-muted">{{ vacancy.location }} · {{ vacancy.salary_range }}</div>
+                  {% if vacancy.description %}
+                    <hr class="my-3">
+                    <div class="text-muted" style="white-space: pre-wrap;">{{ vacancy.description }}</div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
           <div class="row">
             <div class="col-12 col-xl-8">
               <div class="card">
@@ -133,32 +150,254 @@
                 </div>
               </div>
             </div>
-
-            <div class="col-12 col-xl-4">
-              <div class="card">
-                <div class="card-header">
-                  <h4 class="card-title mb-0">Vacancy</h4>
-                </div>
-                <div class="card-body">
-                  <div class="fw-semibold">{{ vacancy.title }}</div>
-                  <div class="text-muted">{{ vacancy.role.position }}</div>
-                  <div class="mt-2 text-muted">{{ vacancy.location }} · {{ vacancy.salary_range }}</div>
-                  {% if vacancy.description %}
-                    <hr class="my-3">
-                    <div class="text-muted" style="white-space: pre-wrap;">{{ vacancy.description }}</div>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
           </div>
 
+          <button id="schedule-meeting-button" style="">Schedule Interview</button>
+          <style>
+            #schedule-meeting-button{
+              padding: 0.35rem 0.45rem; background: transparent; backdrop-filter: blur(6px); border: 2px dashed #349df9; color: #349df9; border-radius: 0.25rem; transition: background 0.3s linear;
+            }
+
+            #schedule-meeting-button:hover{
+              background: #349df9;
+              color: #fff;
+            }
+
+            #schedule-meeting-button.meeting-scheduled{
+              border-color: #27d208;
+              color: #27d208;
+            }
+
+            #schedule-meeting-button.meeting-scheduled:hover{
+              background: #27d208;
+              color: #fff;
+            }
+          </style>
         </div>
       </div>
     </div>
+    <div id="schedule-meeting-modal" class="modal">
+      <div class="modal-card">
+        <form id="schedule-meeting-form" action="">
+          {% csrf_token %}
+
+          <h2>Schedule Interview</h2>
+
+          <div class="form-field">
+            <input name="title" type="text" value='Interview' required>
+            <label>Title</label>
+          </div>
+
+          <div class="form-field">
+            <input name="scheduled_for" type="datetime-local" required>
+            <label>Date & Time</label>
+          </div>
+
+          <input name="participants" value="{{applicant.id}}_applicant_{{applicant.email}}_{{applicant.name}}" readonly type="hidden">
+          {% if applicant.meetings.count > 0 %}
+          <button class="submit-button  disabled "  type="submit">Meeting Scheduled</button>
+          {% else %}
+          <button class="submit-button"  type="submit">Schedule</button>
+          {%endif%}
+        </form>
+      </div>
+    </div>
+
+    <style>
+      .modal{
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.65);
+        backdrop-filter: blur(6px);
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 5000;
+      }
+
+      .modal.active{
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* =========================
+        MODAL CARD
+      ========================= */
+
+      .modal-card{
+        width: 100%;
+        max-width: 420px;
+
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 2rem;
+
+        box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+
+        transform: translateY(20px) scale(0.96);
+        transition: all 0.3s ease;
+      }
+
+      .modal.active .modal-card{
+        transform: translateY(0) scale(1);
+      }
+
+      /* =========================
+        HEADER
+      ========================= */
+
+      .modal-card h2{
+        font-size: 1.4rem;
+        margin-bottom: 1.5rem;
+        color: #111827;
+      }
+
+      /* =========================
+        FORM FIELDS
+      ========================= */
+
+      .form-field{
+        position: relative;
+        margin-bottom: 1.5rem;
+      }
+
+      .form-field input{
+        width: 100%;
+        padding: 0.9rem 1rem;
+        border-radius: 8px;
+        border: 1px solid #d1d5db;
+        font-size: 0.95rem;
+        background: #fff;
+        transition: all 0.2s ease;
+      }
+
+      .form-field input:focus{
+        outline: none;
+        border-color: #111827;
+        box-shadow: 0 0 0 3px rgba(17,24,39,0.1);
+      }
+
+      /* FLOATING LABEL */
+
+      .form-field label{
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.85rem;
+        color: #6b7280;
+        background: white;
+        padding: 0 0.3rem;
+        transition: all 0.2s ease;
+        pointer-events: none;
+      }
+
+      .form-field input:focus + label,
+      .form-field input:not(:placeholder-shown) + label{
+        top: -6px;
+        font-size: 0.75rem;
+        color: #111827;
+      }
+
+      /* =========================
+        BUTTON
+      ========================= */
+
+      .modal-card button{
+        width: 100%;
+        padding: 0.9rem;
+        border-radius: 8px;
+        border: none;
+
+        background: #111827;
+        color: white;
+        font-weight: 600;
+
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .modal-card button:hover{
+        background: #1f2937;
+      }
+
+      .disabled{opacity: 0.4; pointer-events:none;}
+    </style>
 
     <script src="{%get_static_prefix%}dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="{%get_static_prefix%}dashboard/assets/libs/simplebar/simplebar.min.js"></script>
     <script src="{%get_static_prefix%}dashboard/assets/js/app.js"></script>
+    <script src="{%get_static_prefix%}dashboard/assets/js/main.js"></script>
+    <script>
+
+    </script>
+
+    <script>
+      let schedule_meeting_button = document.getElementById('schedule-meeting-button')
+      let schedule_meeting_modal = document.getElementById('schedule-meeting-modal')
+      let schedule_meeting_form = document.getElementById('schedule-meeting-form')
+      let id = location.href.split('/')[6]
+
+      const applicant_meeting_exists = async () => {
+        let url = "/job-application-api/applicant-meeting-exists/" + id
+        let res = await fetch(url)
+        let res_json = await res.json()
+        return {success:res_json.success, meeting:res_json.meeting}
+      }
+
+      const schedule_meeting_process = () => {
+        schedule_meeting_button.onclick = () => {
+          schedule_meeting_modal.classList.add('active')
+        }
+
+        schedule_meeting_form.addEventListener('submit', async e => {
+          e.preventDefault()
+          let url = '/job-application-api/schedule-meeting'
+          let formdata = new FormData(schedule_meeting_form)
+
+          let res_json = await post_data(url, formdata)
+          
+          if (res_json.success){
+            let button = schedule_meeting_form.querySelector(".submit-button")
+            button.textContent = "Scheduled"
+            button.classList.add('disabled')
+          }
+        })
+      }
+      
+
+      document.addEventListener('click', e => {
+        if(e.target.classList.contains('modal')){
+          e.target.classList.remove('active')
+        }
+      })
+    </script>
+    <script>
+      schedule_meeting_process()
+    </script>
+    {% comment %} <script>
+      document.addEventListener('DOMContentLoaded', async e => {
+        let res = await applicant_meeting_exists()
+        let success = res.success
+        let meeting = res.meeting
+        
+        if(success){
+          
+          schedule_meeting_button.textContent = "Meeting Scheduled";
+          schedule_meeting_button.classList.add("meeting-scheduled")
+          schedule_meeting_button.onclick = () => {
+            let date = new Date(meeting.scheduled_for)
+            alert(`Meeting Scheduled for ${date.toTimeString()} on ${date.toDateString() }`)
+          }
+        }
+        
+      })
+    </script> {% endcomment %}
   </body>
 </html>
 
